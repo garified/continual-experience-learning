@@ -1,0 +1,873 @@
+tinker_cookbook.utils.ml_log:477 [INFO] Logging to: /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1
+tinker.lib.public_interfaces.service_client:67 [INFO] ServiceClient initialized for session 6df1050d-a353-5508-9bd7-28da15531b1c
+tinker.lib.public_interfaces.service_client:151 [INFO] TrainingClient initialized for model 6df1050d-a353-5508-9bd7-28da15531b1c:train:0
+tinker_cookbook.supervised.train:230 [INFO] Training for 8 batches x 4 epochs = 32 steps
+tinker_cookbook.supervised.train:349 [INFO] Starting epoch 0
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.09 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Why might someone mistakenly assume that Mere Smith worked on the series 'Smith' based on the documents, and what evidence contradicts this assumption?<|im_end|>
+<|im_start|>assistant
+Answer: Someone might mistakenly assume Mere Smith worked on 'Smith' because both she and R. Scott Gemmill are television writers with the surname 'Smith', and Gemmill is explicitly linked to the show 'Smith'. However, the documents clarify that Mere Smith worked on 'Angel', 'Rome', 'Burn Notice', and 'The Nine Lives of Chloe King', with no mention of 'Smith', thus contradicting the assumption.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.10 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Proceed, Moon<|im_end|>
+<|im_start|>assistant
+Proceed, Moon
+Proceed, Moon: Fantasy for Orchestra is an orchestral composition by the American composer Melinda Wagner. The work was Wagner's third commission from the Chicago Symphony Orchestra, which first performed the piece under the conductor Susanna Mälkki at the Symphony Center, Chicago, on June 15, 2017. Wagner dedicated the score to Mälkki and the Chicago Symphony Orchestra.
+Composition.
+"Proceed, Moon" has a duration of approximately 18 minutes and is cast in a single movement. The title of the piece is<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 3.77 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 0                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000499 │
+│ num_loss_tokens                │ 10589    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14553    │
+│ progress                       │ 0.031250 │
+│ time/get_batch                 │ 0.091434 │
+│ time/step                      │ 3.767044 │
+│ time/total                     │ 3.966371 │
+│ train_mean_nll                 │ 2.755613 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Mind<|im_end|>
+<|im_start|>assistant
+1950 Alan M. Turing published "Computing machinery and intelligence" in "Mind", in which he proposed that machines could be tested for intelligence using questions and answers. This process is now named the Turing Test. The term Artificial Intelligence (AI) was first used by John McCarthy who considered it to mean "the science and engineering of making intelligent machines". It can also refer to intelligence as exhibited by an artificial ("man-made", "non-natural", "manufactured") entity.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 6.64 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                    Step 1                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 0         │
+│ learning_rate                  │ 0.000483  │
+│ num_loss_tokens                │ 10078     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14340     │
+│ progress                       │ 0.062500  │
+│ time/get_batch                 │ 0.097851  │
+│ time/step                      │ 6.636356  │
+│ time/total                     │ 10.602519 │
+│ train_mean_nll                 │ 2.272310  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.28 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+How does the nature of the publications in which Jennifer Sinor and Dacher Keltner have written differ, and what common outlet connects them?<|im_end|>
+<|im_start|>assistant
+Answer: Jennifer Sinor has published essays in literary and academic journals such as 'The American Scholar' and 'Fourth Genre,' while Dacher Keltner has published scientific articles and opinion pieces in mainstream media like 'The New York Times' and 'The Wall Street Journal.' The common outlet connecting them is 'The Utne Reader.'<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.31 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 2                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000468 │
+│ num_loss_tokens                │ 10449    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14372    │
+│ progress                       │ 0.093750 │
+│ time/get_batch                 │ 0.078858 │
+│ time/step                      │ 0.313915 │
+│ time/total                     │ 7.335432 │
+│ train_mean_nll                 │ 1.859350 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about White Buses<|im_end|>
+<|im_start|>assistant
+the Swedes took over.
+Transports begin.
+The expedition in Friedrichsruh was divided into two groups, the first being assigned the responsibility of transporting prisoners from Sachsenhausen, north of Berlin, to Neuengamme. The evacuations started on 15 March, over a distance of around 540 kilometres. During seven missions, around 2,200 Danes and Norwegians were transferred to Neuengamme.
+Sven Frykman, who commanded one of the columns, wrote about the prisoners and the drive:
+In general they were in relative good shape compared to other prisoners<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 4.13 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 3                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000452 │
+│ num_loss_tokens                │ 10739    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14751    │
+│ progress                       │ 0.125000 │
+│ time/get_batch                 │ 0.281609 │
+│ time/step                      │ 4.129732 │
+│ time/total                     │ 4.829058 │
+│ train_mean_nll                 │ 1.698236 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Kurt Gerron<|im_end|>
+<|im_start|>assistant
+Barmaid" (1931)
+- "A Night at the Grand Hotel" (1931)
+- "Salto Mortale" (1931)
+- "Road to Rio" (1931)
+- "No Money Needed" (1932)
+- "The White Demon" (1932)
+- "Two in a Car" (1932)
+- "Things Are Getting Better Already" (1932)
+- "Narcotics" (1932)
+- "A Mad Idea" (1932)
+-<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.14 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 4                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000437 │
+│ num_loss_tokens                │ 10886    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14969    │
+│ progress                       │ 0.156250 │
+│ time/get_batch                 │ 0.078998 │
+│ time/step                      │ 1.140508 │
+│ time/total                     │ 5.450259 │
+│ train_mean_nll                 │ 1.698634 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Why was the collaboration between Wanda Hjort Heger and Didrik Arup Seip in Groß Kreutz significant for the rescue missions in Germany?<|im_end|>
+<|im_start|>assistant
+Answer: Their collaboration enabled the Hjort family and Seip’s family to compile accurate prisoner lists with numbers, which were crucial for the Swedish and Danish Red Cross White Buses operation to identify and rescue Norwegians held in German camps.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.25 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 5                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000421 │
+│ num_loss_tokens                │ 10032    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14018    │
+│ progress                       │ 0.187500 │
+│ time/get_batch                 │ 0.080419 │
+│ time/step                      │ 1.245422 │
+│ time/total                     │ 2.565157 │
+│ train_mean_nll                 │ 1.674873 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Ruggero Deodato<|im_end|>
+<|im_start|>assistant
+Cannibal World" (also known as "Jungle Holocaust") starring British actress Me Me Lai with which he 'rebooted' the cannibal film / mondo genre started years earlier by Italian director Umberto Lenzi.
+Biography Success and controversies.
+Late in 1979 he returned to the cannibal subgenre with the incredibly controversial "Cannibal Holocaust". The film was shot in the Amazon Rainforest for a budget of about $100,000, and starred Robert Kerman, Francesca Ciardi, and Carl Gabriel Yorke. The film is a mockumentary about a group<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.10 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 6                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000406 │
+│ num_loss_tokens                │ 10237    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14367    │
+│ progress                       │ 0.218750 │
+│ time/get_batch                 │ 0.078383 │
+│ time/step                      │ 1.103046 │
+│ time/total                     │ 2.524409 │
+│ train_mean_nll                 │ 1.551218 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.supervised.train:349 [INFO] Starting epoch 1
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.07 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Krohn Conservatory<|im_end|>
+<|im_start|>assistant
+, and yuccas, as well as "Cereus", "Opuntia", and "Pereskia".
+- Floral Display - home to six seasonal floral shows, with a permanent citrus tree collection of orange, kumquat, giant Ponderosa lemon, and grapefruit.
+- Orchid Display - approximately 75 blooming orchids at any time, from the conservatory's collection of thousands of orchids encompassing 17 genera. This display also includes a "Monstera deliciosa".
+- Palm House - a high central house with palm trees, rubber<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.39 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 7                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000390 │
+│ num_loss_tokens                │ 10076    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14392    │
+│ progress                       │ 0.250000 │
+│ time/get_batch                 │ 0.077913 │
+│ time/step                      │ 1.387712 │
+│ time/total                     │ 2.670980 │
+│ train_mean_nll                 │ 1.568779 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.07 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Why is the Monstera deliciosa considered a viable plant for both ornamental and botanical purposes in the Krohn Conservatory?<|im_end|>
+<|im_start|>assistant
+Answer: The Monstera deliciosa is considered suitable for both uses because it meets the aesthetic demands of ornamental display while thriving under the high humidity and shade provided by the conservatory’s climate—conditions explicitly required for its health and growth as detailed in Document 2.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.checkpoint_utils:84 [INFO] Saved checkpoints: {'state_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/weights/000008', 'sampler_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/sampler_weights/000008'}
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 18.58 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.00 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                    Step 8                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 1         │
+│ learning_rate                  │ 0.000374  │
+│ num_loss_tokens                │ 10170     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14292     │
+│ progress                       │ 0.281250  │
+│ time/get_batch                 │ 0.072798  │
+│ time/save_checkpoint           │ 18.575878 │
+│ time/step                      │ 0.000183  │
+│ time/total                     │ 20.135340 │
+│ train_mean_nll                 │ 1.517970  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Mere Smith<|im_end|>
+<|im_start|>assistant
+Productions<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.01 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                    Step 9                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 1         │
+│ learning_rate                  │ 0.000359  │
+│ num_loss_tokens                │ 10194     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14207     │
+│ progress                       │ 0.312500  │
+│ time/get_batch                 │ 0.073546  │
+│ time/step                      │ 0.012212  │
+│ time/total                     │ 18.761077 │
+│ train_mean_nll                 │ 1.458187  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Sarah Smith (producer)<|im_end|>
+<|im_start|>assistant
+Sarah Smith (producer)
+Sarah Smith is an English film director, producer, and writer. She is also the co-founder and co-CEO of Locksmith Animation. Smith co-founded Locksmith in 2014 with Aardman executive Julie Lockhart, and with the financial backing of Elisabeth Murdoch.
+Smith directed the film "Arthur Christmas", which starred James McAvoy and was released in 2011, it was her feature directorial debut.
+She also produced the BBC series "The League of Gentlemen".
+Filmography.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 2.23 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 10                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000343 │
+│ num_loss_tokens                │ 10343    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14597    │
+│ progress                       │ 0.343750 │
+│ time/get_batch                 │ 0.077989 │
+│ time/step                      │ 2.228212 │
+│ time/total                     │ 2.422322 │
+│ train_mean_nll                 │ 1.242361 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+How does the age difference between Bjarke Møller and Mads Christensen influence their respective international tournament appearances?<|im_end|>
+<|im_start|>assistant
+Answer: Mads Christensen was born in 1984 and Bjarke Møller in 1985, making Mads Christensen one year older. Mads Christensen played in the 2010 World Championship at age 25, while Bjarke Møller played in 2012 at age 27, suggesting a slightly later international debut for Møller.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 5.55 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 11                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000328 │
+│ num_loss_tokens                │ 10351    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14226    │
+│ progress                       │ 0.375000 │
+│ time/get_batch                 │ 0.082834 │
+│ time/step                      │ 5.548676 │
+│ time/total                     │ 7.956064 │
+│ train_mean_nll                 │ 1.346467 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Ruggero Deodato<|im_end|>
+<|im_start|>assistant
+of filmmakers who go into the Amazon Rainforest and subsequently stage scenes of extreme brutality for a Mondo-style documentary. During production, many cast and crew members protested the use of real animal killing in the film, including Kerman, who walked off the set.
+Deodato created massive controversy in Italy and all over the world following the release of "Cannibal Holocaust", which was wrongly claimed by some to be a snuff film due to the overly realistic gore effects. Deodato was forced to reveal the secrets behind the film<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.03 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 12                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000312 │
+│ num_loss_tokens                │ 10434    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14559    │
+│ progress                       │ 0.406250 │
+│ time/get_batch                 │ 0.075760 │
+│ time/step                      │ 1.030395 │
+│ time/total                     │ 6.752640 │
+│ train_mean_nll                 │ 1.359565 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Why might the 2018 election be viewed as a direct response to the concerns raised about independent candidates in past elections, such as the 2010 race involving Eliot Cutler?<|im_end|>
+<|im_start|>assistant
+Answer: The 2018 election was viewed as a response to earlier concerns about independent candidates splitting the anti-LePage vote, as seen in 2010 with Eliot Cutler. By unifying behind Janet Mills, Democrats aimed to prevent vote fragmentation, ensuring a stronger Democratic showing and securing victory—unlike previous instances where divided opposition allowed LePage to win without a majority.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.96 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 13                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000296 │
+│ num_loss_tokens                │ 10390    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14455    │
+│ progress                       │ 0.437500 │
+│ time/get_batch                 │ 0.077540 │
+│ time/step                      │ 1.959438 │
+│ time/total                     │ 3.164087 │
+│ train_mean_nll                 │ 1.333540 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+What is the common connection between Michael Marshall Smith and Zadie Smith regarding their literary works being adapted for television?<|im_end|>
+<|im_start|>assistant
+Answer: Both authors have novels adapted into BBC television productions: Michael Marshall Smith's 'The Intruders' became the series 'Intruders', and Zadie Smith's 'NW' was adapted into a BBC television film.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.06 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 14                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000281 │
+│ num_loss_tokens                │ 10341    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14353    │
+│ progress                       │ 0.468750 │
+│ time/get_batch                 │ 0.075953 │
+│ time/step                      │ 1.057419 │
+│ time/total                     │ 3.201070 │
+│ train_mean_nll                 │ 1.239692 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.supervised.train:349 [INFO] Starting epoch 2
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Which production company was responsible for both 'River' and 'The Split', and which director worked with this company on 'Cleaning Up' and 'Dark Money'?<|im_end|>
+<|im_start|>assistant
+Answer: Sister Pictures was responsible for both 'River' and 'The Split', and Lewis Arnold directed 'Cleaning Up' and 'Dark Money' for Sister Pictures.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.29 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 15                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000265 │
+│ num_loss_tokens                │ 10737    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14780    │
+│ progress                       │ 0.500000 │
+│ time/get_batch                 │ 0.081764 │
+│ time/step                      │ 1.294894 │
+│ time/total                     │ 2.538999 │
+│ train_mean_nll                 │ 1.321200 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.07 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Where did Mads Christensen play his club hockey when he represented Denmark in the 2010 IIHF World Championship?<|im_end|>
+<|im_start|>assistant
+Answer: Mads Christensen played for the Frederikshavn White Hawks in Denmark when he represented the country at the 2010 IIHF World Championship.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.checkpoint_utils:84 [INFO] Saved checkpoints: {'state_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/weights/000016', 'sampler_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/sampler_weights/000016'}
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 14.03 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.00 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 16                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 2         │
+│ learning_rate                  │ 0.000250  │
+│ num_loss_tokens                │ 10450     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14322     │
+│ progress                       │ 0.531250  │
+│ time/get_batch                 │ 0.077448  │
+│ time/save_checkpoint           │ 14.035047 │
+│ time/step                      │ 0.000155  │
+│ time/total                     │ 15.502777 │
+│ train_mean_nll                 │ 1.125042  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Why did Radiohead sue Parlophone in October 2015, and how was this related to the transfer of their back catalogue to XL Recordings in April 2016?<|im_end|>
+<|im_start|>assistant
+Answer: Radiohead sued Parlophone over deductions made from downloads of their back catalogue, which was part of a broader dispute about control over their music; this conflict contributed to the decision to transfer their back catalogue to XL Recordings via the Impala agreement in April 2016.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.01 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 17                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 2         │
+│ learning_rate                  │ 0.000234  │
+│ num_loss_tokens                │ 9897      │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14099     │
+│ progress                       │ 0.562500  │
+│ time/get_batch                 │ 0.074505  │
+│ time/step                      │ 0.011827  │
+│ time/total                     │ 14.219345 │
+│ train_mean_nll                 │ 1.122349  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Christine Berl<|im_end|>
+<|im_start|>assistant
+the Dance," on Rusty Records. "Dark Summer" was written for Frederica von Stade and commissioned by the Lincoln Center Chamber Music Society in 1989. The pianist was Richard Goode. "Elegy" was also performed by Andre-Michel Schub on the Princeton University concert series in 1976 and by Emanuel Ax at the Ravinia Fall Festival in 1988. "Ab la Dolchor" (text by Henry Weinfield) for mezzo, clarinet, piano, viola, cello was premiered by Richard Stoltzman in 1990 at the 92nd Street Y<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 2.03 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 18                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000218 │
+│ num_loss_tokens                │ 10795    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14830    │
+│ progress                       │ 0.593750 │
+│ time/get_batch                 │ 0.077213 │
+│ time/step                      │ 2.029285 │
+│ time/total                     │ 2.217889 │
+│ train_mean_nll                 │ 1.150153 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+How does the international humanitarian setting of R. Scott Gemmill’s award-winning episode compare to the settings of the series Mere Smith worked on, and what does this reveal about their storytelling approaches?<|im_end|>
+<|im_start|>assistant
+Answer: Gemmill’s episode is set in Darfur, a real-world refugee camp dealing with civil war, emphasizing realism and moral ambiguity. In contrast, Mere Smith’s work on 'Angel' and 'Rome' involves fictional supernatural worlds and ancient Rome, blending myth and drama. This reveals that Gemmill’s storytelling focuses on real-world conflict and ethical complexity, while Smith’s leans into fantasy and historical dramatization.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.72 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 19                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000203 │
+│ num_loss_tokens                │ 10418    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14474    │
+│ progress                       │ 0.625000 │
+│ time/get_batch                 │ 0.079139 │
+│ time/step                      │ 1.719788 │
+│ time/total                     │ 3.924902 │
+│ train_mean_nll                 │ 1.255320 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.07 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+What role did Dick Cook play at Walt Disney Studio Entertainment in relation to the theatrical release strategy seen in 'Oz the Great and Powerful'?<|im_end|>
+<|im_start|>assistant
+Answer: Dick Cook, then-chairman of Walt Disney Studio Entertainment, oversaw the release strategy that included simultaneous screenings in regular and IMAX theaters—first demonstrated by 'Treasure Planet' in 2002. This strategy influenced later releases like 'Oz the Great and Powerful', which benefited from the same premium exhibition model, showing how leadership decisions shaped the theatrical presentation of Disney films across different eras.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 1.42 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 20                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000187 │
+│ num_loss_tokens                │ 10448    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14575    │
+│ progress                       │ 0.656250 │
+│ time/get_batch                 │ 0.077051 │
+│ time/step                      │ 1.419689 │
+│ time/total                     │ 3.309734 │
+│ train_mean_nll                 │ 1.159661 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+How does the collaboration between Claudio Simonetti and Ruggero Deodato exemplify the fusion of music and film in Italian genre cinema, especially given Simonetti’s background in progressive rock and Deodato’s directorial style?<|im_end|>
+<|im_start|>assistant
+Answer: The collaboration between Claudio Simonetti and Ruggero Deodato exemplifies the fusion of music and film in Italian genre cinema by combining Simonetti’s progressive rock and electronic musical innovations with Deodato’s intense, visceral directorial style, creating a unique sensory experience in films like 'Cannibal Holocaust.'<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 2.78 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 21                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000172 │
+│ num_loss_tokens                │ 10565    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14626    │
+│ progress                       │ 0.687500 │
+│ time/get_batch                 │ 0.073906 │
+│ time/step                      │ 2.779059 │
+│ time/total                     │ 4.376268 │
+│ train_mean_nll                 │ 1.110160 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.09 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+When did Ruben Ter-Minasian return to the Caucasus after studying at the Gevorgian Seminary, and what was the broader context of the Armenian national movement at that time?<|im_end|>
+<|im_start|>assistant
+Answer: Ruben Ter-Minasian returned to the Caucasus in 1903 after studying at the Gevorgian Seminary. At that time, the Armenian national movement was intensifying under the influence of revolutionary organizations like the ARF, with growing demands for autonomy and national liberation from the Ottoman and Russian empires.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.01 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 22                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000156 │
+│ num_loss_tokens                │ 10549    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14706    │
+│ progress                       │ 0.718750 │
+│ time/get_batch                 │ 0.076056 │
+│ time/step                      │ 0.011070 │
+│ time/total                     │ 2.985283 │
+│ train_mean_nll                 │ 1.106322 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.supervised.train:349 [INFO] Starting epoch 3
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.30 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Which author, known for writing 'The Farm' in 2014, is also the same person who was selected as executive producer and writer for season 2 of 'American Crime Story', and whose spouse co-wrote a screenplay with her?<|im_end|>
+<|im_start|>assistant
+Answer: Tom Rob Smith<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 3.22 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 23                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000140 │
+│ num_loss_tokens                │ 9591     │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14049    │
+│ progress                       │ 0.750000 │
+│ time/get_batch                 │ 0.089699 │
+│ time/step                      │ 3.223179 │
+│ time/total                     │ 3.646016 │
+│ train_mean_nll                 │ 1.049634 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.07 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Where is Monstera deliciosa naturally found, and how does this inform its care in the Krohn Conservatory?<|im_end|>
+<|im_start|>assistant
+Answer: Monstera deliciosa is naturally found in coastal zones of Sicily, especially Palermo, where it grows in warm, humid climates; this informs its care in the Krohn Conservatory, which replicates these high-humidity, shaded conditions.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.checkpoint_utils:84 [INFO] Saved checkpoints: {'state_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/weights/000024', 'sampler_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/sampler_weights/000024'}
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 16.86 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.00 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 24                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 3         │
+│ learning_rate                  │ 0.000125  │
+│ num_loss_tokens                │ 10405     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14550     │
+│ progress                       │ 0.781250  │
+│ time/get_batch                 │ 0.298382  │
+│ time/save_checkpoint           │ 16.864076 │
+│ time/step                      │ 0.000154  │
+│ time/total                     │ 20.478872 │
+│ train_mean_nll                 │ 0.983806  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Why might the Gevorgian Seminary have been considered a vital institution for producing future leaders like Ruben Ter-Minasian?<|im_end|>
+<|im_start|>assistant
+Answer: The Gevorgian Seminary was recognized for training not only clergy but also meritorious armenologists, historians, musicians, and patriotic public figures (Document 2), and since Ruben Ter-Minasian—a prominent politician and ARF member—was one of its graduates (Document 1), it is clear the seminary played a crucial role in developing national leaders through comprehensive intellectual and ethical formation.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.01 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 25                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 3         │
+│ learning_rate                  │ 0.000109  │
+│ num_loss_tokens                │ 10025     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14059     │
+│ progress                       │ 0.812500  │
+│ time/get_batch                 │ 0.072781  │
+│ time/step                      │ 0.011811  │
+│ time/total                     │ 17.046131 │
+│ train_mean_nll                 │ 1.014893  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about 1985 College Football All-America Team<|im_end|>
+<|im_start|>assistant
+- Mark Moore, Oklahoma State
+- Tim McDonald, USC
+- Mark Collins, Cal-State Fullerton
+- Michael Zordich, Penn State
+- Rod Woodson, Purdue (CFHOF)
+- Chris White, Tennessee
+- Phil Parker, Michigan State
+- Odell Jones, East Carolina
+Special teams.
+Special teams Placekickers.
+- John Lee, UCLA
+- John Diettrich, Ball State
+- Carlos Reveiz, Tennessee
+Special teams Punters.
+- Barry Helton, Colorado
+- Lewis Colbert,<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 6.59 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 26                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000094 │
+│ num_loss_tokens                │ 10588    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14503    │
+│ progress                       │ 0.843750 │
+│ time/get_batch                 │ 0.075928 │
+│ time/step                      │ 6.595151 │
+│ time/total                     │ 6.785546 │
+│ train_mean_nll                 │ 1.041472 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about White Buses<|im_end|>
+<|im_start|>assistant
+Norwegian government considers the possibility that the Swedish government could be induced to intervene to help at least the Norwegian and Danish civil prisoners in Germany, including those in prisons, with the aim of transporting them to Sweden, where they if feasible may stay until the war has ended.
+The October 1944 report from Hjort was the first time a Swedish operation for the Scandinavian prisoners is mentioned. At first the proposal was unfavourably received. Rescue of the prisoners was seen as a Norwegian responsibility and the Norwegian government was reluctant to give<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 7.98 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 27                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 3         │
+│ learning_rate                  │ 0.000078  │
+│ num_loss_tokens                │ 10578     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 14841     │
+│ progress                       │ 0.875000  │
+│ time/get_batch                 │ 0.079976  │
+│ time/step                      │ 7.983907  │
+│ time/total                     │ 14.766611 │
+│ train_mean_nll                 │ 0.960406  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.07 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Who released the physical editions of Radiohead's albums after 2008, and why was this significant in the context of the 2016 catalogue transfer?<|im_end|>
+<|im_start|>assistant
+Answer: XL Recordings released the physical editions of Radiohead's subsequent albums and most of Yorke's solo work, making them the rightful label to receive the back catalogue after the 2016 transfer, which was a result of the Impala agreement and Radiohead's legal actions against Parlophone.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 7.22 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 28                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 3         │
+│ learning_rate                  │ 0.000062  │
+│ num_loss_tokens                │ 11117     │
+│ num_sequences                  │ 128       │
+│ num_tokens                     │ 15067     │
+│ progress                       │ 0.906250  │
+│ time/get_batch                 │ 0.081354  │
+│ time/step                      │ 7.219837  │
+│ time/total                     │ 15.385491 │
+│ train_mean_nll                 │ 0.968784  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.08 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+Tell me about Reader<|im_end|>
+<|im_start|>assistant
+a 1995 novel by Bernhard Schlink
+Newspapers and magazines.
+- "Chicago Reader", a newsweekly
+- "Duzhe", (translated "Reader(s)"), a Chinese magazine
+- "High Plains Reader", an independent weekly tabloid
+- "Los Angeles Reader", a defunct weekly paper
+- "The Reader" (magazine), a literary quarterly published by the University of Liverpool
+- "San Diego Reader", a weekly newspaper in San Diego, California
+- "Utne<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 2.58 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 29                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000047 │
+│ num_loss_tokens                │ 9953     │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14117    │
+│ progress                       │ 0.937500 │
+│ time/get_batch                 │ 0.074618 │
+│ time/step                      │ 2.577901 │
+│ time/total                     │ 9.975529 │
+│ train_mean_nll                 │ 0.942526 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [INFO] get_batch took 0.10 seconds
+tinker_cookbook.supervised.train:260 [INFO] <|im_start|>user
+What profession did Ivan Gevorkian pursue, and in which province of Armenia was he considered a notable native?<|im_end|>
+<|im_start|>assistant
+Answer: Ivan Gevorkian was a surgeon and scientist, and he was considered a notable native of Gegharkunik Province.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 0.01 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 30                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000031 │
+│ num_loss_tokens                │ 10158    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14302    │
+│ progress                       │ 0.968750 │
+│ time/get_batch                 │ 0.081218 │
+│ time/step                      │ 0.011782 │
+│ time/total                     │ 2.790749 │
+│ train_mean_nll                 │ 1.017265 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting step
+tinker_cookbook.utils.misc_utils:23 [INFO] step took 2.06 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v1/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                   Step 31                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000016 │
+│ num_loss_tokens                │ 10465    │
+│ num_sequences                  │ 128      │
+│ num_tokens                     │ 14473    │
+│ progress                       │ 1.000000 │
+│ time/get_batch                 │ 0.096159 │
+│ time/step                      │ 2.059057 │
+│ time/total                     │ 2.187102 │
+│ train_mean_nll                 │ 1.014410 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.checkpoint_utils:84 [INFO] Saved checkpoints: {'state_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/weights/final', 'sampler_path': 'tinker://6df1050d-a353-5508-9bd7-28da15531b1c:train:0/sampler_weights/final'}
+tinker_cookbook.supervised.train:375 [INFO] Training completed successfully

@@ -1,0 +1,37 @@
+{
+  "em": 8.333333333333332,
+  "f1": 20.109518592239255,
+  "n_samples": 300,
+  "results": [
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Simon Wiesenthal, as a Nazi hunter, was involved in a feud with the Israeli intelligence agency Mossad in the 1960s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.13333333333333333,
+      "pred": "Simon Wiesenthal, as a Nazi hunter, was involved in a feud primarily during the 1960s and 1970s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.13333333333333333,
+      "pred": "Simon Wiesenthal, as a Nazi hunter, was involved in a feud primarily during the 1960s and 1970s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "The independent candidate in Maine's 2010 gubernatorial race who finished ahead of Libby Mitchell was **Paul LePage**.",
+      "gold": "Eliot Cutler"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "The independent candidate in Maine's 2010 gubernatorial race who finished ahead of Libby Mitchell was **Paul LePage**.",
+      "gold": "Eliot Cutler"
+    }
+  ]
+}

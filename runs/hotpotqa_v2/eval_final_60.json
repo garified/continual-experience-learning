@@ -1,0 +1,37 @@
+{
+  "em": 0.0,
+  "f1": 40.88105364421155,
+  "n_samples": 60,
+  "results": [
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Answer: 1945\u20131987",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Answer: 1945\u20131987",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Answer: 1945\u20131987",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.8,
+      "pred": "Answer: Eliot Cutler",
+      "gold": "Eliot Cutler"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.8,
+      "pred": "Answer: Eliot Cutler",
+      "gold": "Eliot Cutler"
+    }
+  ]
+}

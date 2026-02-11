@@ -1,0 +1,37 @@
+{
+  "em": 0.0,
+  "f1": 21.214340070888387,
+  "n_samples": 300,
+  "results": [
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Answer: Simon Wiesenthal, as a Nazi hunter, was involved in a feud with Hermann Langbein, which occurred in the 1980s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Answer: Simon Wiesenthal, as a Nazi hunter, was involved in a feud with Hermann Langbein, which occurred in the 1980s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Answer: Simon Wiesenthal, as a Nazi hunter, was involved in a feud with Hermann Langbein, which occurred in the 1980s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "LePage",
+      "gold": "Eliot Cutler"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "LePage",
+      "gold": "Eliot Cutler"
+    }
+  ]
+}

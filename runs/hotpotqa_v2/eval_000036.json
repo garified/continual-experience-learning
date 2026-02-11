@@ -1,0 +1,37 @@
+{
+  "em": 7.000000000000001,
+  "f1": 19.386787407154742,
+  "n_samples": 300,
+  "results": [
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Simon Wiesenthal, as a Nazi hunter, was primarily active in the decades following World War II, particularly from the 1940s through the 1980s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Simon Wiesenthal, as a Nazi hunter, was primarily active in the decades following World War II, particularly from the 1940s through the 1980s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "Simon Wiesenthal, as a Nazi hunter, was primarily active in the decades following World War II, particularly from the 1940s through the 1980s.",
+      "gold": "1970s"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "The independent candidate in Maine's 2010 gubernatorial race who finished ahead of Libby Mitchell was **Paul LePage**.",
+      "gold": "Eliot Cutler"
+    },
+    {
+      "em": 0.0,
+      "f1": 0.0,
+      "pred": "The independent candidate in Maine's 2010 gubernatorial race who finished ahead of Libby Mitchell was **Paul LePage**.",
+      "gold": "Eliot Cutler"
+    }
+  ]
+}
