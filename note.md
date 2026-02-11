@@ -29,6 +29,15 @@ Lengths: 8K–128K. Paper: https://arxiv.org/abs/2410.02694
 - 2026-02-11: v2 SFT completed (140 steps, 4 epochs, NLL 2.6→1.74). Initial eval on 300 samples showed EM 7-9% — but this was misleading: trained on 20 questions, evaluated on 100.
 - 2026-02-11: **Corrected eval**: On 60 samples (20 trained questions × 3 depths), v2 achieves **EM 45%, F1 54%** — nearly matching RAG baseline (EM 44.41, F1 54.30) without any context! Knowledge extraction worked. Earlier issues: (1) prompt mismatch with HELMET, (2) "Answer:" prefix not stripped, (3) eval scope too broad.
 - 2026-02-11: Split analysis on trained vs untrained questions: v2 final on first 60 (trained) = EM 45, F1 53; rest 240 (untrained) = EM 17.5, F1 30; all 300 = EM 22, F1 34. Baseline zero-shot: first 60 = EM 23, F1 36; rest 240 = EM 25, F1 38. **Conclusion**: SFT boosts trained questions by +22 EM pts but causes mild forgetting on untrained (-8 EM pts).
+- 2026-02-11: v3 data synthesis completed. Following Physics of LM 3.1, generated 15 paraphrase variants per passage using explicit styles (formal academic, casual blog, bullet points, Q&A, narrative, technical doc, news article, Wikipedia, textbook, dialogue, executive summary, detailed elaboration, first person, timeline, compare/contrast). Data: Type1 all=6000, Type2=720. Combined datasets: 5var=2720, 10var=4720, 15var=6720 samples.
+
+- 2026-02-11: v4 eval completed on all checkpoints (`results/v4_all_checkpoints.json`). v4a best: EM 26.33, F1 37.08 (step 408); v4b best: EM 26.67, F1 36.75 (step 840). Both plateau around EM ~25, F1 ~34 after ~300 steps. Tinker base model (zero-shot, temp=0) eval: **EM 16.33, F1 31.31** (`results/base_model_eval.json`). Note: Tinker base model score (EM 16.33) differs from HELMET OpenRouter baseline (EM 25.00) — likely due to prompt format differences (Tinker uses chat template vs HELMET's 2-shot RAG prompt without context). v4 training adds ~+10 EM over the Tinker baseline.
+
+## Conceptual Corrections
+
+Project-specific corrections to prevent repeated misunderstandings.
+
+- 2026-02-11: Rest 240's EM drop (25.4→17.5) is NOT "failure to generalize to new questions about same passages." HELMET HotpotQA gives each question its own unique 1000-passage set. Rest 240 = 80 different questions with entirely different passages never seen in training. The drop reflects degraded general QA ability from overfitting, not knowledge extraction failure.
 
 ## Eval Commands
 
@@ -74,9 +83,11 @@ Each experiment variant is tracked as a "time slice" with consistent data/model/
 | v0 | zero-shot (no context) | — | — | — | EM 25.00, F1 37.99 | Lower bound |
 | v1 | Type1+Type2 (no gold leakage) | `scripts/prep_hotpotqa_data.py` | `data/hotpotqa_20/combined_train.jsonl` (1140) | `runs/hotpotqa_v1` step8/16/24/final | EM 0-2, F1 18-21 | **Failed** — LR=5e-4, batch=128 too aggressive |
 | v2 | Type1+Type2 (conservative HP) | `scripts/prep_hotpotqa_data.py` | `data/hotpotqa_20/combined_train.jsonl` (1140) | `runs/hotpotqa_v2` 12 ckpts | **EM 45, F1 54** (60 samples) | LR=1e-5, batch=32, LoRA=64 — **matches RAG baseline!** |
-| v3a | Type1 (5 variants) + Type2 | `scripts/prep_hotpotqa_data_v3.py` | `data/hotpotqa_v3/combined_5var.jsonl` | TBD | TBD | 15 paraphrase styles, pick first 5 (randomized) |
-| v3b | Type1 (10 variants) + Type2 | `scripts/prep_hotpotqa_data_v3.py` | `data/hotpotqa_v3/combined_10var.jsonl` | TBD | TBD | 15 paraphrase styles, pick first 10 (randomized) |
-| v3c | Type1 (15 variants) + Type2 | `scripts/prep_hotpotqa_data_v3.py` | `data/hotpotqa_v3/combined_15var.jsonl` | TBD | TBD | All 15 paraphrase styles |
+| v3a | Type1 (5 variants) + Type2 | `scripts/prep_hotpotqa_data_v3.py` | `data/hotpotqa_v3/combined_5var.jsonl` (2720) | `runs/hotpotqa_v3_5var` 29 ckpts | TBD | 339 steps, NLL 1.38 |
+| v3b | Type1 (10 variants) + Type2 | `scripts/prep_hotpotqa_data_v3.py` | `data/hotpotqa_v3/combined_10var.jsonl` (4720) | `runs/hotpotqa_v3_10var` 49 ckpts | TBD | 587 steps, NLL 1.21 |
+| v3c | Type1 (15 variants) + Type2 | `scripts/prep_hotpotqa_data_v3.py` | `data/hotpotqa_v3/combined_15var.jsonl` (6720) | `runs/hotpotqa_v3_15var` 70 ckpts | TBD | 839 steps, NLL 1.17 |
+| v4a | Type1+Type2 (100 questions) | `scripts/prep_hotpotqa_data_v4.py` | `data/hotpotqa_100/combined_train.jsonl` | `runs/hotpotqa_v4a` | Best: **EM 26.33, F1 37.08** (step 408); Final: EM 25.00, F1 33.57 | LR=1e-5, same as v2 but all 100 questions |
+| v4b | Type1+Type2 (100 questions) | `scripts/prep_hotpotqa_data_v4.py` | `data/hotpotqa_100/combined_train.jsonl` | `runs/hotpotqa_v4b` | Best: **EM 26.67, F1 36.75** (step 840); Final: EM 24.33, F1 35.29 | LR=5e-6, half of v4a |
 
 ## v2 Detailed Results (Trained vs Untrained Split)
 

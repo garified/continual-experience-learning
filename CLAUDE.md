@@ -12,6 +12,17 @@
 - `runs/` — Tinker training runs and eval results.
 - `HELMET/` — Cloned benchmark repo (gitignored). Our modifications tracked in its own git.
 
+## Experiment Versioning
+When a new idea, strategy, or hypothesis leads to new data synthesis or training:
+1. **Create versioned files** — never overwrite previous versions:
+   - Data script: `scripts/prep_hotpotqa_data_v{N}.py`
+   - Training script: `scripts/train_hotpotqa_sft_v{N}.py`
+   - Eval script: `scripts/eval_checkpoint_hotpotqa_v{N}.py`
+   - Data directory: `data/hotpotqa_v{N}/`
+   - Training run: `runs/hotpotqa_v{N}/`
+2. **Update `note.md`** — add a row to the `## Experiments` table with the new version's Strategy, Data Script, Data File, Training Checkpoint, Eval Results, and Notes.
+3. Previous versions are kept intact for reproducibility and comparison.
+
 ## Eval
 - HELMET evals run from `HELMET/` directory using OpenRouter API.
 - See `note.md` "Eval Commands" section for reproducible commands.

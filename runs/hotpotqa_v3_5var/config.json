@@ -1,0 +1,34 @@
+{
+  "log_path": "/sfs/weka/scratch/ks8vf/exp/runs/hotpotqa_v3_5var",
+  "model_name": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+  "load_checkpoint_path": null,
+  "dataset_builder": {
+    "common_config": {
+      "model_name_for_tokenizer": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+      "renderer_name": "qwen3_instruct",
+      "max_length": 4096,
+      "batch_size": 32,
+      "train_on_what": "all_assistant_messages"
+    },
+    "file_path": "/sfs/weka/scratch/ks8vf/exp/data/hotpotqa_v3/combined_5var.jsonl",
+    "test_size": 0,
+    "shuffle_seed": 0
+  },
+  "learning_rate": 1e-05,
+  "lr_schedule": "linear",
+  "num_epochs": 4,
+  "lora_rank": 64,
+  "base_url": null,
+  "evaluator_builders": [],
+  "infrequent_evaluator_builders": [],
+  "save_every": 12,
+  "eval_every": 12,
+  "infrequent_eval_every": 100,
+  "ttl_seconds": 604800,
+  "adam_beta1": 0.9,
+  "adam_beta2": 0.95,
+  "adam_eps": 1e-08,
+  "wandb_project": null,
+  "wandb_name": null,
+  "enable_trace": false
+}
