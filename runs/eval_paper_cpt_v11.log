@@ -1,0 +1,230 @@
+/home/ks8vf/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+
+=== Evaluating base model ===
+/home/ks8vf/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:829: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+  Overall: 0.061
+  broad_comprehension: 0.083
+  specific_fact: 0.042
+  methodology: 0.095
+  comparison: 0.000
+  ablation: 0.100
+  results: 0.000
+  verbatim_recall: 0.000
+  definition: 0.171
+  author_venue: 0.000
+
+=== Evaluating step 000012 ===
+  Overall: 0.044
+  broad_comprehension: 0.083
+  specific_fact: 0.042
+  methodology: 0.048
+  comparison: 0.000
+  ablation: 0.100
+  results: 0.000
+  verbatim_recall: 0.000
+  definition: 0.100
+  author_venue: 0.000
+
+=== Evaluating step 000024 ===
+  Overall: 0.038
+  broad_comprehension: 0.000
+  specific_fact: 0.042
+  methodology: 0.048
+  comparison: 0.000
+  ablation: 0.000
+  results: 0.037
+  verbatim_recall: 0.067
+  definition: 0.100
+  author_venue: 0.000
+
+=== Evaluating step 000036 ===
+  Overall: 0.116
+  broad_comprehension: 0.333
+  specific_fact: 0.083
+  methodology: 0.095
+  comparison: 0.000
+  ablation: 0.100
+  results: 0.162
+  verbatim_recall: 0.000
+  definition: 0.100
+  author_venue: 0.222
+
+=== Evaluating step 000048 ===
+  Overall: 0.177
+  broad_comprehension: 0.250
+  specific_fact: 0.083
+  methodology: 0.095
+  comparison: 0.333
+  ablation: 0.100
+  results: 0.204
+  verbatim_recall: 0.200
+  definition: 0.272
+  author_venue: 0.333
+
+=== Evaluating step 000060 ===
+  Overall: 0.219
+  broad_comprehension: 0.250
+  specific_fact: 0.083
+  methodology: 0.191
+  comparison: 0.167
+  ablation: 0.155
+  results: 0.278
+  verbatim_recall: 0.133
+  definition: 0.100
+  author_venue: 1.000
+
+=== Evaluating step 000072 ===
+  Overall: 0.326
+  broad_comprehension: 0.583
+  specific_fact: 0.375
+  methodology: 0.191
+  comparison: 0.167
+  ablation: 0.222
+  results: 0.361
+  verbatim_recall: 0.133
+  definition: 0.214
+  author_venue: 1.000
+
+=== Evaluating step 000084 ===
+  Overall: 0.398
+  broad_comprehension: 0.833
+  specific_fact: 0.417
+  methodology: 0.143
+  comparison: 0.167
+  ablation: 0.322
+  results: 0.403
+  verbatim_recall: 0.400
+  definition: 0.414
+  author_venue: 1.000
+
+=== Evaluating step 000096 ===
+  Overall: 0.487
+  broad_comprehension: 0.917
+  specific_fact: 0.667
+  methodology: 0.238
+  comparison: 0.167
+  ablation: 0.378
+  results: 0.477
+  verbatim_recall: 0.467
+  definition: 0.414
+  author_venue: 1.000
+
+=== Evaluating step 000108 ===
+  Overall: 0.579
+  broad_comprehension: 0.917
+  specific_fact: 0.750
+  methodology: 0.333
+  comparison: 0.667
+  ablation: 0.433
+  results: 0.301
+  verbatim_recall: 0.533
+  definition: 0.857
+  author_venue: 1.000
+
+=== Evaluating step 000120 ===
+  Overall: 0.606
+  broad_comprehension: 0.917
+  specific_fact: 1.000
+  methodology: 0.185
+  comparison: 0.667
+  ablation: 0.489
+  results: 0.537
+  verbatim_recall: 0.467
+  definition: 0.557
+  author_venue: 1.000
+
+=== Evaluating step 000132 ===
+  Overall: 0.531
+  broad_comprehension: 0.917
+  specific_fact: 0.750
+  methodology: 0.274
+  comparison: 0.167
+  ablation: 0.334
+  results: 0.361
+  verbatim_recall: 0.400
+  definition: 0.857
+  author_venue: 1.000
+
+=== Evaluating step 000144 ===
+  Overall: 0.644
+  broad_comprehension: 0.917
+  specific_fact: 1.000
+  methodology: 0.226
+  comparison: 0.667
+  ablation: 0.334
+  results: 0.657
+  verbatim_recall: 0.333
+  definition: 0.857
+  author_venue: 1.000
+
+=== Evaluating step 000156 ===
+  Overall: 0.654
+  broad_comprehension: 0.833
+  specific_fact: 1.000
+  methodology: 0.821
+  comparison: 0.167
+  ablation: 0.334
+  results: 0.380
+  verbatim_recall: 0.133
+  definition: 0.857
+  author_venue: 1.000
+
+=== Evaluating step 000168 ===
+  Overall: 0.623
+  broad_comprehension: 0.917
+  specific_fact: 1.000
+  methodology: 0.732
+  comparison: 0.167
+  ablation: 0.489
+  results: 0.296
+  verbatim_recall: 0.333
+  definition: 0.557
+  author_venue: 1.000
+
+=== Evaluating step 000180 ===
+  Overall: 0.553
+  broad_comprehension: 0.917
+  specific_fact: 0.667
+  methodology: 0.458
+  comparison: 0.167
+  ablation: 0.433
+  results: 0.500
+  verbatim_recall: 0.467
+  definition: 0.557
+  author_venue: 1.000
+
+=== Evaluating step final ===
+  Overall: 0.585
+  broad_comprehension: 0.667
+  specific_fact: 1.000
+  methodology: 0.536
+  comparison: 0.167
+  ablation: 0.334
+  results: 0.241
+  verbatim_recall: 0.400
+  definition: 0.857
+  author_venue: 1.000
+
+=== Comparison Summary ===
+Model                Overall    ablation             author_venue         broad_comprehension  comparison           definition           methodology          results              specific_fact        verbatim_recall      
+base_model           0.061      0.100                0.000                0.083                0.000                0.171                0.095                0.000                0.042                0.000                
+step_000012          0.044      0.100                0.000                0.083                0.000                0.100                0.048                0.000                0.042                0.000                
+step_000024          0.038      0.000                0.000                0.000                0.000                0.100                0.048                0.037                0.042                0.067                
+step_000036          0.116      0.100                0.222                0.333                0.000                0.100                0.095                0.162                0.083                0.000                
+step_000048          0.177      0.100                0.333                0.250                0.333                0.272                0.095                0.204                0.083                0.200                
+step_000060          0.219      0.155                1.000                0.250                0.167                0.100                0.191                0.278                0.083                0.133                
+step_000072          0.326      0.222                1.000                0.583                0.167                0.214                0.191                0.361                0.375                0.133                
+step_000084          0.398      0.322                1.000                0.833                0.167                0.414                0.143                0.403                0.417                0.400                
+step_000096          0.487      0.378                1.000                0.917                0.167                0.414                0.238                0.477                0.667                0.467                
+step_000108          0.579      0.433                1.000                0.917                0.667                0.857                0.333                0.301                0.750                0.533                
+step_000120          0.606      0.489                1.000                0.917                0.667                0.557                0.185                0.537                1.000                0.467                
+step_000132          0.531      0.334                1.000                0.917                0.167                0.857                0.274                0.361                0.750                0.400                
+step_000144          0.644      0.334                1.000                0.917                0.667                0.857                0.226                0.657                1.000                0.333                
+step_000156          0.654      0.334                1.000                0.833                0.167                0.857                0.821                0.380                1.000                0.133                
+step_000168          0.623      0.489                1.000                0.917                0.167                0.557                0.732                0.296                1.000                0.333                
+step_000180          0.553      0.433                1.000                0.917                0.167                0.557                0.458                0.500                0.667                0.467                
+step_final           0.585      0.334                1.000                0.667                0.167                0.857                0.536                0.241                1.000                0.400                
+
+Saved results to results/paper_cpt_v11.json
