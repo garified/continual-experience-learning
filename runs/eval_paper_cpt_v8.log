@@ -1,0 +1,74 @@
+/home/ks8vf/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+
+=== Evaluating base model ===
+/home/ks8vf/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:829: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+  Overall: 0.060
+  broad_comprehension: 0.083
+  specific_fact: 0.042
+  methodology: 0.095
+  comparison: 0.000
+  ablation: 0.056
+  results: 0.000
+  verbatim_recall: 0.067
+  definition: 0.171
+  author_venue: 0.000
+
+=== Evaluating step 000012 ===
+  Overall: 0.076
+  broad_comprehension: 0.000
+  specific_fact: 0.083
+  methodology: 0.048
+  comparison: 0.000
+  ablation: 0.056
+  results: 0.056
+  verbatim_recall: 0.000
+  definition: 0.315
+  author_venue: 0.000
+
+=== Evaluating step 000024 ===
+  Overall: 0.065
+  broad_comprehension: 0.000
+  specific_fact: 0.042
+  methodology: 0.095
+  comparison: 0.000
+  ablation: 0.100
+  results: 0.000
+  verbatim_recall: 0.000
+  definition: 0.243
+  author_venue: 0.000
+
+=== Evaluating step 000036 ===
+  Overall: 0.036
+  broad_comprehension: 0.000
+  specific_fact: 0.042
+  methodology: 0.048
+  comparison: 0.000
+  ablation: 0.100
+  results: 0.000
+  verbatim_recall: 0.000
+  definition: 0.071
+  author_venue: 0.000
+
+=== Evaluating step final ===
+  Overall: 0.032
+  broad_comprehension: 0.083
+  specific_fact: 0.042
+  methodology: 0.048
+  comparison: 0.000
+  ablation: 0.000
+  results: 0.000
+  verbatim_recall: 0.000
+  definition: 0.100
+  author_venue: 0.000
+
+=== Comparison Summary ===
+Model                Overall    ablation             author_venue         broad_comprehension  comparison           definition           methodology          results              specific_fact        verbatim_recall      
+base_model           0.060      0.056                0.000                0.083                0.000                0.171                0.095                0.000                0.042                0.067                
+step_000012          0.076      0.056                0.000                0.000                0.000                0.315                0.048                0.056                0.083                0.000                
+step_000024          0.065      0.100                0.000                0.000                0.000                0.243                0.095                0.000                0.042                0.000                
+step_000036          0.036      0.100                0.000                0.000                0.000                0.071                0.048                0.000                0.042                0.000                
+step_final           0.032      0.000                0.000                0.083                0.000                0.100                0.048                0.000                0.042                0.000                
+
+Saved results to results/paper_cpt_v8.json
