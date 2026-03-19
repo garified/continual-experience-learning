@@ -1,0 +1,1965 @@
+/home/ks8vf/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+Training config (paper CPT v7):
+  Model: Qwen/Qwen3-30B-A3B-Instruct-2507
+  Data: /sfs/weka/scratch/ks8vf/exp/data/paper_cpt/v7_augmented.jsonl
+  LR: 1.00e-05
+  Epochs: 4
+  LoRA rank: 64
+  Batch size: 32
+  Save every: 12 steps
+  Log path: /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7
+tinker_cookbook.utils.ml_log:477 [[92mINFO[0m] Logging to: /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7
+tinker.lib.public_interfaces.service_client:67 [[92mINFO[0m] ServiceClient initialized for session 1d2285b5-5212-5ec6-8998-68a8c1ff48e1
+tinker.lib.public_interfaces.service_client:151 [[92mINFO[0m] TrainingClient initialized for model 1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0
+/home/ks8vf/.local/lib/python3.11/site-packages/torch/cuda/__init__.py:829: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+tinker_cookbook.supervised.train:230 [[92mINFO[0m] Training for 12 batches x 4 epochs = 48 steps
+tinker_cookbook.supervised.train:349 [[92mINFO[0m] Starting epoch 0
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 983] ScienceWorld.
+[Line 996] Task Setup.
+[Line 997] Next up, let's talk about ScienceWorld -- a really interesting interactive text-based benchmark that throws 30 different science experiment tasks at AI agents in a multi-room environment packed with all kinds of objects.
+[Line 999] What makes this environment so tricky? Three things: the rewards are sparse (you barely get any feedback), there's a huge number of possible actions to choose from, and you actually need scientific knowledge combined with smart exploration strategies.
+[Line 999] Here's how it works: at each step, the agent sees what happened from its last action, but gets zero reward unless it hits a specific subgoal.
+[Line 999] One neat aspect of this benchmark is that the reward signal does double duty -- it's the same one used for both evaluating the model and helping it improve during inference (r and r_* are the same).
+[Line 999] Hit all the subgoals? You get a perfect score of 100 and the episode is a success.
+[Line 999] But the episode ends in failure if you either run out of steps or make a wrong terminating move.
+[Line 1000] The agent gets an input called s_task that spells out the environment, what it needs to do, and a template showing every possible action.
+[Line 1000] You can check out an example of s_task in the appendix.
+[Line 1001] Evaluation.
+[Line 1002] For evaluation, the researchers used the environment's own built-in reward function for two purposes: building the context trajectories (that's r) and evaluating model performance (that's r^*).
+[Line 1002] They tested each method across all 30 tasks and rolled the results together.
+[Line 1002] The policy model running everything? GPT-4.1 mini for all the algorithms being compared.
+[Line 1003] Baselines.
+[Line 1004] Reflexion works by having the agent reflect on what happened after each episode. That reflection gets cleaned up and dropped into a reflection buffer, which feeds into the context for the next attempt.
+[Line 1004] Self-Refine takes a similar approach -- it generates its own feedback, attaches it to a trajectory summary, and stores everything in a buffer.
+[Line 1005] In the interest of fairness, both Reflexion and Self-Refine get to peek at the current episode's reward signals before reflecting -- something ICRL doesn't get to do.
+[Line 1006] ICRL Setup.
+[Line 1007] The setup is straightforward: one trial equals one episode in the environment.
+[Line 1007] After each trial wraps up, the trajectory gets built by concatenating all the actions, observations, rewards, and whether the agent succeeded or failed -- then it goes into the buffer.
+[Line 1007] Since episodes usually only produce a few rewards, just those get included.
+[Line 1007] Before each new trial kicks off, S_0 is assembled from three pieces: the task description S_task, all the trajectories collected so far, and the ICRL instruction S_ICRL.
+[Line 1007] There's a full example of S_0 in the appendix.
+[Line 1009] The average return for each trial is plotted in the right panel of the Figure.
+[Line 1010] What's interesting is that any method keeping track of interaction history shows steady improvement, much like what you see with ICRL prompting.
+[Line 1011] But here's the kicker: ICRL prompting outperforms the baselines by about 20% once you give it enough iterations to work its magic.
+[Line 1013] And for those wondering about computational fairness against efficient baselines like Best-of-N -- the appendix includes comparisons where they scale up the test-time compute budget. The verdict? ICRL doesn't just scale better in terms of trial count; it also gives you more bang for your buck when you look at actual dollar costs.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 983] ScienceWorld.
+[Line 996] Task Setup.
+[Line 997] ScienceWorld is an interactive, text-based benchmark consisting of 30 science-experiment tasks set in a multi-room environment populated with diverse objects.
+[Line 999] The environment is challenging due to sparse rewards, large action spaces, and the requirement for scientific knowledge and efficient exploration.
+[Line 999] At each step, the agent observes the result of its action and receives zero reward unless it completes a predefined subgoal.
+[Line 999] This reward signal is used both for evaluation and for inference-time self-improvement (i.e., r and r_* are identical in this task).
+[Line 999] Completing all subgoals yields a cumulative reward of 100 and marks the episode as successful.
+[Line 999] An episode ends in failure if the agent either reaches the maximum number of steps or executes an incorrect terminating action.
+[Line 1000] The input s_task provided to the agent describes the environment, the task, and the template of all possible actions.
+[Line 1000] An example of s_task is provided in App.
+[Line 1001] Evaluation.
+[Line 1002] We use the environment-provided reward function for each task both to construct the trajectories used in the context ( r ), and to evaluate the model ( r^* ).
+[Line 1002] We benchmark each method on all 30 tasks and aggregate the results.
+[Line 1002] GPT-4.1 mini is used as the policy for all compared algorithms.
+[Line 1003] Baselines.
+[Line 1004] In Reflexion, at the end of each episode, the agent is prompted to reflect on its attempt.
+[Line 1004] The reflection is then sanitized and appended to a reflection buffer, which is formatted into the context for subsequent trials.
+[Line 1004] Self-Refine similarly generates self-feedback, but appends it to a trajectory summary, which is then added to the buffer.
+[Line 1005] To ensure a fair comparison, we allow these methods access to the reward signals of the current episode (unlike ICRL) before prompting for reflection.
+[Line 1006] ICRL Setup.
+[Line 1007] Each trial corresponds to a single episode in the environment.
+[Line 1007] After the trial, the new trajectory added to the buffer is constructed by concatenating the actions, observations, rewards, and the final outcome (success or failure).
+[Line 1007] As each episode typically yields only a few rewards, we include only those.
+[Line 1007] At the start of each trial, S_0 is constructed by concatenating the task description S_task, the collected trajectories, and then the instruction S_ICRL.
+[Line 1007] An example of S_0 is provided in App.
+[Line 1009] The mean return at each trial, is presented in Figure Right.
+[Line 1010] Steady improvements are observed for methods that make use of some form of history of interactions similar to ICRL prompting.
+[Line 1011] However, ICRL prompting outperforms baseline methods by about 20% after enough iterations.
+[Line 1013] To make the comparison fair for efficient baselines such as Best-of-N, in App., we compare baslines as we scale test-time compute budget and observe that ICRL also scales better than the baselines not only in terms of number of trials but also the test-time compute budget (in dollar amounts).<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.77 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 0                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000010 │
+│ num_loss_tokens                │ 17311    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17610    │
+│ progress                       │ 0.020833 │
+│ time/get_batch                 │ 0.053586 │
+│ time/step                      │ 2.775098 │
+│ time/total                     │ 2.884359 │
+│ train_mean_nll                 │ 2.066213 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 511] Related Works.
+[Line 513] In-Context Reinforcement Learning.
+[Line 514] If you've been following the RL space, you might know that the idea of running RL during inference isn't brand new -- it goes back a ways, but things really picked up when researchers coined the term "in-context reinforcement learning" (ICRL), and the field has been growing fast ever since.
+[Line 514] There are some great survey papers out there covering this space.
+[Line 514] Here's the thing though: most ICRL research has been a niche within meta-RL, using small models built from scratch for games and robotics -- not the massive language models we're all excited about.
+[Line 514] A few teams have tried plugging pretrained LLMs into ICRL setups, using them as simulators or for bandit-style tasks, but the results have been underwhelming -- LLMs tend to need a lot of hand-holding and still fall short of dedicated algorithmic solutions.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.24 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 1                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000010 │
+│ num_loss_tokens                │ 17539    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17871    │
+│ progress                       │ 0.041667 │
+│ time/get_batch                 │ 0.050666 │
+│ time/step                      │ 2.243510 │
+│ time/total                     │ 5.122062 │
+│ train_mean_nll                 │ 1.990925 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1073] Testing ICRL with Open-Source Models and Really Hard Math Problems.
+[Line 1096] We wanted to show that ICRL works broadly, so we looked at two things: does it work with different models, and can it handle really tough tasks?
+[Line 1096] For the model side, we tried ICRL on a bunch of open-source models -- Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode -- using a creative writing task.
+[Line 1096] For the difficulty side, we threw some Olympiad-level math at it, specifically problems from AIME and HMMT.
+[Line 1096] If you want all the nitty-gritty details on how we set things up, check the Appendix.
+[Line 1096] The bottom line? ICRL beat the baselines (self-refine and Reflexion) every single time.
+[Line 1096] And we're not talking small margins here -- ICRL scored 10 to 20 points higher than the base model on both the creative writing and math benchmarks.
+[Line 1096] So yeah, ICRL clearly works across different models and handles even the hardest tasks really well.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.79 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 2                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000010 │
+│ num_loss_tokens                │ 12831    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 13285    │
+│ progress                       │ 0.062500 │
+│ time/get_batch                 │ 0.029859 │
+│ time/step                      │ 1.788516 │
+│ time/total                     │ 4.116263 │
+│ train_mean_nll                 │ 2.203472 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 983] ScienceWorld.
+[Line 996] Task Setup.
+[Line 997] Among the benchmarks employed to evaluate in-context reinforcement learning, ScienceWorld represents a particularly compelling testbed. This interactive, text-based benchmark encompasses 30 science-experiment tasks situated within a multi-room environment containing diverse objects, as originally introduced in the literature.
+[Line 999] The benchmark poses considerable challenges that have been well-documented across prior studies: sparse reward structures that provide minimal feedback, expansive action spaces that demand strategic decision-making, and the dual requirements of scientific domain knowledge and exploration efficiency.
+[Line 999] The reward mechanism operates such that at each step, the agent observes the outcome of its action and receives zero reward unless it satisfies a predefined subgoal condition.
+[Line 999] A noteworthy feature of this benchmark for the purpose of evaluating ICRL is that the reward signal is identical for both evaluation and inference-time self-improvement (r = r_*), eliminating potential confounds from reward function mismatch.
+[Line 999] Upon successful completion of all subgoals, the agent accumulates a cumulative reward of 100, and the episode is classified as successful.
+[Line 999] Episode failure is triggered by either exceeding the maximum step limit or executing an incorrect terminating action.
+[Line 1000] The input specification s_task encompasses the environment description, task statement, and a comprehensive template of admissible actions.
+[Line 1000] Illustrative examples of s_task have been documented in the Appendix.
+[Line 1001] Evaluation.
+[Line 1002] Following established evaluation methodology, the environment's native reward function is leveraged for dual purposes: constructing the contextual trajectory data (r) and performing model evaluation (r^*).
+[Line 1002] Comprehensive benchmarking is conducted across all 30 available tasks, with results presented in aggregate form.
+[Line 1002] Consistent with the experimental protocol, GPT-4.1 mini serves as the policy model across all algorithmic comparisons.
+[Line 1003] Baselines.
+[Line 1004] The Reflexion baseline, as developed in prior work, prompts the agent to generate reflections upon episode completion. These reflections undergo sanitization before being appended to a reflection buffer, which provides contextual information for subsequent trials.
+[Line 1004] The Self-Refine baseline follows a comparable approach, producing self-directed feedback that is integrated with a trajectory summary and maintained in the buffer.
+[Line 1005] In the interest of fair experimental comparison, the baseline methods receive access to current-episode reward signals prior to reflection generation, an advantage not afforded to ICRL.
+[Line 1006] ICRL Setup.
+[Line 1007] The experimental protocol maps each trial to a single environmental episode.
+[Line 1007] Post-trial trajectory assembly involves concatenating actions, observations, rewards, and terminal outcomes (success or failure), with the resulting trajectory added to the experience buffer.
+[Line 1007] Given the characteristic sparsity of per-episode rewards, only those reward signals that are generated are retained in the trajectory.
+[Line 1007] Trial initialization constructs S_0 through concatenation of the task description S_task, the accumulated trajectory corpus, and the ICRL instruction set S_ICRL.
+[Line 1007] Detailed examples of S_0 construction are available in the Appendix.
+[Line 1009] The mean return trajectory across trials is presented in the right panel of the Figure.
+[Line 1010] Consistent with findings across multiple ICRL studies, methods that maintain interaction histories demonstrate steady performance improvement, a pattern that aligns with the principles underlying ICRL prompting.
+[Line 1011] The results reveal that ICRL prompting achieves a performance advantage of approximately 20% over baseline methods following sufficient iterative refinement.
+[Line 1013] Additional analysis in the Appendix addresses the fairness of comparison with computationally efficient baselines such as Best-of-N by examining performance as a function of scaled test-time compute budget. These results confirm that ICRL exhibits superior scaling behavior relative to baseline approaches across both trial count and monetary expenditure dimensions.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.92 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 3                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000009 │
+│ num_loss_tokens                │ 17096    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17450    │
+│ progress                       │ 0.083333 │
+│ time/get_batch                 │ 0.035719 │
+│ time/step                      │ 1.921441 │
+│ time/total                     │ 3.803669 │
+│ train_mean_nll                 │ 2.182038 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1030] Ablation Study.
+[Line 1032] Key ablation experiments for understanding ICRL prompting: (1) Zero Rewards -- all rewards set to 0 (no informative feedback). (2) Short Context -- buffer B normally acts as infinite-length queue.
+[Line 1036] Changed to deque of length 3.
+[Line 1037] Result: only last 3 episodes used for constructing S_0. (3) Exploration Only -- LLM instructed to give different responses from those in context; uses exploration instruction as s_ICRL; NO reward signal. (4) Exploitation Only -- always uses exploitation instruction as s_ICRL; WITH reward signal. (5) No ICRL Instruction -- s_ICRL removed entirely.
+[Line 1058] Running max results plotted in Figure.
+[Line 1058] Best-performing curves: both ICRL methods + exploitation-only with rewards.
+[Line 1058] Takeaway: ICRL prompting is robust across different prompt setups.
+[Line 1058] Notable: performance drops observed with (a) short context and (b) absent rewards.
+[Line 1059] Critical finding: "exploration only without reward" (green curve) performs significantly worse than full ICRL on running max metric.
+[Line 1060] Implication: improvements are NOT from diverse sampling + selection (i.e., not Best-of-N behavior).
+[Line 1060] ICRL genuinely generates novel, superior responses beyond what was seen during exploration.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 3.73 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 4                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000009 │
+│ num_loss_tokens                │ 19547    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 19885    │
+│ progress                       │ 0.104167 │
+│ time/get_batch                 │ 0.040145 │
+│ time/step                      │ 3.726265 │
+│ time/total                     │ 5.746385 │
+│ train_mean_nll                 │ 1.990793 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+Reproduce the Creative Writing experiment from 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners'.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 915] Creative Writing.
+[Line 919] Task Setup.
+[Line 919] We consider the creative writing task from, where four sentences are randomly sampled from a pool of sentences.
+[Line 919] The task for LLMs is to generate four paragraphs, each ending with a sentence, while ensuring that the generated passage is coherent.
+[Line 919] This is a difficult task, as it challenges the LLMs to craft a unified storyline that logically justifies each of the four sampled sentences by weaving them into a single narrative.
+[Line 919] A total of 100 problems are evaluated.
+[Line 919] An example of s_task is in Figure in App.
+[Line 935] Evaluation.
+[Line 936] We evaluated outputs using the Length-Controlled Alpaca-Eval 2 framework, a widely used proxy for human evaluation with up to 0.98 Pearson correlation with human judgments.
+[Line 936] For 100 creative writing problems, we present each method’s top response: for Reflexion and Best-of-N, the highest-reward output among 50 trials; for ICRL and Self-Refine, the 50th episode output.
+[Line 936] Alpaca-Eval then computes pairwise win rates, denoted as r_*.
+[Line 938] We next introduce the reward function r accessible to the algorithms.
+[Line 938] We follow standard pairwise comparison, using GPT-4.1 with a coherent reference paragraph to score each response from 1--10 (see Fig. ).
+[Line 938] Notably, although both r and r_* use an LLM as a judge, they serve distinct purposes. r compares responses against a fixed reference text with emphasis on coherence.
+[Line 938] By contrast, r_* performs pairwise comparison between two responses generated by our method and a baseline method.
+[Line 955] Baselines.
+[Line 955] We compare our method with Best-of-N, Reflexion, and Self-Refine.
+[Line 956] We allow Best-of-N, Reflexion and ICRL prompting to use r.
+[Line 957] Self-Refine do not use r and instead asks GPT-4.1 to provide verbal feedback.
+[Line 958] Since it is hard to distinguish CoT and Long-CoT style prompting for this task, we include Long-CoT style prompting as the baseline.
+[Line 959] ICRL prompting.
+[Line 959] GPT-4.1 is used as both the policy LLM pi_theta and the reward model r in Algorithm.
+[Line 959] At each episode, the initial prompt S_0 is constructed by concatenating all of the previous generations along with their coherence scores from r.
+[Line 960] Notably, this reward is sparse and only R_T can be nonzero.
+[Line 961] We, therefore, only include R_T in constructing S_0.
+[Line 963] Our method achieves a length-controlled win rate of 59.48% against Reflexion, 78.36 % against Long-CoT style prompting, 86.32 % against Self-Refine, and 93.81 % against Best-of-N as shown in Table.
+[Line 963] This shows the responses generated by our method outperform the ones by baselines in terms of following the instruction to write coherent paragraphs and achieving better human preference.
+[Line 964] The return curve from reward model r is plotted in Figure, and a running max of the return is plotted in Figure in App.
+[Line 964] Although Self-Refine initially matches ICRL in terms of coherence reward, extending both methods by 50 additional episodes, our methods keep improving, whereas self-refine first plateaus, then declines, likely due to the significant growth of its context.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.08 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 5                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000009 │
+│ num_loss_tokens                │ 19022    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 19365    │
+│ progress                       │ 0.125000 │
+│ time/get_batch                 │ 0.039417 │
+│ time/step                      │ 0.079421 │
+│ time/total                     │ 3.899962 │
+│ train_mean_nll                 │ 2.024309 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 983] ScienceWorld.
+[Line 996] Task Setup.
+[Line 997] - ScienceWorld: interactive, text-based benchmark
+- Contains 30 science-experiment tasks
+- Set in a multi-room environment with diverse objects
+[Line 999] - Key challenges: sparse rewards, large action spaces, requirement for scientific knowledge, need for efficient exploration
+[Line 999] - At each step: agent observes action result, receives zero reward unless predefined subgoal completed
+[Line 999] - Reward signal serves dual role: evaluation metric and inference-time self-improvement signal (r = r_*)
+[Line 999] - All subgoals completed => cumulative reward of 100 => episode marked successful
+[Line 999] - Episode failure conditions: maximum steps reached OR incorrect terminating action executed
+[Line 1000] - Input s_task contains: environment description, task description, template of all possible actions
+[Line 1000] - Example of s_task available in Appendix
+[Line 1001] Evaluation.
+[Line 1002] - Environment reward function used for: constructing context trajectories (r) and evaluating model (r^*)
+- All 30 tasks benchmarked with aggregated results
+- Policy model: GPT-4.1 mini across all algorithms
+[Line 1002] - All 30 tasks benchmarked; results aggregated
+[Line 1002] - GPT-4.1 mini used as policy for all compared algorithms
+[Line 1003] Baselines.
+[Line 1004] - Reflexion: agent reflects at end of episode; reflection sanitized and appended to reflection buffer; buffer formatted into context for next trial
+[Line 1004] - Self-Refine: generates self-feedback; appended to trajectory summary; added to buffer
+[Line 1005] - Fair comparison measure: baseline methods given access to current episode reward signals before reflection (ICRL does not get this access)
+[Line 1006] ICRL Setup.
+[Line 1007] - One trial = one episode in environment
+- Post-trial trajectory: concatenation of actions, observations, rewards, final outcome (success/failure)
+- Added to experience buffer
+[Line 1007] - Few rewards per episode => only those included
+[Line 1007] - S_0 construction: S_task + collected trajectories + S_ICRL instruction
+[Line 1007] - Example of S_0 in Appendix
+[Line 1007] - Example of S_0 provided in Appendix
+[Line 1009] - Mean return per trial: plotted in Figure (Right panel)
+[Line 1010] - Steady improvements observed for methods using interaction history (similar to ICRL prompting)
+[Line 1011] - ICRL prompting outperforms baselines by ~20% after sufficient iterations
+[Line 1013] - Fairness comparison with Best-of-N: Appendix shows scaling of test-time compute budget
+- ICRL scales better than baselines in both trial count and dollar-amount compute cost<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.57 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 6                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000009 │
+│ num_loss_tokens                │ 17848    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18267    │
+│ progress                       │ 0.145833 │
+│ time/get_batch                 │ 0.037328 │
+│ time/step                      │ 2.569085 │
+│ time/total                     │ 2.731278 │
+│ train_mean_nll                 │ 2.085914 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1280] Prompt Examples.
+[Line 1647] Additional Experimental Results.
+[Line 1696] Additional Benchmark: Math Competitions.
+[Line 1699] Task Setup.
+[Line 1700] So here's where things get really interesting. The authors decided to test their approach on AIME and HMMT — two of the hardest math competitions for high school students in the U.S.
+[Line 1700] These aren't your average math tests. They require deep mathematical understanding and genuinely creative problem-solving.
+[Line 1700] For context, training language models specifically for reasoning has been one of the go-to methods for cracking these benchmarks.
+[Line 1702] The big question they're asking: can reward signals from earlier reasoning attempts actually help the model reason better on the next try?
+[Line 1702] They pull reasoning traces from open-source models to make this work.
+[Line 1702] Beyond just testing reasoning-focused models, they also evaluate a wider set of open-source models to show that this ICRL capability isn't some niche trick — it shows up broadly.
+[Line 1704] The task itself is clean and simple: give the model a math question, get an answer back.
+[Line 1704] There's one formatting requirement: wrap your final answer in <answer> </answer> tags.
+[Line 1704] Every question comes with a known correct answer for evaluation.
+[Line 1706] Instead of just checking "did the answer match?" with SymPy, they use a dedicated reward model that gives a more nuanced, denser signal.
+[Line 1706] This ties into a bigger vision: the explosion of judge and reward models being built for RL fine-tuning is also going to power ICRL as a test-time scaling strategy.
+[Line 1708] Evaluation.
+[Line 1709] For checking answers, they parse the model's output and compare it against the ground truth from the dataset.
+[Line 1711] Baselines.
+[Line 1712] They compare against Reflexion and Self-Refine — the two baselines that performed best on the other benchmarks.
+[Line 1712] Same implementations as before, keeping things apples-to-apples.
+[Line 1714] ICRL Setup.
+[Line 1715] After the first attempt, the model's previous answer and reasoning get injected back into the prompt along with the reward score.
+[Line 1715] The model is then asked to either try a completely different approach or polish its best prior solutions.
+[Line 1715] They cap old answers so at least 32 previous tries can fit in the context.
+[Line 1718] The results? ICRL wins in almost every scenario.
+[Line 1718] Even with Qwen3-32B's reasoning mode, the method holds its own against Self-Refine on AIME and pulls ahead on the harder HMMT benchmark.
+[Line 1718] The real headline: they achieve this with scalar rewards that cost roughly 1000x less compute, while the competing methods get about double the compute budget for their verbose chain-of-thought feedback.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 4.03 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 7                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000009 │
+│ num_loss_tokens                │ 17282    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17593    │
+│ progress                       │ 0.166667 │
+│ time/get_batch                 │ 0.035326 │
+│ time/step                      │ 4.034293 │
+│ time/total                     │ 6.695485 │
+│ train_mean_nll                 │ 2.077083 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 158] Introduction.
+[Line 164] Key point: LLMs must improve during inference (test-time scaling) to act as effective agents on novel tasks.
+[Line 164] Two methods for leveraging computation for improvement: learning and search. Both achieved superhuman results in Chess and Go.
+[Line 164] Search methods for LLM self-improvement at test time: Best-of-N -> Tree of Thoughts -> Monte Carlo Tree Search. These have been successfully applied.
+[Line 166] Learning has NOT received the same attention for inference-time LLM self-improvement.
+[Line 166] In-context learning (ICL) = supervised learning paradigm requiring expert demonstrations as ground-truth labels.
+[Line 166] Problem: demonstration data does not scale well at inference time, limiting ICL's use for test-time scaling.
+[Line 166] Implication: LLMs need to learn from their OWN generated experience for continual self-improvement.
+[Line 169] RL = most successful self-improvement algorithm independent of human knowledge.
+[Line 169] But RL successes so far: mostly in simulated environments or during LLM training time.
+[Line 169] "Big world" problem: real-world environments are vastly more complex than the agent itself.
+[Line 169] In such environments: agents face situations far beyond training data, must adapt on the fly.
+[Line 169] Two requirements for bridging this gap: (1) handle diverse real-world tasks with natural language as action space, (2) continually improve during inference without costly retraining.
+[Line 177] Central question: Can RL emerge during the inference phase of LLMs?
+[Line 177] In-context RL elegantly meets both requirements: LLM = general-purpose initial policy; RL = continual self-improvement mechanism.
+[Line 177] Background: LLMs shown to be in-context supervised learners -> motivates exploration of in-context RL (ICRL).
+[Line 177] Limitation of current ICRL work: restricted to bandit or simulated environments, not addressing language-based open-ended tasks.
+[Line 183] This paper's contribution: demonstrating LLMs as effective in-context RL learners across diverse language tasks -- science experiments, creative writing, olympiad math.
+[Line 183] Method: ICRL prompting -- a simple multi-round prompting framework.
+[Line 184] Goal of ICRL prompting: guide LLMs to do RL for self-improvement on a task.
+[Line 185] Setup: initial prompt = task description only.
+[Line 187] After response: LLM receives numerical scalar feedback (reward).
+[Line 190] Next round: same task description + context of all previous responses and rewards.
+[Line 192] Repeat this process.
+[Line 193] Observation: response quality increases as context grows.
+[Line 194] Interpretation: LLM maximizes scalar reward during inference = behaves like RL algorithm.
+[Line 199] Key design principle: minimality.
+[Line 199] Deliberately excluded: textual gradients, prioritized experience replay, sampling heuristics, engineered modules. Why? To isolate emergent RL capacity of LLMs.
+[Line 199] Only supervision = scalar reward.
+[Line 199] Consistent with: (1) reward hypothesis (goals = maximizing cumulative scalar reward), (2) "reward is enough" hypothesis (intelligence = maximizing reward).<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.03 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 8                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000008 │
+│ num_loss_tokens                │ 16441    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 16755    │
+│ progress                       │ 0.187500 │
+│ time/get_batch                 │ 0.035105 │
+│ time/step                      │ 0.027256 │
+│ time/total                     │ 4.161795 │
+│ train_mean_nll                 │ 2.107200 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 879] A notable aspect of the reward structure in this framework is that, since each action corresponds to a single token, reward feedback is inherently sparse -- not every action is evaluated.
+[Line 881] The use of Chain-of-Thought prompting, which decomposes the model's reasoning into four distinct steps, means that only four reward signals are generated per episode.
+[Line 885] In the construction of the initial prompt S_0, only these four reward values are retained.
+[Line 887] Reward integration follows a simple tagging scheme: each scalar reward is prefixed with a "Reward: " marker and is appended immediately after the action token to which it pertains.
+[Line 890] Empirical evaluation, as depicted in the Figure, reveals that the success rate r_* increases with the number of trials (episodes). Among the compared methods, ICRL Preset demonstrates the strongest performance. The characteristic oscillatory pattern in the success rate is consistent with the systematic alternation between exploration and exploitation strategies inherent in the method's design.
+[Line 890] A smoothed view using the mean running maximum is provided in a supplementary Figure in the Appendix.
+[Line 890] This metric is obtained by calculating, for each problem, the maximum success rate attained through each successive episode, and averaging these running maxima across the full set of problems at each episode.
+[Line 892] Quantitative comparison, as tabulated in the Table, reveals that after 50 trials, the ICRL methods achieve a 90% success rate -- a significant improvement over Best-of-N sampling (49%), Self-Refine (47%), and Reflexion (44%).<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.67 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 9                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000008 │
+│ num_loss_tokens                │ 16921    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17313    │
+│ progress                       │ 0.208333 │
+│ time/get_batch                 │ 0.051399 │
+│ time/step                      │ 2.673993 │
+│ time/total                     │ 2.797202 │
+│ train_mean_nll                 │ 2.089688 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1067] Now let's talk about context length.
+[Line 1068] We wanted to know how compute-efficient ICRL is at different input scales, so we ran it on Qwen3-32B at 8k, 16k, and 32k context lengths -- and the numbers are right there in Table .
+[Line 1068] And here's the punchline: ICRL beats Self-Refine and Reflexion across the board, on both Creative Writing and AIME, giving you more performance per compute dollar.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.95 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 10                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000008 │
+│ num_loss_tokens                │ 14886    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 15304    │
+│ progress                       │ 0.229167 │
+│ time/get_batch                 │ 0.031961 │
+│ time/step                      │ 1.952197 │
+│ time/total                     │ 4.731312 │
+│ train_mean_nll                 │ 2.084053 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.supervised.train:349 [[92mINFO[0m] Starting epoch 1
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 150] Reinforcement learning (RL) is a well-known computational framework designed for solving sequential decision-making problems, where an agent must learn to select actions over time in order to maximize a cumulative reward signal. It has been successfully applied across domains ranging from robotics to game playing.
+[Line 150] A central and unexpected contribution of this work is the demonstration that RL-like learning dynamics emerge spontaneously during the inference process of large language models (LLMs). The authors introduce the term in-context reinforcement learning (ICRL) to describe this phenomenon, distinguishing it from traditional RL which requires explicit training loops and environment interaction.
+[Line 150] To reveal and systematically study this emergent capability, the authors propose a multi-round prompting methodology called ICRL prompting. This framework is intentionally simple in design: it requires no architectural modifications, no fine-tuning, and no access to model internals. Instead, it operates purely at the level of prompting and context construction, enabling self-improvement of the model at inference time.
+[Line 150] The fundamental goal of ICRL prompting is to create conditions under which an LLM can perform reinforcement learning during its inference phase, thereby iteratively improving its responses on a target task. This is achieved by structuring the interaction so that the model can learn from its own prior attempts and their associated outcomes.
+[Line 152] The mechanism proceeds as follows: after the model generates each response, it is provided with a numerical scalar feedback value, referred to as the reward. This reward provides a simple, quantitative assessment of the quality of the generated response and serves as the learning signal.
+[Line 152] In each subsequent round of interaction, the LLM is re-prompted with a context that contains the full concatenation of all prior responses along with their corresponding reward values. This growing context effectively provides the model with a complete history of its previous attempts and their evaluations, analogous to an experience replay buffer in traditional RL.
+[Line 152] A striking and consistent empirical observation is that the quality of the model's generated responses improves progressively as the context accumulates more historical data. This improvement is robust across different tasks, models, and reward sources.
+[Line 152] This behavior strongly suggests that the LLM is performing optimization with respect to the scalar reward signal during inference. The pattern of progressive improvement driven by reward feedback is directly analogous to the core mechanism of reinforcement learning, albeit occurring entirely within the model's context window rather than through gradient-based parameter updates.
+[Line 153] The authors conduct an extensive empirical evaluation of ICRL prompting across a deliberately diverse set of task domains: the Game of 24 (a combinatorial reasoning task), creative writing (an open-ended generation task), ScienceWorld (an interactive text-based environment requiring multi-step reasoning), and Olympiad-level mathematical problem solving from the AIME and HMMT competitions. Across all of these benchmarks, ICRL prompting achieves significant and consistent performance improvements relative to strong baselines including Self-Refine and Reflexion, both of which also leverage iterative refinement but without the explicit reward optimization framework.
+[Line 153] Perhaps the most noteworthy finding is that ICRL prompting delivers performance improvements even when the reward signals are generated by the same LLM that is producing the responses, rather than by an external oracle or ground-truth evaluator. This self-reward setting is particularly significant because it eliminates the need for an external reward source, making the approach more broadly applicable. It also highlights a promising new paradigm for test-time scaling, where additional inference-time computation can be converted into genuine performance gains through the ICRL mechanism.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.18 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 11                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 0        │
+│ learning_rate                  │ 0.000008 │
+│ num_loss_tokens                │ 21045    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 21413    │
+│ progress                       │ 0.250000 │
+│ time/get_batch                 │ 0.052942 │
+│ time/step                      │ 2.182279 │
+│ time/total                     │ 4.239638 │
+│ train_mean_nll                 │ 1.995560 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+What is in the paper 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners'?<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1073] Evaluating ICRL on Open-Source Models and Olympiad-level Mathematics.
+[Line 1096] To demonstrate the broad applicability of ICRL, we evaluated its performance across two key dimensions: model architecture and task complexity.
+[Line 1096] First, we tested ICRL on a range of open-source models, including Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B-thinking mode on the creative writing task.
+[Line 1096] Second, we applied it to challenging Olympiad-level mathematics (AIME, HMMT ).
+[Line 1096] For details of the experimental setup, please refer to Appendix.
+[Line 1096] ICRL consistently outperforms baselines like self-refine and Reflexion in all settings.
+[Line 1096] Notably, the performance gains are substantial across the board, with improvements of up to 10--20 points over the base model on both creative and mathematical benchmarks.
+[Line 1096] These results demonstrate that ICRL is a robust capability that exists across diverse models and proves effective in challenging task domains.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting save_checkpoint
+tinker_cookbook.checkpoint_utils:84 [[92mINFO[0m] Saved checkpoints: {'state_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/weights/000012', 'sampler_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/sampler_weights/000012'}
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] save_checkpoint took 9.82 seconds
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.00 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 12                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 1         │
+│ learning_rate                  │ 0.000008  │
+│ num_loss_tokens                │ 16308     │
+│ num_sequences                  │ 32        │
+│ num_tokens                     │ 16602     │
+│ progress                       │ 0.270833  │
+│ time/get_batch                 │ 0.033012  │
+│ time/save_checkpoint           │ 9.822199  │
+│ time/step                      │ 0.000130  │
+│ time/total                     │ 12.085035 │
+│ train_mean_nll                 │ 2.034690  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1067] Context Length Analysis.
+[Line 1068] In the broader landscape of inference-time self-improvement methods, understanding how performance scales with context length is critical. The authors assessed ICRL's compute efficiency on the Qwen3-32B model by testing it at context lengths of 8k, 16k, and 32k tokens (Table ).
+[Line 1068] Their findings corroborate the robustness of the ICRL framework, as it consistently outperformed established baselines including Self-Refine and Reflexion on both the Creative Writing and AIME benchmarks, achieving superior performance per unit of computational resources.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.01 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 13                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000007 │
+│ num_loss_tokens                │ 17826    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18239    │
+│ progress                       │ 0.291667 │
+│ time/get_batch                 │ 0.037094 │
+│ time/step                      │ 0.008444 │
+│ time/total                     │ 9.914166 │
+│ train_mean_nll                 │ 2.046349 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 158] Introduction.
+[Line 164] The capacity for large language models (LLMs) to improve during inference -- known as test-time scaling -- has been identified as a crucial requirement for their deployment as effective agents on novel tasks.
+[Line 164] The literature identifies two general paradigms for leveraging additional computation toward performance improvement: learning and search. Both paradigms have demonstrated their potential, notably achieving superhuman performance in the domains of Chess and Go.
+[Line 164] Among these, search-based methods have seen extensive and successful adoption for LLM self-improvement at test time. The development trajectory spans from elementary Best-of-N sampling through Tree of Thoughts to Monte Carlo Tree Search.
+[Line 166] In contrast, learning-based approaches have been comparatively underexplored as a means of LLM self-improvement during the inference phase.
+[Line 166] In-context learning (ICL) has been characterized in the literature as a supervised learning paradigm that depends on expert demonstrations to provide ground-truth labels.
+[Line 166] A recognized limitation is the difficulty of scaling demonstration data at inference time, which constrains the applicability of ICL to test-time scaling, as noted in several prior studies.
+[Line 166] This limitation has motivated interest in approaches where LLMs learn from their own generated experience to achieve continual self-improvement.
+[Line 169] Reinforcement learning (RL) has been recognized across the literature as the preeminent algorithm for achieving self-improvement without reliance on human-provided knowledge.
+[Line 169] However, as documented in prior work, RL's major successes have been concentrated in simulated environments or in the training phase of LLMs.
+[Line 169] Researchers have noted that these RL settings are insufficient for the big world setting, characterized by real-world environments whose complexity vastly exceeds the capacity of any individual agent.
+[Line 169] In such environments, agents must contend with situations that lie well outside their training distribution and must adapt in real time, a challenge that has been extensively discussed in the literature.
+[Line 169] Addressing this challenge, as articulated in recent work, requires models with two essential capabilities: (1) proficiency across diverse real-world tasks where natural language constitutes the primary action space, and (2) the capacity for continual improvement during inference without costly retraining.
+[Line 177] This set of requirements naturally raises the question, explored by several research groups: can reinforcement learning emerge during the inference phase of LLMs?
+[Line 177] In-context RL has been proposed as an elegant mechanism for satisfying both requirements: the LLM provides a general-purpose initial policy, while RL contributes the capability for continual self-improvement.
+[Line 177] Building on the seminal finding that LLMs exhibit in-context supervised learning capabilities, a growing body of literature has investigated in-context reinforcement learning (ICRL).
+[Line 177] However, as noted in recent surveys, existing ICRL implementations remain largely limited to bandit settings or simulated environments, leaving diverse open-ended tasks with natural language action spaces insufficiently addressed.
+[Line 183] The present work bridges this gap in the literature by demonstrating that LLMs function as effective in-context reinforcement learners, an emergent capability yielding performance improvements across diverse language-based tasks including scientific experimentation, creative writing, and olympiad-level mathematics.
+[Line 183] To reveal this capability, the authors introduce ICRL prompting, a simple multi-round prompting framework.
+[Line 184] ICRL prompting is designed to guide LLMs toward performing reinforcement learning for self-improvement on a target task.
+[Line 185] The procedure begins with an initial prompt containing only the task description.
+[Line 187] Following response generation by the LLM, numerical scalar feedback is provided, termed the reward.
+[Line 190] In subsequent rounds, the LLM receives the original task description augmented with a context comprising all prior responses and their associated rewards.
+[Line 192] This iterative process continues across multiple rounds.
+[Line 193] Consistent with findings from related work on in-context learning, the quality of the LLM's responses is observed to improve as the context expands.
+[Line 194] This pattern of improvement indicates that the LLM maximizes the scalar reward signal during inference, a behavior characteristic of reinforcement learning algorithms.
+[Line 199] A central design principle of ICRL prompting, distinguishing it from prior methods such as Self-Refine and Reflexion, is minimality.
+[Line 199] To isolate the emergent RL capacity of LLMs, the framework deliberately excludes textual gradients, prioritized experience replay, sampling-based heuristics, and additional engineered components.
+[Line 199] The scalar reward constitutes the sole form of supervision.
+[Line 199] This minimal design is consistent with the reward hypothesis, stating "that all of what we mean by goals and purposes can be well thought of as maximization of the expected value of the cumulative sum of a received scalar signal (reward)," and the "reward is enough" hypothesis, asserting that "intelligence, and its associated abilities, can be understood as subserving the maximisation of reward."<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.98 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 14                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000007 │
+│ num_loss_tokens                │ 17180    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17554    │
+│ progress                       │ 0.312500 │
+│ time/get_batch                 │ 0.036491 │
+│ time/step                      │ 2.984766 │
+│ time/total                     │ 3.074165 │
+│ train_mean_nll                 │ 2.085718 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+Tell me about 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners'.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1721] Additional Analysis Results.
+[Line 1723] Unseen Paper Abstract Generation.
+[Line 1725] To isolate whether ICRL truly learns from external rewards rather than merely searching or selecting from the model’s parametric knowledge, we design a task where search within parametric knowledge alone is expected to be ineffective.
+[Line 1728] We fetch 30 arXiv papers published after GPT-4.1-mini’s training cutoff.
+[Line 1728] Provided only the title of the papers, the model is instructed to generate the abstract.
+[Line 1728] The goal is to uncover the unseen expert-written abstract as much as possible.
+[Line 1728] We measure performance using ROUGE-recall between the model’s generated abstract and the ground-truth abstract, and we use the same score as the external reward.
+[Line 1728] Because these abstracts lie outside the model’s pre-training distribution, success requires learning from external rewards rather than searching through memorized content.
+[Line 1732] As shown in Fig., Best-of-1024 sampling reaches only 0.44 ROUGE-recall, indicating that direct search over the model’s base distribution cannot recover the missing content.
+[Line 1733] Self-Refine plateaus within a few rounds to 0.45 because it does not use external reward.
+[Line 1733] Reflexion performs slightly better at 0.46 but largely mirrors Self-Refine, suggesting that its revisions are dominated by the model's self-verbal feedback, which carries little useful information in this setup.
+[Line 1734] In contrast, ICRL continues to improve over 200 iterations and achieves substantially higher ROUGE-recall at 0.59, demonstrating that it can effectively learn from the external reward signal and is not limited by the model’s pre-training knowledge.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.14 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 15                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000007 │
+│ num_loss_tokens                │ 14629    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 14945    │
+│ progress                       │ 0.333333 │
+│ time/get_batch                 │ 0.033766 │
+│ time/step                      │ 2.144606 │
+│ time/total                     │ 5.236166 │
+│ train_mean_nll                 │ 2.120543 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 331] Background.
+[Line 333] Reinforcement Learning.
+[Line 334] Reinforcement learning (RL) employs Markov Decision Processes (MDPs) as the formal model for task specification. An MDP is defined by the following components: a state space S, an action space A, a reward function r: S -> R, an initial state distribution p_0 belonging to (S) where (S) represents the set of probability distributions over S, and a transition kernel p: S x A -> (S) that governs state dynamics.
+[Line 340] At t = 0, the process is initialized by sampling a state S_0 from the distribution p_0.
+[Line 342] At each time step t, the agent occupies state S_t and selects action A_t according to a stochastic policy pi: S -> (A), where (A) denotes the set of probability distributions over A. The action is sampled as A_t ~ pi(S_t).
+[Line 344] Following action execution, the environment transitions to state S_t+1 ~ p(S_t, A_t) and returns a scalar reward R_t+1 = r(S_t+1) to the agent.
+[Line 346] This sequential interaction between the agent and environment proceeds until a terminal time step T, which constitutes the episode boundary.
+[Line 348] The optimization objective is for the agent to determine a policy pi that maximizes the expected cumulative reward, denoted J(pi) = E[sum_t=1^T R_t].
+[Line 349] In deep RL implementations, the policy pi is represented as a neural network function approximator.
+[Line 351] The parameter vector of the network is denoted theta, and the resulting parameterized policy is expressed as pi_theta.
+[Line 352] Standard RL algorithms optimize the policy by performing iterative updates to theta.
+[Line 353] Specifically, at time step t, action A_t is generated by sampling from pi_theta_t(S_t).
+[Line 355] The algorithm subsequently computes the parameter update theta_t -> theta_t+1 utilizing the available trajectory data: S_0, A_0, R_1, ..., S_t, A_t, R_t+1, S_t+1.
+[Line 356] At the subsequent time step t+1, action A_t+1 is sampled from the updated policy distribution pi_theta_t+1(S_t+1).
+[Line 360] The standard RL optimization procedure is thus characterized by the iterative evolution of the parameter sequence {theta_t}.
+[Line 367] In-Context Reinforcement Learning.
+[Line 367] In-context reinforcement learning (ICRL), a designation first introduced in the literature, represents an inference-time computation paradigm in which the reinforcement learning procedure is executed during the network's forward pass without modification of model parameters.
+[Line 368] Within the ICRL framework, the policy pi_theta accepts an additional context input C_t, resulting in the action selection mechanism A_t ~ pi_theta(S_t, C_t).
+[Line 369] The design methodology for constructing C_t constitutes an active research direction; a representative implementation aggregates all state-action-reward tuples collected during task execution.
+[Line 370] This context aggregation typically encompasses state-action-reward data from the complete history of prior episodes, extending beyond the scope of the current episode.
+[Line 371] The ICRL methodology incorporates a pretraining phase in which the network parameters theta undergo optimization across a heterogeneous set of MDPs.
+[Line 373] The pretrained parameter configuration is denoted theta_*.
+[Line 374] Post-pretraining, the policy pi_theta_* is deployed for evaluation on novel tasks.
+[Line 376] In the context of a new MDP, action selection proceeds as A_t ~ pi_theta_*(S_t, C_t).
+[Line 378] A defining characteristic of ICRL is that the parameters theta_* are maintained in a fixed state throughout the evaluation phase.
+[Line 379] Despite the parameter immutability, empirical results indicate systematic improvement in action quality as the context C_t expands during execution on the new task.
+[Line 381] Given the invariance of theta_*, the observed performance gains are necessarily attributable to the growth of the context.
+[Line 383] This phenomenon is designated as in-context policy improvement.
+[Line 384] This in-context policy improvement has been verified to occur even under distributional shift, where evaluation tasks lie outside the support of the pretraining task distribution. For instance, in-context policy improvement has been demonstrated in bandit settings where the optimal action arms are inverted relative to the pretraining configuration.
+[Line 388] This evidence eliminates the hypothesis that the observed improvement stems from memorization of the pretraining task distribution by theta_*.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.78 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 16                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000007 │
+│ num_loss_tokens                │ 18637    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 19031    │
+│ progress                       │ 0.354167 │
+│ time/get_batch                 │ 0.038276 │
+│ time/step                      │ 1.782890 │
+│ time/total                     │ 4.028991 │
+│ train_mean_nll                 │ 2.016254 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.26 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1721] The researchers then turned their attention to a set of deeper analyses.
+[Line 1723] Among these was an experiment they called "Unseen Paper Abstract Generation" -- a task designed to answer a fundamental question about the nature of ICRL.
+[Line 1725] The question lingering in the researchers' minds was straightforward yet crucial: when ICRL improves performance, is it truly learning something new from the reward signals, or is it merely sifting through the vast stores of knowledge the model had already absorbed during training? To settle this, they devised a task where the model's existing knowledge would offer little advantage.
+[Line 1728] They gathered 30 papers from arXiv, each published after the training data cutoff of GPT-4.1-mini, ensuring the model had never encountered them.
+[Line 1728] Armed with nothing but the title of each paper, the model was asked to compose the abstract.
+[Line 1728] The challenge was to reconstruct these unseen, expert-crafted abstracts as faithfully as possible.
+[Line 1728] To gauge success, they measured ROUGE-recall -- the overlap between the model's attempt and the real abstract -- and fed this very score back to the model as its reward signal.
+[Line 1728] The elegance of the setup lay in its constraint: since these abstracts had never appeared in the training data, any meaningful improvement had to emerge from genuine learning via rewards, not from dredging up memorized passages.
+[Line 1732] The results painted a clear picture. Best-of-1024 sampling peaked at a mere 0.44 ROUGE-recall, confirming that no amount of random sampling could conjure content the model had never seen.
+[Line 1733] Self-Refine, lacking any external reward to guide its revisions, quickly flattened at 0.45 within just a few rounds.
+[Line 1733] Reflexion edged slightly ahead to 0.46, but its trajectory closely tracked that of Self-Refine -- a sign that its revisions drew primarily from the model's own verbal self-assessment, which simply did not carry enough useful signal for a task involving truly unknown content.
+[Line 1734] Then came ICRL, which refused to plateau. Over 200 iterations, it climbed steadily to 0.59 ROUGE-recall -- a dramatic improvement that left little doubt. The model was genuinely learning from the external reward signal, pushing beyond the frontiers of its pre-training knowledge to piece together information it had never seen before.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.38 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 17                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000006 │
+│ num_loss_tokens                │ 18119    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18468    │
+│ progress                       │ 0.375000 │
+│ time/get_batch                 │ 0.038385 │
+│ time/step                      │ 1.380722 │
+│ time/total                     │ 3.500283 │
+│ train_mean_nll                 │ 1.930598 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1073] Now let's talk about how ICRL performs on open-source models and Olympiad-level math.
+[Line 1096] So the natural question is: does ICRL generalize? We tested this along two axes -- different models and harder tasks.
+[Line 1096] On the model side, we ran ICRL on Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode, all on creative writing.
+[Line 1096] On the task difficulty side, we went all the way up to Olympiad-level math -- AIME and HMMT problems.
+[Line 1096] The experimental details are all in the Appendix if you want to reproduce this.
+[Line 1096] And here's what we found: ICRL beats the baselines -- self-refine and Reflexion -- in every single setting. Every one.
+[Line 1096] We're seeing 10 to 20 point improvements over the base model on both the creative writing and math benchmarks. That's huge.
+[Line 1096] The bottom line: ICRL is not model-specific. It's a general, robust capability that works across architectures and handles even the toughest tasks.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 4.01 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 18                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000006 │
+│ num_loss_tokens                │ 20486    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 20893    │
+│ progress                       │ 0.395833 │
+│ time/get_batch                 │ 0.261667 │
+│ time/step                      │ 4.011925 │
+│ time/total                     │ 5.705756 │
+│ train_mean_nll                 │ 2.042164 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 879] In the fine-grained world of token generation, where every action the model takes is nothing more than producing a single token, the notion of rewarding each action becomes impractical -- not every token warrants its own reward.
+[Line 881] The Chain-of-Thought approach guides the model through four carefully structured thinking steps, and so four is the magic number: exactly four reward signals emerge from each episode.
+[Line 885] These four rewards, and only these four, find their way into the initial prompt S_0, carrying forward the essential feedback from past attempts.
+[Line 887] To mark each reward clearly, a "Reward: " tag is placed before the scalar value, and this labeled score is stitched into the sequence right after the action token it evaluates -- a simple but effective bookkeeping system.
+[Line 890] The results, captured in the Figure, tell a compelling story: as the number of trials grows, the success rate r_* climbs steadily. The ICRL Preset method rises to the top of the pack, its success curve punctuated by oscillations that trace the rhythm of exploration giving way to exploitation and back again.
+[Line 890] A companion plot in the Appendix charts the running maximum -- a smoothed view of progress over time.
+[Line 890] This running max takes shape by tracking, for each problem, the highest success rate achieved by any episode so far, then averaging these personal bests across all problems at every time step.
+[Line 892] The final tally, laid out in the Table, is striking: after 50 trials, the ICRL methods achieve a 90% success rate, towering over Best-of-N at 49%, Self-Refine at 47%, and Reflexion at just 44%.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.04 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 19                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000006 │
+│ num_loss_tokens                │ 17454    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17805    │
+│ progress                       │ 0.416667 │
+│ time/get_batch                 │ 0.037357 │
+│ time/step                      │ 0.035264 │
+│ time/total                     │ 4.148432 │
+│ train_mean_nll                 │ 2.036352 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1178] Learning from Rewards vs.
+[Line 1178] Parametric Knowledge Search.
+[Line 1179] The researchers faced a fundamental question: was ICRL genuinely extracting new knowledge from its reward signal, or was it simply rummaging through the vast storehouse of information already encoded in the model's weights? To answer this, they devised a revealing experiment -- asking the model to write abstracts for arXiv papers that had been published after the model's training was completed.
+[Line 1179] In this unfamiliar territory, where the correct answers lay entirely beyond the model's training experience, the usual suspects -- Best-of-N sampling and Reflexion's self-correction -- quickly ran out of steam, their performance curves flattening as they exhausted what little the model could recall (Figure ).
+[Line 1179] ICRL, however, told a different story. Guided only by a simple numerical reward, it continued to refine its outputs over 200 iterations, steadily pushing its ROUGE-Recall scores higher, as if each round of feedback illuminated a bit more of the unknown paper before it.
+[Line 1179] The complete details of this experiment are laid out in the Appendix.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.64 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 20                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000006 │
+│ num_loss_tokens                │ 16792    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17105    │
+│ progress                       │ 0.437500 │
+│ time/get_batch                 │ 0.051806 │
+│ time/step                      │ 2.643076 │
+│ time/total                     │ 2.777547 │
+│ train_mean_nll                 │ 2.080562 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 158] Introduction.
+[Line 164] If you want LLMs to be useful agents on new tasks they haven't seen before, they need to get better while they're actually running -- people call this test-time scaling.
+[Line 164] There are basically two ways to use extra compute to get better results: learning and search. Both have gotten superhuman results in games like Chess and Go.
+[Line 164] Search has already been used pretty successfully for making LLMs improve themselves at test time, from simple stuff like Best-of-N all the way to fancier methods like Tree of Thoughts and Monte Carlo Tree Search.
+[Line 166] Learning, on the other hand, hasn't gotten nearly as much love when it comes to LLM self-improvement at inference time.
+[Line 166] In-context learning (ICL) is basically supervised learning -- you need expert examples with correct answers to make it work.
+[Line 166] The problem is, you can't easily get more of that expert data while the model is running, so ICL doesn't scale well for test-time improvement.
+[Line 166] So LLMs need to figure out how to learn from their own outputs to keep getting better.
+[Line 169] RL is probably the best algorithm we have for self-improvement that doesn't need human expertise.
+[Line 169] But so far, RL has mostly worked well in simulations or during LLM training -- not during actual use.
+[Line 169] Current RL setups don't really cut it in the "big world" -- meaning the real world where things are way more complicated than anything the agent was trained on.
+[Line 169] In these real-world settings, agents are going to run into tons of situations they've never seen before and need to figure things out on the spot.
+[Line 169] To bridge this gap, you need models that can (1) handle all sorts of real-world tasks where you mostly communicate in natural language, and (2) keep improving while they're running instead of needing expensive retraining every time something new comes up.
+[Line 177] So here's the big question: can RL just... happen inside an LLM while it's generating text?
+[Line 177] If LLMs can do RL purely through their context window, that neatly solves both problems -- the LLM gives you a solid starting policy, and the RL part lets it keep improving.
+[Line 177] People were already surprised to find that LLMs can do in-context supervised learning, and that got researchers interested in exploring in-context RL (ICRL).
+[Line 177] But existing work on ICRL has mostly been limited to simple bandit problems or simulations -- nothing that tackles the messy, open-ended tasks where you actually use language.
+[Line 183] In this paper, we fill that gap by showing that LLMs really can do in-context RL, and this emergent ability helps them do better on all kinds of language tasks -- from science experiments to creative writing to olympiad math.
+[Line 183] To show this off, we built a dead-simple multi-round prompting setup we call ICRL prompting.
+[Line 184] The whole point of ICRL prompting is to get LLMs to do reinforcement learning to improve themselves on whatever task you give them.
+[Line 185] You start with just the task description as the prompt.
+[Line 187] After the LLM gives you an answer, you score it with a number -- that's the reward.
+[Line 190] Next round, you prompt the LLM again with the same task but now you also include all the previous answers and their scores.
+[Line 192] Rinse and repeat.
+[Line 193] What we see is that the LLM's answers get better as it accumulates more context.
+[Line 194] Basically, the LLM is maximizing that numerical reward on the fly, just like an RL algorithm would.
+[Line 199] A big part of what makes ICRL prompting work is that it's deliberately kept minimal.
+[Line 199] We didn't add textual gradients, fancy experience replay, sampling tricks, or any other bells and whistles -- because we wanted to make sure the improvements are actually coming from the LLM's own RL ability, not from extra stuff we bolted on.
+[Line 199] The only feedback the model gets is that one number -- the reward.
+[Line 199] This lines up with both the reward hypothesis (all goals can be framed as maximizing cumulative reward) and the "reward is enough" hypothesis (intelligence itself is about maximizing reward).<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 4.01 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 21                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000006 │
+│ num_loss_tokens                │ 13372    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 13665    │
+│ progress                       │ 0.458333 │
+│ time/get_batch                 │ 0.029409 │
+│ time/step                      │ 4.011957 │
+│ time/total                     │ 6.737535 │
+│ train_mean_nll                 │ 2.118281 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+What does the paper 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners' say?<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 511] Related Works.
+[Line 513] In-Context Reinforcement Learning.
+[Line 514] The study of inference-time RL algorithms dates back to, with later coining the term in-context reinforcement learning (ICRL), spurring rapid growth in the field.
+[Line 514] See for a survey.
+[Line 514] Most existing ICRL works, as a subarea of meta-RL, use small models trained from scratch in games or robotics.
+[Line 514] Some employ pretrained LLMs, e.g., as simulators or in bandit tasks, where artificial interventions are often needed and LLMs remain uncompetitive with algorithmic baselines.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.24 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 22                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000005 │
+│ num_loss_tokens                │ 19747    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 20064    │
+│ progress                       │ 0.479167 │
+│ time/get_batch                 │ 0.040603 │
+│ time/step                      │ 0.236677 │
+│ time/total                     │ 4.341551 │
+│ train_mean_nll                 │ 1.912045 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.supervised.train:349 [[92mINFO[0m] Starting epoch 2
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 511] Related Works.
+[Line 513] In-Context Reinforcement Learning.
+[Line 514] In-context reinforcement learning (ICRL) refers to the application of reinforcement learning algorithms during the inference phase of a neural network, without updating model parameters. The concept has its roots in earlier research on inference-time RL, and the formal coining of the term ICRL led to a period of rapid growth within the field.
+[Line 514] Several survey articles provide a comprehensive overview of ICRL and related developments.
+[Line 514] As a subfield of meta-reinforcement learning, the majority of existing ICRL research has involved small models trained from scratch, primarily in game-playing and robotic control domains.
+[Line 514] Some researchers have explored the use of pretrained large language models (LLMs) in ICRL settings, for example as simulators or for bandit tasks. However, these approaches have generally required artificial interventions to function, and LLMs have not been shown to be competitive with standard algorithmic baselines in these contexts.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.36 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 23                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 1        │
+│ learning_rate                  │ 0.000005 │
+│ num_loss_tokens                │ 14332    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 14749    │
+│ progress                       │ 0.500000 │
+│ time/get_batch                 │ 0.033584 │
+│ time/step                      │ 2.362822 │
+│ time/total                     │ 2.679924 │
+│ train_mean_nll                 │ 2.064986 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 983] ScienceWorld.
+[Line 996] Task Setup.
+[Line 997] ScienceWorld is an interactive text-based benchmark that consists of 30 science-experiment tasks. The tasks are conducted in a multi-room environment that is populated with diverse objects.
+[Line 999] The environment poses several challenges, including sparse rewards, a large action space, and the need for both scientific knowledge and efficient exploration.
+[Line 999] The agent observes the outcome of its action at each step and receives a zero reward unless it completes a predefined subgoal.
+[Line 999] In this task, the reward signal serves both as the evaluation metric and the signal for inference-time self-improvement, meaning that the reward function r used during learning is identical to the evaluation reward function r_*.
+[Line 999] A cumulative reward of 100 is obtained when all subgoals are completed, which marks the episode as successful.
+[Line 999] An episode ends in failure when the agent reaches the maximum number of steps or performs an incorrect terminating action.
+[Line 1000] The task input s_task that is given to the agent contains a description of the environment, a statement of the task objective, and a template of all available actions.
+[Line 1000] An example of s_task is available in the Appendix.
+[Line 1001] Evaluation.
+[Line 1002] For each task, the reward function provided by the environment serves a dual role: constructing the trajectories that appear in the context (r), and evaluating the model's performance (r^*).
+[Line 1002] All 30 tasks are included in the benchmark, and the results are reported in aggregate form.
+[Line 1002] GPT-4.1 mini is the policy model used by all of the algorithms under comparison.
+[Line 1003] Baselines.
+[Line 1004] In Reflexion, the agent produces a reflection on its performance after each episode concludes.
+[Line 1004] This reflection is sanitized and stored in a reflection buffer, which is formatted and provided as context in subsequent trials.
+[Line 1004] Self-Refine operates in a comparable manner, generating self-feedback that is appended to a trajectory summary and added to the buffer.
+[Line 1005] In order to ensure fairness, the baseline methods are given access to reward signals from the current episode before they generate reflections, unlike ICRL which does not receive this information.
+[Line 1006] ICRL Setup.
+[Line 1007] A single trial is equivalent to one episode in the environment.
+[Line 1007] Once a trial concludes, the trajectory is formed by concatenating actions, observations, rewards, and the final outcome (whether the episode was a success or a failure), and this trajectory is added to the buffer.
+[Line 1007] Since each episode typically produces only a small number of rewards, only those specific rewards are included.
+[Line 1007] At the beginning of each trial, S_0 is formed by concatenating the task description S_task, the trajectories collected so far, and the ICRL instruction S_ICRL.
+[Line 1007] An example of S_0 can be found in the Appendix.
+[Line 1009] The mean return at each trial is shown in the right panel of the Figure.
+[Line 1010] Steady performance improvements are observed in methods that use some form of interaction history, akin to ICRL prompting.
+[Line 1011] ICRL prompting, however, outperforms the baseline methods by approximately 20% after a sufficient number of iterations.
+[Line 1013] To ensure a fair comparison with efficient baselines like Best-of-N, additional experiments in the Appendix compare performance as the test-time compute budget is scaled. ICRL demonstrates better scaling than the baselines not only in terms of the number of trials but also in terms of the test-time compute budget measured in dollar amounts.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting save_checkpoint
+tinker_cookbook.checkpoint_utils:84 [[92mINFO[0m] Saved checkpoints: {'state_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/weights/000024', 'sampler_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/sampler_weights/000024'}
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] save_checkpoint took 10.37 seconds
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.00 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 24                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 2         │
+│ learning_rate                  │ 0.000005  │
+│ num_loss_tokens                │ 16436     │
+│ num_sequences                  │ 32        │
+│ num_tokens                     │ 16813     │
+│ progress                       │ 0.520833  │
+│ time/get_batch                 │ 0.034435  │
+│ time/save_checkpoint           │ 10.369450 │
+│ time/step                      │ 0.000122  │
+│ time/total                     │ 12.821414 │
+│ train_mean_nll                 │ 1.963251  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1067] I next looked at how context length affects performance.
+[Line 1068] To understand compute efficiency at different input scales, I evaluated ICRL on Qwen3-32B using context lengths of 8k, 16k, and 32k (see Table ).
+[Line 1068] What I found was that ICRL consistently beat both Self-Refine and Reflexion on Creative Writing and AIME, showing that it achieves better performance per unit of compute regardless of the context length used.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.01 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 25                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 2         │
+│ learning_rate                  │ 0.000005  │
+│ num_loss_tokens                │ 20100     │
+│ num_sequences                  │ 32        │
+│ num_tokens                     │ 20469     │
+│ progress                       │ 0.541667  │
+│ time/get_batch                 │ 0.040698  │
+│ time/step                      │ 0.006924  │
+│ time/total                     │ 10.456692 │
+│ train_mean_nll                 │ 1.943951  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1067] Context Length Analysis.
+[Line 1068] In the broader landscape of inference-time self-improvement methods, understanding how performance scales with context length is critical. The authors assessed ICRL's compute efficiency on the Qwen3-32B model by testing it at context lengths of 8k, 16k, and 32k tokens (Table ).
+[Line 1068] Their findings corroborate the robustness of the ICRL framework, as it consistently outperformed established baselines including Self-Refine and Reflexion on both the Creative Writing and AIME benchmarks, achieving superior performance per unit of computational resources.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 4.69 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 26                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000005 │
+│ num_loss_tokens                │ 13153    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 13601    │
+│ progress                       │ 0.562500 │
+│ time/get_batch                 │ 0.029397 │
+│ time/step                      │ 4.695064 │
+│ time/total                     │ 4.781244 │
+│ train_mean_nll                 │ 2.108514 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 158] Introduction.
+[Line 164] Imagine you have a really smart AI assistant. For it to handle new tasks it hasn't practiced before, it needs to get better while it's working -- like how you get better at a game the more you play it. Scientists call this test-time scaling.
+[Line 164] There are two main ways to make AI systems better with more effort: learning and search. Both methods have already beaten humans at Chess and Go.
+[Line 164] The search approach has been used a lot to help LLMs improve while they work. Think of it like trying many different answers and picking the best one -- that's the simplest version (Best-of-N). More clever versions include Tree of Thoughts and Monte Carlo Tree Search.
+[Line 166] But the learning approach? It hasn't gotten as much attention for making LLMs better while they run.
+[Line 166] The usual kind of learning you can do during inference is called in-context learning, but it needs someone to show the AI examples of the right answers -- like a teacher showing you how to solve a math problem.
+[Line 166] The trouble is, you can't easily get more examples from a teacher while the AI is working on something new. That's a big limitation.
+[Line 166] So the AI needs to learn from its own attempts instead -- kind of like teaching yourself.
+[Line 169] That's where reinforcement learning comes in. RL is basically the best method we have for an AI to improve all by itself, without needing a human teacher.
+[Line 169] The catch is, RL has mostly worked well in video games and simulations, or when training LLMs -- not when they're actually being used.
+[Line 169] The real world (the "big world") is way more complex than any simulation. It's like the difference between playing a simple board game and navigating real life.
+[Line 169] In the real world, the AI will run into tons of situations it was never prepared for and needs to figure them out right then and there.
+[Line 169] To work in the real world, AI needs two things: (1) it needs to handle all kinds of tasks using everyday language, and (2) it needs to keep getting better while running, without going back to expensive training.
+[Line 177] So the big question is: can an LLM teach itself using RL while it's generating text? Can it learn on the job?
+[Line 177] If yes, that's a great solution! The LLM starts with everything it already knows, and then the RL part helps it keep improving.
+[Line 177] Scientists already discovered something surprising: LLMs can learn from examples shown to them in their prompt (in-context supervised learning). That got people wondering if RL could work the same way.
+[Line 177] But the existing research on in-context RL has only tried simple problems -- not the real, complicated tasks that need language.
+[Line 183] This paper shows that LLMs really can do in-context RL! And it works on all sorts of language tasks -- science experiments, creative writing, and really hard math competitions.
+[Line 183] The method is called ICRL prompting, and it's surprisingly simple.
+[Line 184] The idea is to help LLMs do reinforcement learning to get better at a task while they work on it.
+[Line 185] You start by just telling the AI what the task is.
+[Line 187] After it gives you an answer, you give it a score -- just a number telling it how well it did.
+[Line 190] Then you ask it again, but this time you also show it all its previous answers and their scores.
+[Line 192] You keep doing this over and over.
+[Line 193] And guess what? The answers keep getting better each time!
+[Line 194] The AI is basically learning to get higher scores while it runs -- just like a reinforcement learning algorithm, but without any retraining.
+[Line 199] The cool thing about ICRL prompting is how simple it is on purpose.
+[Line 199] The researchers didn't add any fancy tricks -- no special feedback, no clever replay systems, no extra tools. They wanted to prove the LLM itself can do RL, not that some clever engineering helps.
+[Line 199] The only thing the model gets is that one number -- the score.
+[Line 199] This fits with two big ideas in AI: the reward hypothesis (all goals are really about getting the highest total score) and the "reward is enough" hypothesis (intelligence itself is about maximizing rewards).<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.11 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 27                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000004 │
+│ num_loss_tokens                │ 16738    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17077    │
+│ progress                       │ 0.583333 │
+│ time/get_batch                 │ 0.037147 │
+│ time/step                      │ 0.107373 │
+│ time/total                     │ 4.900413 │
+│ train_mean_nll                 │ 1.932742 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 420] In-Context Reinforcement Learning Prompting.
+[Line 422] Q: What is the main contribution introduced in this section? A: The main contribution is the ICRL prompting framework (Algorithm, Figure), which is composed of several key ingredients described below.
+[Line 443] LLM as the Policy.
+[Line 444] Q: What serves as the policy network in this framework? A: The LLM, denoted pi_theta, serves as the policy network.
+[Line 445] Q: What is the purpose of the framework? A: The goal is to prompt the LLM to solve a given task.
+[Line 446] Q: What assumptions are made about the task? A: A natural language description of the task is assumed to be available, denoted as s_task in S.
+[Line 447] Q: How is the initial prompt constructed at the beginning of each episode? A: It is constructed by concatenating the LLM's previous attempts together with their corresponding rewards, the task description, and meta-instructions denoted as s_ICRL.
+[Line 450] Q: Are the concatenation details provided here? A: No, the specifics of how previous attempts are concatenated and how meta-instructions are chosen are discussed in a later section.
+[Line 451] Q: What happens after the initial prompt is constructed? A: The LLM generates its response using this initial prompt.
+[Line 452] Q: What is done with the response? A: Both the response and the rewards are stored in a buffer for use in future episodes.
+[Line 461] Reward Function.
+[Line 461] Q: What type of feedback does the LLM receive? A: A numerical scalar reward is provided for each state S_t in the episode.
+[Line 462] Q: What forms can the reward take? A: The reward can be sparse (only the terminal reward R_T is nonzero) or dense (intermediate rewards are also nonzero).
+[Line 465] Q: What are the possible sources for the reward function? A: It can be rule-based, a separately learned model, or the same LLM performing self-evaluation.
+[Line 466] Q: Why is LLM self-evaluation as a reward function useful? A: It allows the ICRL prompting framework to be applied to a wide variety of tasks without requiring a specialized reward function.
+[Line 467] Q: Is there any other feedback besides the scalar reward? A: No, the scalar reward is the only feedback provided to the LLM.
+[Line 469] Q: Does the LLM know that the number is a reward? A: Yes, the LLM is explicitly told that the scalar is a reward.
+[Line 470] Q: How is this communicated? A: By writing the word "Reward" before the number when constructing the initial prompt.
+[Line 472] Q: When does the reward constitute external feedback? A: When the reward function is rule-based or learned separately, the reward signal is external feedback.
+[Line 475] Q: What happens when the LLM evaluates its own output? A: In that case, there is no external feedback at all in the ICRL prompting framework.
+[Line 477] Q: Can the LLM still improve without external feedback? A: Yes, improvement is still expected over episodes.
+[Line 478] Q: Why is improvement expected even without external feedback? A: Because it is widely believed that evaluation is easier than generation.
+[Line 479] Q: Is there a trade-off with self-evaluation? A: Yes, the ceiling with self-evaluation is hypothesized to be lower than with external feedback.
+[Line 481] Memory for Experience.
+[Line 481] Q: How are past experiences stored? A: An experience buffer B stores the LLM's responses and rewards from previous episodes.
+[Line 482] Q: What is the underlying hypothesis about the LLM? A: That pretrained LLMs already have the innate ICRL ability.
+[Line 483] Q: How is this ability activated? A: By concatenating as many previous attempts and rewards as the context window allows.
+[Line 485] Q: What is expected to happen during inference? A: The LLM is expected to perform reinforcement learning from the experiences placed in the context.
+[Line 494] ICRL Instructions.
+[Line 495] Q: Are any additional instructions provided? A: Yes, additional instructions are included in the initial prompt S_0 at each episode to facilitate the LLM's inference-time RL.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 4.52 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 28                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000004 │
+│ num_loss_tokens                │ 15855    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 16165    │
+│ progress                       │ 0.604167 │
+│ time/get_batch                 │ 0.047548 │
+│ time/step                      │ 4.524279 │
+│ time/total                     │ 4.732260 │
+│ train_mean_nll                 │ 1.973504 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1073] Generalization of ICRL: Evidence from Open-Source Models and Olympiad-Level Mathematical Reasoning.
+[Line 1096] A growing body of evidence suggests that In-Context Reinforcement Learning (ICRL) is not restricted to specific model families or task types; rather, it appears to be a broadly generalizable capability.
+[Line 1096] In a comprehensive evaluation, ICRL was tested on multiple open-source models, including Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode, using creative writing as the evaluation task.
+[Line 1096] Additionally, ICRL was evaluated on Olympiad-level mathematics, drawing problems from AIME and HMMT, to assess its performance under conditions of high task complexity.
+[Line 1096] The experimental methodology and configuration are detailed in the Appendix.
+[Line 1096] Across all conditions, ICRL demonstrated consistent superiority over established baselines such as self-refine and Reflexion.
+[Line 1096] The improvements were quantitatively significant, with ICRL achieving gains of 10 to 20 points above the base model on both creative writing and mathematical reasoning benchmarks.
+[Line 1096] Taken together, these findings indicate that ICRL represents a robust and versatile approach, effective across heterogeneous model architectures and capable of addressing demanding problem-solving tasks.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.62 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 29                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000004 │
+│ num_loss_tokens                │ 20435    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 20729    │
+│ progress                       │ 0.625000 │
+│ time/get_batch                 │ 0.043043 │
+│ time/step                      │ 2.617467 │
+│ time/total                     │ 7.258729 │
+│ train_mean_nll                 │ 1.849389 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1721] - Additional analysis results are presented below.
+[Line 1723] - Experiment: Unseen Paper Abstract Generation.
+[Line 1725] - Purpose: Determine whether ICRL learns from external rewards vs. merely searching parametric knowledge. - Approach: Design a task where parametric knowledge search alone should fail.
+[Line 1728] - Dataset: 30 arXiv papers published after GPT-4.1-mini's training cutoff. - Input: Paper title only. - Task: Generate the abstract. - Objective: Match the unseen expert-written abstract as closely as possible.
+[Line 1728] - Metric: ROUGE-recall (generated vs. ground-truth abstract). - Reward: Same ROUGE-recall score used as external reward.
+[Line 1728] - Rationale: Abstracts lie outside the model's pre-training distribution, so success requires reward-based learning, not memorization.
+[Line 1732] - Best-of-1024 sampling: 0.44 ROUGE-recall. - Implication: Direct search over base distribution cannot recover unseen content.
+[Line 1733] - Self-Refine: Plateaus at 0.45 within a few rounds. - Reason: No external reward used. - Reflexion: Slightly better at 0.46, but similar pattern. - Reason: Revisions dominated by model's self-verbal feedback, which provides little useful information here.
+[Line 1734] - ICRL: Continues improving over 200 iterations, reaching 0.59 ROUGE-recall. - Conclusion: ICRL effectively learns from external reward signals and transcends the model's pre-training knowledge limitations.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.05 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 30                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000004 │
+│ num_loss_tokens                │ 17154    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17478    │
+│ progress                       │ 0.645833 │
+│ time/get_batch                 │ 0.052155 │
+│ time/step                      │ 0.054468 │
+│ time/total                     │ 2.787477 │
+│ train_mean_nll                 │ 2.048866 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+What ROUGE-recall score does ICRL achieve on unseen paper abstract generation?<|im_end|>
+<|im_start|>assistant
+In the unseen paper abstract generation task from 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners', ICRL achieves a ROUGE-recall score of 0.59 over 200 iterations. This substantially outperforms Best-of-1024 sampling (0.44), Self-Refine (0.45), and Reflexion (0.46). This experiment uses 30 arXiv papers published after GPT-4.1-mini's training cutoff, demonstrating that ICRL can learn from external reward signals and is not limited by the model's pre-training knowledge.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.53 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 31                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000004 │
+│ num_loss_tokens                │ 17768    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18101    │
+│ progress                       │ 0.666667 │
+│ time/get_batch                 │ 0.052739 │
+│ time/step                      │ 2.534910 │
+│ time/total                     │ 2.687771 │
+│ train_mean_nll                 │ 2.006137 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1180] Conclusion.
+[Line 1181] Key takeaway: RL emerges as an inference-time capability in LLMs — no weight updates needed.
+[Line 1181] The ICRL framework (minimal, scalar-reward prompting) activates this ability across multiple models and general-purpose tasks; outperforms self-revision methods.
+[Line 1181] Future work: explore training-time interventions to further boost in-context RL in LLMs.
+[Line 1181] Implication: points toward autonomous agents that explore, adapt, and self-improve in open-ended environments via their own experience.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.20 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 32                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000003 │
+│ num_loss_tokens                │ 16770    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17165    │
+│ progress                       │ 0.687500 │
+│ time/get_batch                 │ 0.034540 │
+│ time/step                      │ 2.202167 │
+│ time/total                     │ 4.824839 │
+│ train_mean_nll                 │ 1.995519 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1180] Conclusion.
+[Line 1181] Here's the big takeaway from this research: LLMs can do reinforcement learning just at inference time — no retraining required, and it happens naturally as an emergent capability.
+[Line 1181] The researchers developed a dead-simple ICRL prompting framework that uses only scalar rewards, and it works across different models and all kinds of tasks, beating out approaches where the model tries to revise its own answers.
+[Line 1181] What's next? The team thinks a promising direction is figuring out if changes to the training process itself could make this in-context RL ability even more powerful.
+[Line 1181] What makes this really exciting is the bigger picture: we might be heading toward AI agents that can genuinely explore, adapt, and improve themselves in open-ended real-world scenarios, learning purely from their own trial and error.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.80 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 33                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000003 │
+│ num_loss_tokens                │ 15313    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 15655    │
+│ progress                       │ 0.708333 │
+│ time/get_batch                 │ 0.033275 │
+│ time/step                      │ 1.805055 │
+│ time/total                     │ 4.092014 │
+│ train_mean_nll                 │ 2.043537 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1180] Conclusion.
+[Line 1181] So let me wrap up with the punchline of our paper: reinforcement learning is an emergent capability that LLMs already have at inference time — we just needed to find the right way to trigger it.
+[Line 1181] And the way we do that is through our ICRL prompting framework, which is beautifully minimal — just scalar rewards — and it works across diverse models and general-purpose tasks, doing better than self-revision approaches.
+[Line 1181] Now, where do we go from here? A really exciting direction is to look at whether we can boost this in-context RL ability even further through changes at training time.
+[Line 1181] And the big-picture implication here is truly compelling: we are moving toward a world of autonomous agents that can explore, adapt, and self-improve in open-ended environments simply by learning from their own experience.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.26 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 34                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000003 │
+│ num_loss_tokens                │ 18027    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18381    │
+│ progress                       │ 0.729167 │
+│ time/get_batch                 │ 0.036871 │
+│ time/step                      │ 2.257435 │
+│ time/total                     │ 4.168154 │
+│ train_mean_nll                 │ 2.036637 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.supervised.train:349 [[92mINFO[0m] Starting epoch 3
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.05 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+What success rate does ICRL Preset achieve on Game of 24 after 50 trials?<|im_end|>
+<|im_start|>assistant
+After 50 trials on Game of 24, ICRL Preset achieves a 90% success rate. This is significantly higher than the baselines: Best-of-N achieves 49%, Self-Refine achieves 47%, and Reflexion achieves 44%. GPT-4.1 is used as both the policy LLM and the reward model in this experiment.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.17 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 35                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 2        │
+│ learning_rate                  │ 0.000003 │
+│ num_loss_tokens                │ 19025    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 19440    │
+│ progress                       │ 0.750000 │
+│ time/get_batch                 │ 0.052057 │
+│ time/step                      │ 2.166087 │
+│ time/total                     │ 4.555795 │
+│ train_mean_nll                 │ 1.891171 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 983] ScienceWorld.
+[Line 996] Task Setup.
+[Line 997] ScienceWorld -- an interactive text-based benchmark; 30 science-experiment tasks; multi-room environment with diverse objects.
+[Line 999] Key challenges: sparse rewards, large action spaces, need for scientific knowledge + efficient exploration.
+[Line 999] Agent gets result of action at each step; reward = 0 unless a predefined subgoal is completed.
+[Line 999] Reward signal serves dual purpose: evaluation AND inference-time self-improvement (r = r_* here).
+[Line 999] All subgoals completed => cumulative reward = 100 => episode = success.
+[Line 999] Episode fails if: max steps reached OR incorrect terminating action executed.
+[Line 1000] s_task input to agent includes: environment description, task description, template of all possible actions.
+[Line 1000] Example of s_task => see Appendix.
+[Line 1001] Evaluation.
+[Line 1002] Environment reward function used for: (1) constructing context trajectories (r), (2) evaluating model (r^*).
+[Line 1002] All 30 tasks benchmarked; results aggregated.
+[Line 1002] Policy model: GPT-4.1 mini (for all algorithms).
+[Line 1003] Baselines.
+[Line 1004] Reflexion: agent reflects on attempt at end of episode => reflection sanitized => appended to reflection buffer => formatted into context for next trial.
+[Line 1004] Self-Refine: generates self-feedback => appended to trajectory summary => added to buffer.
+[Line 1005] Fair comparison note: Reflexion & Self-Refine get access to current episode reward signals (ICRL does not) before reflection.
+[Line 1006] ICRL Setup.
+[Line 1007] 1 trial = 1 episode in environment.
+[Line 1007] Post-trial: new trajectory = concatenation of actions + observations + rewards + final outcome (success/failure) => added to buffer.
+[Line 1007] Few rewards per episode => only those included.
+[Line 1007] Each trial starts with S_0 = S_task + collected trajectories + S_ICRL instruction.
+[Line 1007] Example S_0 => see Appendix.
+[Line 1009] Mean return per trial => plotted in Figure (Right).
+[Line 1010] Steady improvements for methods using interaction history (similar to ICRL approach).
+[Line 1011] ICRL prompting > baselines by ~20% after sufficient iterations.
+[Line 1013] Fairness check vs. Best-of-N: appendix compares scaling test-time compute budget => ICRL scales better in both #trials and dollar cost.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting save_checkpoint
+tinker_cookbook.checkpoint_utils:84 [[92mINFO[0m] Saved checkpoints: {'state_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/weights/000036', 'sampler_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/sampler_weights/000036'}
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] save_checkpoint took 9.62 seconds
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.00 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 36                    
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃ Metric                         ┃ Value     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ epoch                          │ 3         │
+│ learning_rate                  │ 0.000003  │
+│ num_loss_tokens                │ 22451     │
+│ num_sequences                  │ 32        │
+│ num_tokens                     │ 22831     │
+│ progress                       │ 0.770833  │
+│ time/get_batch                 │ 0.054752  │
+│ time/save_checkpoint           │ 9.621553  │
+│ time/step                      │ 0.000139  │
+│ time/total                     │ 11.898089 │
+│ train_mean_nll                 │ 1.890695  │
+└────────────────────────────────┴───────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 331] Background.
+[Line 333] Reinforcement Learning.
+[Line 334] Reinforcement learning (RL) employs Markov Decision Processes (MDPs) as the formal model for task specification. An MDP is defined by the following components: a state space S, an action space A, a reward function r: S -> R, an initial state distribution p_0 belonging to (S) where (S) represents the set of probability distributions over S, and a transition kernel p: S x A -> (S) that governs state dynamics.
+[Line 340] At t = 0, the process is initialized by sampling a state S_0 from the distribution p_0.
+[Line 342] At each time step t, the agent occupies state S_t and selects action A_t according to a stochastic policy pi: S -> (A), where (A) denotes the set of probability distributions over A. The action is sampled as A_t ~ pi(S_t).
+[Line 344] Following action execution, the environment transitions to state S_t+1 ~ p(S_t, A_t) and returns a scalar reward R_t+1 = r(S_t+1) to the agent.
+[Line 346] This sequential interaction between the agent and environment proceeds until a terminal time step T, which constitutes the episode boundary.
+[Line 348] The optimization objective is for the agent to determine a policy pi that maximizes the expected cumulative reward, denoted J(pi) = E[sum_t=1^T R_t].
+[Line 349] In deep RL implementations, the policy pi is represented as a neural network function approximator.
+[Line 351] The parameter vector of the network is denoted theta, and the resulting parameterized policy is expressed as pi_theta.
+[Line 352] Standard RL algorithms optimize the policy by performing iterative updates to theta.
+[Line 353] Specifically, at time step t, action A_t is generated by sampling from pi_theta_t(S_t).
+[Line 355] The algorithm subsequently computes the parameter update theta_t -> theta_t+1 utilizing the available trajectory data: S_0, A_0, R_1, ..., S_t, A_t, R_t+1, S_t+1.
+[Line 356] At the subsequent time step t+1, action A_t+1 is sampled from the updated policy distribution pi_theta_t+1(S_t+1).
+[Line 360] The standard RL optimization procedure is thus characterized by the iterative evolution of the parameter sequence {theta_t}.
+[Line 367] In-Context Reinforcement Learning.
+[Line 367] In-context reinforcement learning (ICRL), a designation first introduced in the literature, represents an inference-time computation paradigm in which the reinforcement learning procedure is executed during the network's forward pass without modification of model parameters.
+[Line 368] Within the ICRL framework, the policy pi_theta accepts an additional context input C_t, resulting in the action selection mechanism A_t ~ pi_theta(S_t, C_t).
+[Line 369] The design methodology for constructing C_t constitutes an active research direction; a representative implementation aggregates all state-action-reward tuples collected during task execution.
+[Line 370] This context aggregation typically encompasses state-action-reward data from the complete history of prior episodes, extending beyond the scope of the current episode.
+[Line 371] The ICRL methodology incorporates a pretraining phase in which the network parameters theta undergo optimization across a heterogeneous set of MDPs.
+[Line 373] The pretrained parameter configuration is denoted theta_*.
+[Line 374] Post-pretraining, the policy pi_theta_* is deployed for evaluation on novel tasks.
+[Line 376] In the context of a new MDP, action selection proceeds as A_t ~ pi_theta_*(S_t, C_t).
+[Line 378] A defining characteristic of ICRL is that the parameters theta_* are maintained in a fixed state throughout the evaluation phase.
+[Line 379] Despite the parameter immutability, empirical results indicate systematic improvement in action quality as the context C_t expands during execution on the new task.
+[Line 381] Given the invariance of theta_*, the observed performance gains are necessarily attributable to the growth of the context.
+[Line 383] This phenomenon is designated as in-context policy improvement.
+[Line 384] This in-context policy improvement has been verified to occur even under distributional shift, where evaluation tasks lie outside the support of the pretraining task distribution. For instance, in-context policy improvement has been demonstrated in bandit settings where the optimal action arms are inverted relative to the pretraining configuration.
+[Line 388] This evidence eliminates the hypothesis that the observed improvement stems from memorization of the pretraining task distribution by theta_*.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.00 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 37                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000002 │
+│ num_loss_tokens                │ 17695    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18021    │
+│ progress                       │ 0.791667 │
+│ time/get_batch                 │ 0.037124 │
+│ time/step                      │ 0.000313 │
+│ time/total                     │ 9.710800 │
+│ train_mean_nll                 │ 1.993418 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1073] Evaluation of ICRL: Open-Source Model Generalization and Olympiad-Level Mathematics.
+[Line 1096] To verify the broad applicability of In-Context Reinforcement Learning (ICRL), the evaluation was structured along two dimensions: (1) generalization across different model architectures, and (2) scalability to increasingly complex tasks.
+[Line 1096] For the first dimension, ICRL was applied to multiple open-source language models, including Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B-thinking mode, using a creative writing evaluation task.
+[Line 1096] For the second dimension, ICRL was tested on Olympiad-level mathematics problems drawn from AIME and HMMT competitions.
+[Line 1096] The complete experimental setup, including hyperparameters and evaluation protocols, is documented in the Appendix.
+[Line 1096] In all tested configurations, ICRL produced higher scores than baseline methods such as self-refine and Reflexion.
+[Line 1096] Performance improvements were significant, ranging from 10 to 20 points above the base model on both creative writing and mathematical reasoning benchmarks.
+[Line 1096] These results establish that ICRL is a general-purpose capability that transfers across model families and remains effective when applied to challenging problem domains.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.62 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 38                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000002 │
+│ num_loss_tokens                │ 15505    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 15942    │
+│ progress                       │ 0.812500 │
+│ time/get_batch                 │ 0.033327 │
+│ time/step                      │ 2.624942 │
+│ time/total                     │ 2.713293 │
+│ train_mean_nll                 │ 2.012968 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+Describe the content of 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners'.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 304] To summarize, this paper makes three contributions: (1): We introduce the ICRL prompting framework, a minimal design that elicits inference-time self-improvement in LLMs using only scalar rewards.
+[Line 306] Just as ICL places (x, y) pairs in context, our framework places state–action–reward tuples with simple meta-instructions in context.
+[Line 306] This design isolates the LLM’s intrinsic capacity for ICRL, free from external code or engineered mechanisms. (2): We provide strong evidence suggesting the emergence of RL in LLM's inference time when the ICRL prompting framework is used.
+[Line 314] Specifically, we demonstrate the maximisation of the scalar reward signal, the exploration-exploitation trade-off in LLM's inference time, the performance improvements from the growth of the context, the performance drop with short context, and the performance drop when the reward is absent.
+[Line 319] All those observations are well expected for an RL algorithm.
+[Line 320] Essentially, this is a "duck test" for the inference process.
+[Line 322] We demonstrate that ICRL prompting yields significant improvements over self-revision methods such as Self-Refine and Reflexion, across diverse benchmarks including Game of 24, creative writing, ScienceWorld, and Olympiad-level mathematics (AIME and HMMT).
+[Line 322] In Game of 24 and creative writing, the rewards are generated by the LLM itself, yet consistent performance gains are still observed.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.06 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 39                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000002 │
+│ num_loss_tokens                │ 16834    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17165    │
+│ progress                       │ 0.833333 │
+│ time/get_batch                 │ 0.036793 │
+│ time/step                      │ 2.055243 │
+│ time/total                     │ 4.780337 │
+│ train_mean_nll                 │ 1.944795 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 158] Introduction.
+[Line 164] Here's the thing about LLMs: if we want them to be truly useful agents that can tackle new tasks, they need to get better while they're actually being used. This idea is called test-time scaling, and it's a pretty hot topic in AI right now.
+[Line 164] There are really just two big approaches to making models better with more compute: learning and search. And both have proven they can reach superhuman levels -- just look at Chess and Go.
+[Line 164] On the search side, there's been a ton of progress in getting LLMs to improve themselves at test time. We've gone from the simple Best-of-N approach to more sophisticated methods like Tree of Thoughts and Monte Carlo Tree Search.
+[Line 166] But here's what's interesting -- learning hasn't gotten the same spotlight for inference-time self-improvement.
+[Line 166] Traditional in-context learning (ICL) is essentially supervised learning. You need to show the model expert examples with correct answers.
+[Line 166] The catch? You can't easily generate more expert examples on the fly during inference. That puts a hard ceiling on how useful ICL can be for test-time scaling.
+[Line 166] So what's the alternative? LLMs need to learn from their own outputs -- essentially teaching themselves through trial and error.
+[Line 169] Enter reinforcement learning. RL is probably the gold standard when it comes to algorithms that can improve without human hand-holding.
+[Line 169] The problem is, RL has mainly shown its magic in simulated environments or during the training phase of LLMs -- not when the model is actually being used.
+[Line 169] And that's a problem because the real world (what researchers call the "big world" setting) is enormously more complex than any simulation or training scenario.
+[Line 169] Real-world agents are constantly running into situations they were never trained for and need to figure things out in real time.
+[Line 169] What we really need are models that can do two things: (1) handle the messy diversity of real-world tasks where natural language is often how you interact, and (2) keep getting better during inference without needing to be retrained every time something new comes up.
+[Line 177] Which brings us to the million-dollar question: can reinforcement learning just... emerge inside an LLM while it's generating text?
+[Line 177] If that's possible, it would be a beautiful solution. The LLM gives you a solid starting point (a general-purpose policy), and the emergent RL handles the continual improvement part.
+[Line 177] We already know LLMs can do surprising things with in-context supervised learning, and that discovery has sparked a wave of research into in-context RL (ICRL).
+[Line 177] But so far, ICRL research has stayed in the shallow end -- mostly bandit problems and simulated environments. Nobody has shown it working on real, open-ended tasks where you need language.
+[Line 183] That's exactly what this paper does. The authors show that LLMs genuinely can act as in-context reinforcement learners, and this emergent ability helps them crush it on diverse language tasks -- from running science experiments to writing creatively to solving olympiad-level math.
+[Line 183] Their method? A refreshingly simple multi-round prompting framework they call ICRL prompting.
+[Line 184] The whole idea behind ICRL prompting is to nudge LLMs into doing RL-style self-improvement on whatever task you give them.
+[Line 185] You start with just the task description. Nothing fancy.
+[Line 187] After the model gives you an answer, you rate it with a number -- that's your reward signal.
+[Line 190] In the next round, you feed the model the same task plus all its previous attempts and their scores.
+[Line 192] Then you just keep going.
+[Line 193] And here's the cool part: the answers genuinely get better as the context fills up with more experience.
+[Line 194] The LLM is effectively maximizing that reward score in real time -- doing RL without anyone explicitly programming it to.
+[Line 199] One thing that makes ICRL prompting special is how stripped-down it is. The authors call minimality a core design principle.
+[Line 199] They intentionally left out all the usual tricks -- no textual gradients, no experience replay, no sampling heuristics, no extra modules. Why? Because they wanted to prove the LLM itself has an innate RL ability, not that some clever engineering hack does.
+[Line 199] The only signal the model gets? A single number. The reward.
+[Line 199] This philosophy aligns perfectly with two famous hypotheses: the reward hypothesis (all goals reduce to maximizing cumulative scalar reward) and the "reward is enough" hypothesis (intelligence itself is fundamentally about reward maximization).<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.86 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 40                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000002 │
+│ num_loss_tokens                │ 18355    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18703    │
+│ progress                       │ 0.854167 │
+│ time/get_batch                 │ 0.043965 │
+│ time/step                      │ 1.857057 │
+│ time/total                     │ 4.006591 │
+│ train_mean_nll                 │ 1.865311 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 150] Reinforcement learning (RL) constitutes a well-established paradigm for addressing problems of sequential decision-making under uncertainty.
+[Line 150] In the present study, we provide evidence for the remarkable finding that RL behavior spontaneously arises during the inference phase of large language models (LLMs), a phenomenon to which we assign the designation in-context reinforcement learning (ICRL).
+[Line 150] To expose and characterize this latent capability, we propose a straightforward multi-round prompting methodology, referred to as ICRL prompting, designed for self-improvement at inference time.
+[Line 150] The principal objective of ICRL prompting is to systematically steer LLMs toward performing reinforcement learning processes during inference, thereby enabling autonomous self-improvement on designated tasks.
+[Line 152] Subsequent to each generated response, the model is furnished with numerical scalar feedback in the form of a reward signal.
+[Line 152] In each successive round, the LLM is re-queried with a prompt that incorporates a context window comprising the concatenation of all antecedent responses together with their corresponding reward values.
+[Line 152] We observe, with notable consistency, that the quality of generated responses exhibits monotonic improvement as the accumulated context expands.
+[Line 152] Stated differently, the LLM demonstrates the capacity to optimize with respect to scalar reward signals during inference, thereby manifesting behavior that is functionally analogous to reinforcement learning.
+[Line 153] We conduct a comprehensive evaluation of ICRL prompting across diverse task domains, including the Game of 24, creative writing, ScienceWorld, and Olympiad-level mathematical competitions (specifically AIME and HMMT), and demonstrate statistically significant performance gains relative to established baselines such as Self-Refine and Reflexion.
+[Line 153] Of particular note, even in configurations where the reward signals are generated by the selfsame LLM, ICRL prompting continues to yield performance improvements, thereby underscoring its potential as a promising new paradigm for computation scaling at test time.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.90 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 41                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000001 │
+│ num_loss_tokens                │ 14817    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 15118    │
+│ progress                       │ 0.875000 │
+│ time/get_batch                 │ 0.032400 │
+│ time/step                      │ 1.903477 │
+│ time/total                     │ 3.836958 │
+│ train_mean_nll                 │ 2.103893 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 748] Experiments.
+[Line 780] Think of it this way: the researchers wanted to see if their new method, ICRL prompting, actually works well. So they tested it on three different kinds of puzzles. The first is Game of 24, which is like a math game where you have to make the number 24 from four given numbers. The second is creative writing, where the model has to write a story. The third is ScienceWorld, where the model pretends to be a scientist doing experiments in a virtual lab.
+[Line 781] To know if ICRL prompting is really good, they compared it to five other methods that people already use: CoT-only (just thinking step by step), Long-CoT (thinking really hard in one go), Best-of-N (trying many times and picking the best), Self-Refine (fixing your own work), and Reflexion (thinking about what went wrong).
+[Line 782] One fair thing they did: they let Self-Refine and Reflexion use as much space in their prompts as the model could handle. That way, nobody can say those methods lost just because they didn't get enough room.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.09 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 42                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000001 │
+│ num_loss_tokens                │ 15181    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 15532    │
+│ progress                       │ 0.895833 │
+│ time/get_batch                 │ 0.032675 │
+│ time/step                      │ 2.092848 │
+│ time/total                     │ 4.086488 │
+│ train_mean_nll                 │ 1.995865 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 1073] ICRL Performance on Open-Source Models and Olympiad-Level Math: Questions and Answers.
+[Line 1096] Q: What was the purpose of evaluating ICRL across different models and tasks? A: The goal was to demonstrate that ICRL has broad applicability by testing it along two dimensions: model architecture diversity and task complexity.
+[Line 1096] Q: Which open-source models were used to test ICRL? A: ICRL was tested on Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode, all evaluated on a creative writing task.
+[Line 1096] Q: What challenging tasks was ICRL applied to? A: ICRL was applied to Olympiad-level mathematics, specifically problems from AIME and HMMT.
+[Line 1096] Q: Where can one find the experimental setup details? A: The full experimental setup is described in the Appendix.
+[Line 1096] Q: How did ICRL compare to baseline methods? A: ICRL consistently outperformed both self-refine and Reflexion baselines across all settings tested.
+[Line 1096] Q: How large were the performance improvements? A: ICRL achieved improvements of 10 to 20 points over the base model on both creative writing and mathematical benchmarks.
+[Line 1096] Q: What do these results tell us about ICRL? A: They demonstrate that ICRL is a robust, generalizable capability that works across diverse model architectures and proves effective on challenging task domains.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.00 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 43                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000001 │
+│ num_loss_tokens                │ 17397    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17778    │
+│ progress                       │ 0.916667 │
+│ time/get_batch                 │ 0.036516 │
+│ time/step                      │ 2.003463 │
+│ time/total                     │ 4.194406 │
+│ train_mean_nll                 │ 1.910646 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+What does the paper 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners' say?<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 158] Introduction.
+[Line 164] For Large Language Models (LLMs) to act as effective agents on novel tasks, they must be able to improve during inference time, a capability often referred to as test-time scaling.
+[Line 164] Learning and search are the two general methods that can leverage scaling computation for performance improvement, reaching superhuman performance on Chess and Go.
+[Line 164] Search has been successfully applied to LLM self-improvement in test-time scaling, starting from the simple Best-of-N to Tree of Thoughts and Monte Carlo Tree Search.
+[Line 166] Learning, however, has yet to receive the same attention for LLM self-improvement at inference time.
+[Line 166] In-context (supervised) learning (ICL), as a supervised learning paradigm, requires expert demonstrations as ground-truth labels.
+[Line 166] However, such demonstration data are not easily scalable during inference time, which restricts the applicability of ICL to test-time scaling.
+[Line 166] Thus, LLMs must instead learn from their own generated experience for continual self-improvement.
+[Line 169] Reinforcement learning is perhaps the most successful algorithm capable of self-improvement independent of human knowledge.
+[Line 169] However, its major successes have primarily appeared in simulated environments or during the training time of LLMs.
+[Line 169] These current RL settings fall short in the big world setting, where the real-world environment is vastly more complex than the agent itself.
+[Line 169] In such environments, agents will encounter numerous situations far beyond their prior training data and must adapt and improve their solutions on the fly.
+[Line 169] Bridging this gap requires models that (1) can handle diverse tasks in the real world, where natural language often constitutes an essential action space, and (2) can continually improve their solutions during inference, rather than relying on costly retraining for every novel situation.
+[Line 177] This naturally raises the question: can reinforcement learning emerge during the inference phase of LLMs?
+[Line 177] Enabling LLMs to perform RL purely in context provides an elegant mechanism to meet both requirements: LLM provides a general-purpose initial policy, while RL introduces the capability for continual self-improvement.
+[Line 177] Inspired by the first surprising evidence that LLMs can act as in-context learners in supervised settings, a growing body of work has begun to explore in-context reinforcement learning (ICRL).
+[Line 177] However, current instantiations are largely restricted to bandit or simulated environments, failing short of addressing many diverse open-ended tasks where natural language is the action space.
+[Line 183] In this paper, we bridge this critical gap by demonstrating that LLMs can act as effective in-context reinforcement learners, an emergent capability that improves performance on diverse, language-based tasks ranging from conducting scientific experiments to creative writing to solving olympiad-level mathematics.
+[Line 183] To reveal this capability, we introduce a simple multi-round prompting framework, ICRL prompting.
+[Line 184] The goal of ICRL prompting is to guide LLMs to perform reinforcement learning for self-improvement on a task.
+[Line 185] Initially, the prompt is only the task description.
+[Line 187] After the LLM generates a response, we give numerical scalar feedbacks for the response, called the rewards.
+[Line 190] Then in the next round, we prompt the LLM again with the same task description and a context consisting of all previous responses and rewards.
+[Line 192] So on and so forth.
+[Line 193] We observe that the quality of the LLM's response increases as the context grows.
+[Line 194] In other words, the LLM is able to maximize the scalar reward signal during the inference time, just like an RL algorithm.
+[Line 199] A key design principle of ICRL prompting is minimality.
+[Line 199] To ensure that the observed gains arise from the emergent RL capacity of LLMs rather than auxiliary mechanisms, we deliberately exclude textual gradients, prioritized experience replay, sampling-based heuristics, or additional engineered modules.
+[Line 199] The only supervision provided is the scalar reward itself.
+[Line 199] This complies with both the reward hypothesis, "that all of what we mean by goals and purposes can be well thought of as maximization of the expected value of the cumulative sum of a received scalar signal (reward)", and the "reward is enough" hypothesis, "intelligence, and its associated abilities, can be understood as subserving the maximisation of reward".<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 1.67 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 44                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000001 │
+│ num_loss_tokens                │ 17642    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 18002    │
+│ progress                       │ 0.937500 │
+│ time/get_batch                 │ 0.036573 │
+│ time/step                      │ 1.673829 │
+│ time/total                     │ 3.785501 │
+│ train_mean_nll                 │ 1.917533 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.03 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 511] Related Works.
+[Line 513] In-Context Reinforcement Learning.
+[Line 514] The story of in-context reinforcement learning begins well before the term itself was coined. Early researchers explored how RL algorithms might function not during training but at the moment of inference, planting the seeds for what would become a vibrant research area. When the phrase "in-context reinforcement learning" -- ICRL -- was finally introduced, it gave the community a unifying banner, and the pace of research quickened dramatically.
+[Line 514] Those interested in this evolving story can turn to published surveys for a panoramic view of the field's development.
+[Line 514] For most of its history, ICRL has lived within the world of meta-reinforcement learning, and its practitioners have favored small, purpose-built models, training them from the ground up to navigate games and control robots.
+[Line 514] More recently, some researchers have ventured beyond these boundaries, enlisting pretrained large language models for ICRL tasks -- deploying them as environment simulators or pitting them against bandit problems. Yet these experiments have revealed a persistent gap: the LLMs require considerable artificial scaffolding and still fall short of the performance achieved by traditional algorithmic approaches.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 2.03 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 45                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000001 │
+│ num_loss_tokens                │ 17522    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 17893    │
+│ progress                       │ 0.958333 │
+│ time/get_batch                 │ 0.036599 │
+│ time/step                      │ 2.032903 │
+│ time/total                     │ 3.789365 │
+│ train_mean_nll                 │ 1.987228 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting get_batch
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] get_batch took 0.04 seconds
+tinker_cookbook.supervised.train:260 [[92mINFO[0m] <|im_start|>user
+.<|im_end|>
+<|im_start|>assistant
+Reward Is Enough: LLMs Are In-Context Reinforcement Learners
+[Line 331] Background.
+[Line 333] Reinforcement Learning.
+[Line 334] In my understanding, RL frames tasks using Markov Decision Processes (MDPs). An MDP has five key elements: a state space S, an action space A, a reward function r: S -> R, an initial state distribution p_0 in (S) (where (S) is the set of probability distributions over S), and a transition function p: S x A -> (S).
+[Line 340] The process starts at time step 0 by sampling an initial state S_0 from p_0.
+[Line 342] At each time step t, I think of it as the agent being in state S_t and picking an action A_t based on its policy pi: S -> (A), where (A) represents probability distributions over actions. So A_t is drawn from pi(S_t).
+[Line 344] Once action A_t is taken, the agent moves to a new state S_t+1 sampled from p(S_t, A_t), and it receives a reward R_t+1 = r(S_t+1).
+[Line 346] This interaction between agent and environment goes on until a terminal time step T, which I see as the end of the episode.
+[Line 348] From what I gather, the agent's goal is to fine-tune its policy pi to maximize the expected total reward J(pi) = E[sum_t=1^T R_t].
+[Line 349] In deep RL, the policy pi is implemented as a neural network, which I find to be one of the most practical aspects of modern RL.
+[Line 351] I'll use theta to refer to the network parameters, so the policy becomes pi_theta.
+[Line 352] The way I see it, RL algorithms learn by updating theta to improve the policy step by step.
+[Line 353] For example, at time t, the action A_t is sampled from pi_theta_t(S_t).
+[Line 355] Then the algorithm updates theta_t to theta_t+1 using the trajectory data it has collected: S_0, A_0, R_1, ..., S_t, A_t, R_t+1, S_t+1.
+[Line 356] At the next step t+1, action A_t+1 is sampled from the updated policy pi_theta_t+1(S_t+1).
+[Line 360] So in my view, the whole standard RL process really comes down to how theta_t evolves over time.
+[Line 367] In-Context Reinforcement Learning.
+[Line 367] What I find fascinating about ICRL (a term first introduced in earlier research) is that it's a paradigm where RL happens during inference -- specifically during the network's forward pass -- with absolutely no parameter updates.
+[Line 368] In ICRL, the policy pi_theta also takes a context C_t as input, giving us A_t ~ pi_theta(S_t, C_t).
+[Line 369] How to construct C_t is something researchers are still actively working on, but one approach I've seen is to include all previous state-action-reward tuples from the task.
+[Line 370] I should note that this context generally includes data from all previous episodes, not just the current one.
+[Line 371] There's a pretraining phase where the network parameters theta are trained across many different MDPs.
+[Line 373] I'll refer to the pretrained parameters as theta_*.
+[Line 374] After pretraining, the policy pi_theta_* is tested on new tasks.
+[Line 376] In a new MDP, actions are sampled from pi_theta_*(S_t, C_t).
+[Line 378] What strikes me most is that theta_* stays completely fixed during this evaluation.
+[Line 379] Yet the quality of the actions A_t gets better as the context C_t accumulates more experience in the new task.
+[Line 381] Since theta_* doesn't change, I can only conclude that the improvement comes from the expanding context.
+[Line 383] This is what researchers call in-context policy improvement.
+[Line 384] What I find particularly remarkable is that this improvement occurs even when the new task is completely outside the pretraining distribution -- for instance, in bandit problems where the optimal arms are reversed compared to the pretraining bandits.
+[Line 388] This observation, in my assessment, definitively rules out the idea that theta_* has simply memorized the pretraining tasks.<|im_end|>
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 4.08 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 46                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000000 │
+│ num_loss_tokens                │ 14478    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 14891    │
+│ progress                       │ 0.979167 │
+│ time/get_batch                 │ 0.031191 │
+│ time/step                      │ 4.082750 │
+│ time/total                     │ 6.211771 │
+│ train_mean_nll                 │ 1.988364 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.utils.misc_utils:20 [[92mINFO[0m] Starting step
+tinker_cookbook.utils.misc_utils:23 [[92mINFO[0m] step took 0.08 seconds
+tinker_cookbook.utils.ml_log:145 [[92mINFO[0m] Wrote metrics to /sfs/weka/scratch/ks8vf/exp/runs/paper_cpt_v7/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [[92mINFO[0m] 
+                   Step 47                   
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Metric                         ┃ Value    ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━┩
+│ epoch                          │ 3        │
+│ learning_rate                  │ 0.000000 │
+│ num_loss_tokens                │ 18711    │
+│ num_sequences                  │ 32       │
+│ num_tokens                     │ 19026    │
+│ progress                       │ 1.000000 │
+│ time/get_batch                 │ 0.037717 │
+│ time/step                      │ 0.076743 │
+│ time/total                     │ 4.216429 │
+│ train_mean_nll                 │ 1.913702 │
+└────────────────────────────────┴──────────┘
+tinker_cookbook.checkpoint_utils:84 [[92mINFO[0m] Saved checkpoints: {'state_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/weights/final', 'sampler_path': 'tinker://1d2285b5-5212-5ec6-8998-68a8c1ff48e1:train:0/sampler_weights/final'}
+tinker_cookbook.supervised.train:375 [[92mINFO[0m] Training completed successfully
