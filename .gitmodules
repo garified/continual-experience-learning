@@ -1,0 +1,12 @@
+[submodule "tau2-bench"]
+	path = tau2-bench
+	url = git@github.com:garified/tau2-bench.git
+	branch = local
+[submodule "HELMET"]
+	path = HELMET
+	url = git@github.com:garified/HELMET.git
+	branch = local
+[submodule "tinker-cookbook"]
+	path = tinker-cookbook
+	url = git@github.com:garified/tinker-cookbook.git
+	branch = local
