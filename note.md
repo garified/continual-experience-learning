@@ -13,6 +13,7 @@ Lengths: 8K–128K. Paper: https://arxiv.org/abs/2410.02694
 3. **Eval**: Run HELMET again without context. Compare against baseline.
 4. **Analyze**: Which tasks internalize well vs. still need retrieval? How does context length affect the gap?
 
+- 2026-02-13: [ANCHOR slides] Slide design preference: one dense bullet per example over two uneven bullets. Merge the "proof" detail into the same line (e.g., "wrote a C compiler — compiles a bootable Linux kernel, PostgreSQL, FFmpeg"). Every line must be a vivid specific detail, not a capability list. Three tight lines > six uneven ones. Slide should breathe.
 - 2026-02-11: Follow Physics of LM 3.1 recipe for knowledge extraction — mixed pre-training + QA is effective for OOD knowledge extraction. Multiple textual variants mentioning the same fact (e.g., bios, paraphrases) help more than a single piece of training data about that fact.
 - 2026-02-11: Data plan for HotpotQA SFT on Qwen3-30B-A3B-Instruct-2507 via Tinker. Train/dev passage overlap is only 0.6%, so train-split QA is useless for dev knowledge. Instead: (1) Type 1 — absorb all 20 `ctxs` passages per sample as chat pairs (knowledge absorption), (2) Type 2 — teacher model scans 20 passages to discover naturally linked pairs (NOT using gold `positive_ctxs` — that's leakage), then generates many multi-hop QA per linked pair (e.g., ~8 pairs × ~10 questions = ~80 QA per sample), (3) Eval — HELMET dev questions without context.
 - 2026-02-11: Type 1 data currently does not track which passages belong to which eval prompt. Future improvement: tag passages by source prompt and add direct questions on entire prompt context (similar to prompt distillation approach).
@@ -32,6 +33,28 @@ Lengths: 8K–128K. Paper: https://arxiv.org/abs/2410.02694
 - 2026-02-11: v3 data synthesis completed. Following Physics of LM 3.1, generated 15 paraphrase variants per passage using explicit styles (formal academic, casual blog, bullet points, Q&A, narrative, technical doc, news article, Wikipedia, textbook, dialogue, executive summary, detailed elaboration, first person, timeline, compare/contrast). Data: Type1 all=6000, Type2=720. Combined datasets: 5var=2720, 10var=4720, 15var=6720 samples.
 
 - 2026-02-11: v4 eval completed on all checkpoints (`results/v4_all_checkpoints.json`). v4a best: EM 26.33, F1 37.08 (step 408); v4b best: EM 26.67, F1 36.75 (step 840). Both plateau around EM ~25, F1 ~34 after ~300 steps. Tinker base model (zero-shot, temp=0) eval: **EM 16.33, F1 31.31** (`results/base_model_eval.json`). Note: Tinker base model score (EM 16.33) differs from HELMET OpenRouter baseline (EM 25.00) — likely due to prompt format differences (Tinker uses chat template vs HELMET's 2-shot RAG prompt without context). v4 training adds ~+10 EM over the Tinker baseline.
+
+- 2026-02-11: **v5 per-slice experiment completed** — replicated v2's knowledge extraction across all 5 non-overlapping 20-question slices (2 epochs each, same v2 hyperparameters). Key results:
+
+  **Base model (no training) per-slice EM on slice questions:**
+  | Slice | Questions | Slice Q EM | Other Q EM | All 300 EM |
+  |-------|-----------|-----------|-----------|-----------|
+  | s1 | Q1-20 | 30.00 | 12.92 | 16.33 |
+  | s2 | Q21-40 | 10.00 | 17.92 | 16.33 |
+  | s3 | Q41-60 | 21.67 | 15.42 | 16.67 |
+  | s4 | Q61-80 | 10.00 | 18.33 | 16.67 |
+  | s5 | Q81-100 | 10.00 | 18.33 | 16.67 |
+
+  **Best trained checkpoint per-slice EM on slice questions (delta from base):**
+  | Slice | Trained EM | Base EM | Delta | Untrained EM (best ckpt) |
+  |-------|-----------|---------|-------|--------------------------|
+  | s1 | 45.00 | 30.00 | **+15.00** | 14.58 |
+  | s2 | 10.00 | 10.00 | **+0.00** | 24.17 |
+  | s3 | 25.00 | 21.67 | **+3.33** | 20.42 |
+  | s4 | 15.00 | 10.00 | **+5.00** | 22.50 |
+  | s5 | 15.00 | 10.00 | **+5.00** | 22.50 |
+
+  **Key finding**: v2's EM 45 result was an outlier. Q1-20 (slice 1) is the easiest slice — the base model already scores EM 30 on those questions vs EM 10 on Q21-40/Q61-100. The training delta is only +15 EM for the best slice and +0 to +5 for others. Knowledge extraction effect is real but much weaker and more variable than Q1-20 alone suggested. Result files: `results/v5_s{1-5}.json` (trained), `results/v5_base_s{1-5}.json` (base model).
 
 ## Conceptual Corrections
 
@@ -88,6 +111,13 @@ Each experiment variant is tracked as a "time slice" with consistent data/model/
 | v3c | Type1 (15 variants) + Type2 | `scripts/prep_hotpotqa_data_v3.py` | `data/hotpotqa_v3/combined_15var.jsonl` (6720) | `runs/hotpotqa_v3_15var` 70 ckpts | TBD | 839 steps, NLL 1.17 |
 | v4a | Type1+Type2 (100 questions) | `scripts/prep_hotpotqa_data_v4.py` | `data/hotpotqa_100/combined_train.jsonl` | `runs/hotpotqa_v4a` | Best: **EM 26.33, F1 37.08** (step 408); Final: EM 25.00, F1 33.57 | LR=1e-5, same as v2 but all 100 questions |
 | v4b | Type1+Type2 (100 questions) | `scripts/prep_hotpotqa_data_v4.py` | `data/hotpotqa_100/combined_train.jsonl` | `runs/hotpotqa_v4b` | Best: **EM 26.67, F1 36.75** (step 840); Final: EM 24.33, F1 35.29 | LR=5e-6, half of v4a |
+| v5_s1 | Per-slice (Q1-20) | `scripts/prep_hotpotqa_data_v5.py --slice 1` | `data/hotpotqa_20/combined_train.jsonl` (reuse v2) | `runs/hotpotqa_v5_s1` | Best: **EM 45.00** (trained), EM 14.58 (untrained) | 2 epochs, 70 steps |
+| v5_s2 | Per-slice (Q21-40) | `scripts/prep_hotpotqa_data_v5.py --slice 2` | `data/hotpotqa_v5_s2/combined_train.jsonl` (1590) | `runs/hotpotqa_v5_s2` | Best: **EM 10.00** (trained), EM 24.17 (untrained) | 2 epochs, 98 steps |
+| v5_s3 | Per-slice (Q41-60) | `scripts/prep_hotpotqa_data_v5.py --slice 3` | `data/hotpotqa_v5_s3/combined_train.jsonl` (1228) | `runs/hotpotqa_v5_s3` | Best: **EM 25.00** (trained), EM 16.25 (untrained) | 2 epochs, 76 steps |
+| v5_s4 | Per-slice (Q61-80) | `scripts/prep_hotpotqa_data_v5.py --slice 4` | `data/hotpotqa_v5_s4/combined_train.jsonl` (1438) | `runs/hotpotqa_v5_s4` | Best: **EM 15.00** (trained), EM 22.50 (untrained) | 2 epochs, 88 steps |
+| v5_s5 | Per-slice (Q81-100) | `scripts/prep_hotpotqa_data_v5.py --slice 5` | `data/hotpotqa_v5_s5/combined_train.jsonl` (1427) | `runs/hotpotqa_v5_s5` | Best: **EM 15.00** (trained), EM 22.50 (untrained) | 2 epochs, 88 steps |
+
+- 2026-02-11: Added `scripts/watch_and_eval_v5.py` — watcher script that polls `checkpoints.jsonl` for new entries during training and runs evals as they appear. Detects training completion via `"final"` checkpoint. Usage: `python scripts/watch_and_eval_v5.py --slice N` runs alongside training to parallelize eval with training.
 
 ## v2 Detailed Results (Trained vs Untrained Split)
 

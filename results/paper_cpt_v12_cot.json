@@ -1,0 +1,667 @@
+{
+  "base_model_cot": {
+    "overall_score": 0.16,
+    "type_scores": {
+      "cross_method_experiment": 0.163,
+      "cross_reward_experiment": 0.375,
+      "cross_theory_evidence": 0.25,
+      "cross_model_experiment": 0.0,
+      "cross_selfreward_evidence": 0.0,
+      "cross_formalism_practice": 0.375,
+      "cross_context_ablation": 0.0,
+      "cross_design_comparison": 0.125,
+      "cross_contribution_evidence": 0.111,
+      "cross_meta_info": 0.111,
+      "cross_failure_evidence": 0.25,
+      "cross_related_distinction": 0.222,
+      "cross_fairness_scaling": 0.0,
+      "cross_duck_test": 0.25
+    },
+    "per_question": [
+      {
+        "id": "mh_1",
+        "type": "cross_method_experiment",
+        "question": "The ICRL paper describes two instruction strategies (Preset and Autonomous). Which one was used in the Game of 24 experiment, and what was the difference in their success rates after 50 trials?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper describes two instruction strategies (Preset and Autonomous). Which one was used in the Game of 24 experiment, and what was the difference in their success rates after 50 trials?",
+        "response": "Let me think step by step.\n\nStep 1: Recall the key points from the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (ICRL).\n\n- The paper argues that large language models (LLMs) can perform in-context reinforcement learning (ICRL) by using reward signals embedded in prompts.\n- It introduces a framework where the LLM learns to generate actions (e.g., mathematical expressions) based on a reward signal provided in the context.\n- Two instruction strategies are discussed:\n  1. **Preset Strategy**: The agent is given a fixed set of candidate actions (e.g., a list of possible expressions) in the prompt, and the reward is used to select the best one.\n  2. **Autonomous Strategy**: The agent generates its own actions (e.g., expressions) on the fly, without being constrained to a predefined list, and then evaluates them using the reward signal.\n- The paper evaluates these strategies on the **Game of 24** \u2014 a mathematical puzzle where the goal is to use four numbers and basic arithmetic operations to make 24.\n- The experiments measure success rates (i.e., the percentage of times the LLM finds a valid solution) after a certain number of trials (e.g., 50 trials).\n\nStep 2: Identify which strategy was used in the Game of 24 experiment.\n\n- In the Game of 24 experiment, the paper uses the **Autonomous** strategy. This is because the LLM is tasked with generating its own expressions (actions) to solve the problem, rather than choosing from a fixed list of candidates.\n- The Preset strategy would require pre-defining a set of possible expressions, which is impractical for the Game of 24 due to the vast combinatorial space.\n\nStep 3: Recall the success rates for each strategy after 50 trials.\n\n- The paper reports that the **Autonomous** strategy achieved a success rate of **~70%** after 50 trials.\n- The **Preset** strategy achieved a lower success rate of **~40%** after 50 trials.\n\nStep 4: Answer the question.\n\nThe ICRL paper describes two instruction strategies: Preset and Autonomous. In the Game of 24 experiment, the **Autonomous** strategy was used. After 50 trials, the success rate for the Autonomous strategy was approximately **70%**, compared to about **40%** for the Preset strategy.\n\nFinal Answer:\nThe **Autonomous** strategy was used in the Game of 24 experiment. After 50 trials, the success rate was approximately **70%** for Autonomous and **40%** for Preset.",
+        "ground_truth": "Both ICRL Preset and ICRL Autonomous were tested on Game of 24. ICRL Preset achieves 90% success rate after 50 trials. ICRL Preset alternates exploration (even episodes) and exploitation (odd episodes). ICRL Autonomous lets the LLM decide. Both outperform baselines.",
+        "score": 0.125,
+        "hits": [
+          "50 trials"
+        ],
+        "misses": [
+          "ICRL Preset",
+          "ICRL Autonomous",
+          "90%",
+          "exploration",
+          "exploitation",
+          "even",
+          "odd"
+        ]
+      },
+      {
+        "id": "mh_2",
+        "type": "cross_method_experiment",
+        "question": "In the ICRL paper, the experience buffer stores previous responses and rewards. The ablation study tests what happens with a short context buffer. What specific buffer configuration was tested, and what was the finding compared to the full buffer?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: In the ICRL paper, the experience buffer stores previous responses and rewards. The ablation study tests what happens with a short context buffer. What specific buffer configuration was tested, and what was the finding compared to the full buffer?",
+        "response": "Let me think step by step about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (ICRL) and the specific ablation study related to the context buffer.\n\nStep 1: Recall the core idea of the paper.\n- The paper argues that large language models (LLMs) can perform reinforcement learning (RL) in-context, meaning they use prior interactions (demonstrations and rewards) stored in their context window to improve future responses.\n- The model learns by treating its own past responses and the associated rewards as experience, effectively simulating a reinforcement learning loop within the context.\n\nStep 2: Understand the role of the experience buffer.\n- The \"experience buffer\" in this context refers to the set of previous (response, reward) pairs that are stored in the model\u2019s context window.\n- These pairs are used to guide future responses via in-context learning, similar to how RL agents use experience replay.\n\nStep 3: Recall the ablation study on buffer length.\n- The paper conducts an ablation study to test the importance of buffer size (i.e., how many past interactions are retained).\n- Specifically, it compares a full buffer (which retains many past (response, reward) pairs) to a short buffer.\n\nStep 4: Identify the specific buffer configuration tested.\n- The ablation study tests a **short context buffer** that retains only the **most recent (response, reward) pair** \u2014 i.e., just the last interaction.\n- This is contrasted with the full buffer, which retains multiple past interactions (e.g., up to 10 or more pairs, depending on the setup).\n\nStep 5: Recall the key finding of the ablation.\n- The study finds that **using only the most recent (response, reward) pair (short buffer) leads to significantly worse performance** compared to using the full buffer.\n- The full buffer enables the model to learn from a broader history of interactions, allowing it to detect patterns and improve over time.\n- In contrast, the short buffer lacks sufficient historical context, preventing the model from effectively learning from past experiences, resulting in suboptimal responses and slower convergence.\n\nConclusion:\n- Specific buffer configuration tested: **a short context buffer that stores only the most recent (response, reward) pair**.\n- Finding: **Performance was significantly worse compared to the full buffer**, demonstrating that retaining a longer history of interactions is crucial for effective in-context reinforcement learning.\n\nAnswer:\nIn the ICRL paper, the ablation study tested a short context buffer that stored only the most recent (response, reward) pair. The finding was that this short buffer configuration led to significantly worse performance compared to the full buffer, which retains multiple past interactions, highlighting the importance of a longer historical context for effective in-context reinforcement learning.",
+        "ground_truth": "The ablation tested Short Context where the buffer B is made a deque of length 3 instead of infinite (queue). Only the recent 3 episodes are used in constructing S_0. Performance drops with short context, demonstrating that the growth of context is important for ICRL's improvement.",
+        "score": 0.2,
+        "hits": [
+          "short context"
+        ],
+        "misses": [
+          "deque",
+          "length 3",
+          "3 episodes",
+          "performance drop"
+        ]
+      },
+      {
+        "id": "mh_3",
+        "type": "cross_reward_experiment",
+        "question": "The ICRL paper describes sparse and dense reward functions. For each of the three main benchmarks (Game of 24, creative writing, ScienceWorld), which type of reward was used and who provided it?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper describes sparse and dense reward functions. For each of the three main benchmarks (Game of 24, creative writing, ScienceWorld), which type of reward was used and who provided it?",
+        "response": "Let\u2019s think step by step.\n\nStep 1: Recall the key points from the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (ICRL, 2023).\n\n- The paper argues that large language models (LLMs) can perform reinforcement learning (RL) in-context, meaning they can learn from reward signals provided within the prompt, without explicit training or fine-tuning.\n- The core idea is that the LLM acts as a policy, and the reward signal is embedded in the prompt (e.g., via a reward function or feedback), allowing the model to optimize its behavior through self-consistent reasoning.\n- The paper introduces the concept of \"in-context reinforcement learning\" (ICRL), where the model uses a reward function to guide its output generation, effectively performing RL without gradient updates.\n- The paper evaluates this approach on three benchmarks: Game of 24, Creative Writing, and ScienceWorld.\n- A key distinction in the paper is between **sparse** and **dense** reward functions:\n  - **Sparse rewards** are given only at the end of a sequence (e.g., correct vs. incorrect final answer).\n  - **Dense rewards** are provided at intermediate steps (e.g., feedback after each reasoning step).\n\nStep 2: Recall the specific experiments and reward types used in each benchmark.\n\nFrom the paper:\n\n1. **Game of 24**:\n   - Task: Given four numbers, use arithmetic operations to make 24.\n   - Reward: The reward is **sparse** \u2014 the model receives a reward only if the final expression evaluates to 24.\n   - Who provided the reward? The **reward is computed automatically by the system** (i.e., the model checks the final expression). No human is involved in providing the reward during inference.\n   - The paper uses a self-consistent reward mechanism: the model generates a solution, and the system evaluates it.\n\n2. **Creative Writing**:\n   - Task: Generate a creative story based on a prompt.\n   - Reward: The reward is **dense** \u2014 the model receives feedback (reward) after each sentence or paragraph, based on coherence, creativity, and relevance.\n   - Who provided the reward? The reward is **provided by a separate LLM** (e.g., a judge model like GPT-4) that evaluates each generated segment.\n   - The paper uses a \"reward model\" (a separate LLM) to score intermediate outputs, enabling dense feedback.\n\n3. **ScienceWorld**:\n   - Task: A text-based game environment where the agent must perform actions to achieve goals (e.g., find a key, open a door).\n   - Reward: The reward is **sparse** \u2014 the model receives a reward only when the final goal is achieved (e.g., \"You have successfully opened the door\").\n   - Who provided the reward? The **environment** (simulated via the ScienceWorld framework) provides the reward based on the final state. The reward is not human-provided but system-generated based on task success.\n\nStep 3: Summarize the findings.\n\nFinal Answer:\n\n- **Game of 24**: Sparse reward, provided by the **system** (automated evaluation of final expression).\n- **Creative Writing**: Dense reward, provided by a **separate LLM (e.g., GPT-4)** acting as a judge.\n- **ScienceWorld**: Sparse reward, provided by the **environment** (simulated game state).\n\nThese results demonstrate that LLMs can perform in-context RL with both sparse and dense rewards, and that the source of the reward (system, environment, or another LLM) varies by task.",
+        "ground_truth": "Game of 24: dense reward (GPT-4.1 scores each of 4 thinking steps on 0-3 scale, same LLM as policy). Creative writing: sparse reward (only R_T, coherence score from GPT-4.1 comparing against reference, same LLM as policy). ScienceWorld: sparse reward (environment-provided, r and r_* are identical, GPT-4.1 mini as policy).",
+        "score": 0.375,
+        "hits": [
+          "dense",
+          "sparse",
+          "coherence"
+        ],
+        "misses": [
+          "GPT-4.1",
+          "0-3 scale",
+          "thinking step",
+          "environment-provided",
+          "GPT-4.1 mini"
+        ]
+      },
+      {
+        "id": "mh_4",
+        "type": "cross_theory_evidence",
+        "question": "The ICRL paper claims the 'reward is enough' hypothesis supports their framework. What specific experimental evidence from the ablation study directly tests whether reward signals are necessary, and what was the result?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper claims the 'reward is enough' hypothesis supports their framework. What specific experimental evidence from the ablation study directly tests whether reward signals are necessary, and what was the result?",
+        "response": "Let\u2019s break this down step by step.\n\nStep 1: Recall key facts about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (ICRL).\n\n- The paper proposes that large language models (LLMs) can perform in-context reinforcement learning (ICRL), meaning they learn to optimize behavior based on reward signals provided in the context (i.e., in the prompt), without explicit fine-tuning.\n- The central hypothesis is the \"reward is enough\" idea: given a reward signal (e.g., a score or feedback), the LLM can infer the optimal policy to maximize that reward, even in novel tasks.\n- The framework uses a \"reward-guided prompting\" setup: the model is given a task description, a few examples (demonstrations), and a reward signal (e.g., a score from 0 to 10) for each example. The model then uses this reward to infer the best behavior.\n- The paper argues that LLMs can act as in-context reinforcement learners by leveraging reward signals to guide their responses.\n\nStep 2: Focus on the ablation study.\n\n- The ablation study is designed to test the necessity of the reward signal in the ICRL framework.\n- Specifically, the paper conducts an ablation where the reward signal is removed from the prompt, while keeping all other components (task description, demonstrations, etc.) the same.\n- This tests whether the model can still perform well without any reward feedback \u2014 i.e., whether the reward is truly necessary for the model to learn the desired behavior.\n\nStep 3: Identify the specific experimental evidence and result.\n\n- The key ablation experiment removes the reward signal from the in-context examples.\n- The result shows a significant drop in performance: the model\u2019s success rate (e.g., in solving tasks like math problems or code generation) drops dramatically when the reward signal is absent.\n- For example, in one experiment on a math problem-solving task, the model achieved ~80% accuracy with reward signals, but only ~30% without them.\n- This demonstrates that the reward signal is not just helpful but necessary for the model to learn and generalize the correct behavior in the in-context setting.\n\nStep 4: Conclusion.\n\nThe specific experimental evidence from the ablation study that directly tests whether reward signals are necessary is the comparison of model performance when reward signals are present versus when they are completely removed from the prompt (while keeping demonstrations and task descriptions unchanged). The result was a substantial performance drop (e.g., from ~80% to ~30% accuracy), which supports the claim that reward signals are essential \u2014 thus providing direct evidence in favor of the \"reward is enough\" hypothesis.\n\nAnswer:\nThe ablation study removed the reward signal from the in-context examples while keeping the task description and demonstrations intact. The result showed a significant drop in performance (e.g., from ~80% to ~30% accuracy on a math task), demonstrating that reward signals are necessary for effective in-context learning. This directly supports the \"reward is enough\" hypothesis by showing that without reward feedback, the model fails to learn the optimal behavior.",
+        "ground_truth": "The 'reward is enough' hypothesis states intelligence can be understood as subserving the maximisation of reward. The ablation 'Zero Rewards' sets all rewards to 0 and shows performance drop. The 'Exploration Only without reward signal' method performs significantly worse than ICRL when comparing running max. This demonstrates ICRL generates genuinely better novel responses, not just exploring and picking the best (Best-of-N).",
+        "score": 0.25,
+        "hits": [
+          "performance drop",
+          "without reward"
+        ],
+        "misses": [
+          "maximisation of reward",
+          "Zero Rewards",
+          "Exploration Only",
+          "significantly worse",
+          "running max",
+          "genuinely better novel responses"
+        ]
+      },
+      {
+        "id": "mh_5",
+        "type": "cross_model_experiment",
+        "question": "Different LLMs are used as the policy across the paper's experiments. Which specific model serves as the policy for Game of 24, which for ScienceWorld, and which open-source models were tested on creative writing and math?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: Different LLMs are used as the policy across the paper's experiments. Which specific model serves as the policy for Game of 24, which for ScienceWorld, and which open-source models were tested on creative writing and math?",
+        "response": "Let me think step by step about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" and recall the relevant details.\n\nStep 1: Recall the overall premise of the paper.\n- The paper argues that large language models (LLMs) can perform in-context reinforcement learning (ICRL) without explicit training on reward signals.\n- It demonstrates that by using a reward signal (e.g., a success/failure label) in the prompt, LLMs can adapt their behavior to maximize reward, effectively acting as reinforcement learners.\n\nStep 2: Recall the experimental setup and models used.\n- The paper evaluates different LLMs as the \"policy\" in a reinforcement learning setting, where the policy is the model that generates actions (responses) based on the current state and reward feedback.\n- The experiments are conducted in different environments: Game of 24 (a mathematical puzzle), ScienceWorld (a text-based interactive environment), and creative writing/math tasks (for open-source models).\n\nStep 3: Recall specific models used in each experiment.\n- For the **Game of 24** experiment:\n  - The paper uses **GPT-3.5-turbo** as the policy model.\n  - This model is prompted with the game state and a reward signal (correct/incorrect) to solve the puzzle.\n\n- For the **ScienceWorld** experiment:\n  - The paper uses **GPT-4** as the policy model.\n  - GPT-4 is used to interact with the ScienceWorld environment, where it performs actions based on observations and receives reward signals.\n\n- For the **creative writing and math tasks** (open-source models):\n  - The paper tests several open-source models, including:\n    - **Llama-2-7B**\n    - **Llama-2-13B**\n    - **Falcon-7B**\n    - **Falcon-40B**\n  - These models are evaluated on tasks like creative writing and math problem solving using in-context RL with reward signals.\n\nStep 4: Confirm the specific model assignments.\n- The paper explicitly states that GPT-3.5-turbo is used for Game of 24, GPT-4 for ScienceWorld, and various open-source models (Llama-2, Falcon) for creative writing and math.\n\nFinal Answer:\n- The policy for **Game of 24** is **GPT-3.5-turbo**.\n- The policy for **ScienceWorld** is **GPT-4**.\n- The open-source models tested on creative writing and math are **Llama-2-7B**, **Llama-2-13B**, **Falcon-7B**, and **Falcon-40B**.",
+        "ground_truth": "Game of 24: GPT-4.1 as policy (chosen for excellent long-context capacity). ScienceWorld: GPT-4.1 mini as policy. Open-source models on creative writing and math: Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode.",
+        "score": 0.0,
+        "hits": [],
+        "misses": [
+          "GPT-4.1",
+          "long-context",
+          "GPT-4.1 mini",
+          "Phi-4",
+          "Llama-4 Maverick",
+          "Qwen3-32B",
+          "thinking mode"
+        ]
+      },
+      {
+        "id": "mh_6",
+        "type": "cross_selfreward_evidence",
+        "question": "The ICRL paper discusses using the LLM itself as the reward function. In which benchmarks is the reward self-generated by the same LLM, and how does the unseen paper abstract experiment prove that ICRL goes beyond parametric knowledge search?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper discusses using the LLM itself as the reward function. In which benchmarks is the reward self-generated by the same LLM, and how does the unseen paper abstract experiment prove that ICRL goes beyond parametric knowledge search?",
+        "response": "Let\u2019s break this down step by step, based on the content and implications of the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (ICRL), as well as related insights from the literature.\n\n---\n\n### Step 1: Recall key facts about the ICRL paper\n\nThe ICRL paper (by Liu et al., 2024) argues that large language models (LLMs) can perform reinforcement learning (RL) in-context, without fine-tuning, by treating the reward signal as a function of the model\u2019s own internal reasoning and evaluation. Key points include:\n\n- **Core idea**: LLMs can act as in-context reinforcement learners (ICRL) by using their own internal reasoning to generate rewards and update behavior based on those rewards, all within a single prompt (no parameter updates).\n- **Reward as a function of the LLM**: The reward is not external but is **self-generated** by the LLM itself\u2014evaluating the quality of a response or action based on its own internal knowledge and reasoning.\n- **Mechanism**: The model is prompted with a sequence of actions (e.g., steps in a reasoning chain), and then evaluates each action using a reward prompt (e.g., \u201cRate this step from 1 to 10 based on correctness and relevance\u201d). The model then uses this self-generated reward to guide future actions.\n- **No fine-tuning**: The method operates entirely in-context, relying on prompt engineering and the model\u2019s ability to simulate RL dynamics.\n- **Benchmarks used**:\n  - **GSM8K** (Grade School Math): Solving math word problems via step-by-step reasoning.\n  - **AQuA** (Ask Questions Answering): Multiple-choice math problems.\n  - **MATH** (Advanced math problems).\n  - **Strategy games** (e.g., 2048, Sudoku, and other logic puzzles).\n  - **Chain-of-thought (CoT) reasoning tasks** where the model generates and evaluates intermediate steps.\n\nIn these benchmarks, the **reward is self-generated by the same LLM**\u2014the model evaluates its own reasoning steps and uses that evaluation to guide future steps, effectively performing a form of in-context policy search.\n\n---\n\n### Step 2: Understand the \"unseen paper abstract experiment\" reference\n\nThe question refers to an \"unseen paper abstract experiment\" that proves ICRL goes beyond parametric knowledge search. While the ICRL paper itself does not cite a separate \"unseen paper,\" this likely refers to a **thought experiment or ablation** described in the ICRL paper\u2019s abstract or supplementary material that demonstrates the model is not just retrieving stored knowledge but is actively learning and adapting in-context.\n\nSpecifically, the ICRL paper includes a **key experiment** (often referred to in discussions) that illustrates this:\n\n> **Experiment**: The model is given a novel task (e.g., a new logic puzzle or a math problem with a previously unseen rule) and is prompted to solve it using a self-rewarding loop: generate a step \u2192 evaluate it with a reward prompt \u2192 revise based on reward \u2192 repeat.\n\n- **Result**: The model improves its performance over multiple iterations, even though the task was not in its training data.\n- **Crucial insight**: The model does not just retrieve a pre-existing answer or pattern. Instead, it **generates and evaluates actions**, uses feedback (self-reward), and **modifies its behavior**\u2014a hallmark of learning, not just retrieval.\n\nThis experiment proves that ICRL goes beyond **parametric knowledge search** (i.e., looking up answers from pre-trained weights) because:\n- The model is not simply recalling a known solution.\n- It is **iteratively refining its strategy** based on self-evaluation.\n- It demonstrates **adaptive behavior** in novel situations, suggesting a form of in-context learning.\n\n---\n\n### Step 3: Synthesize the answer\n\n**Answer**:\n\nIn the ICRL paper, the reward is self-generated by the same LLM in benchmarks such as **GSM8K, AQuA, MATH, and logic puzzles like 2048 and Sudoku**. In these tasks, the LLM evaluates its own reasoning steps (e.g., \"Rate this step for correctness\") and uses this self-generated reward to guide subsequent actions, effectively performing in-context reinforcement learning.\n\nThe **unseen paper abstract experiment** (a key ablation in the ICRL paper) demonstrates that ICRL goes beyond parametric knowledge search by showing that the LLM can **solve novel problems not present in its training data** through iterative self-evaluation and policy refinement. For example, when presented with a new logic puzzle, the model improves its solution over multiple reasoning steps by generating, evaluating, and revising its own actions based on self-reward. This behavior cannot be explained by simple retrieval of stored knowledge\u2014it shows **adaptive, goal-directed learning in-context**, proving that ICRL involves more than just parametric search.\n\n---\n\n### Final Answer:\n\nThe reward is self-generated by the same LLM in benchmarks such as GSM8K, AQuA, MATH, and logic puzzles like 2048 and Sudoku. The experiment described in the ICRL paper (often referred to as the \"unseen paper abstract experiment\") demonstrates that ICRL goes beyond parametric knowledge search by showing the LLM can iteratively improve its performance on novel tasks through self-evaluation and in-context policy updates\u2014evidence of adaptive learning rather than mere retrieval.",
+        "ground_truth": "Self-generated reward: Game of 24 (GPT-4.1 is both policy and reward) and creative writing (GPT-4.1 scores coherence). The hypothesis is 'evaluation is easier than generation'. The unseen paper abstract experiment uses papers published after the model's training cutoff. Best-of-1024 reaches only 0.44 ROUGE-recall, Self-Refine 0.45, Reflexion 0.46, but ICRL achieves 0.59 over 200 iterations, demonstrating learning from external reward signals beyond parametric knowledge.",
+        "score": 0.0,
+        "hits": [],
+        "misses": [
+          "evaluation is easier than generation",
+          "training cutoff",
+          "0.44",
+          "0.45",
+          "0.46",
+          "0.59",
+          "200 iterations",
+          "external reward"
+        ]
+      },
+      {
+        "id": "mh_7",
+        "type": "cross_formalism_practice",
+        "question": "The paper formally models LLM token generation as an MDP. What are the state space, action space, and transition function in this formulation, and how does S_0 in ICRL prompting differ from the standard RL initial state?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper formally models LLM token generation as an MDP. What are the state space, action space, and transition function in this formulation, and how does S_0 in ICRL prompting differ from the standard RL initial state?",
+        "response": "Let\u2019s go through this step by step, based on the key content and formalism from the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (by Liu et al., 2023).\n\n---\n\n### Step 1: Recall relevant facts from the paper\n\nThe paper proposes a novel perspective: that large language models (LLMs) performing in-context learning (ICL) can be formally understood as **in-context reinforcement learners (ICRL)**. The core idea is that the LLM\u2019s token-by-token generation process during inference can be modeled as a **Markov Decision Process (MDP)**, where the model learns to select tokens (actions) to maximize a reward signal derived from the task.\n\nKey points from the paper:\n\n- The LLM generates text token-by-token, and each token choice is influenced by the context (prompt + previous tokens).\n- The paper introduces a formal MDP framework to model this process.\n- The reward is not explicitly given but is **inferred from the task\u2019s success** (e.g., correct answer in a question-answering task).\n- The model learns to optimize a policy that maps context to token choices, using the reward signal from the task outcome.\n\n---\n\n### Step 2: Identify the MDP components in the ICRL formulation\n\nThe paper models the LLM\u2019s generation process as an MDP:  \n**M = (S, A, T, R, \u03b3)**\n\nLet\u2019s define each component:\n\n#### 1. **State Space (S)**  \n- The state at step *t* is the **entire prefix of the generated text up to that point**, i.e., the sequence of tokens generated so far.\n- Formally:  \n  $ S_t = \\text{prefix}_t = (x_1, x_2, ..., x_t) $  \n  where $ x_i $ is the i-th token generated.\n- The state includes both the input prompt and the generated response so far.\n- So, the state space $ S $ is the set of all possible prefixes of text sequences that can be generated by the LLM.\n\n#### 2. **Action Space (A)**  \n- The action at each step is the **next token to generate**.\n- The action space is the **full vocabulary of the LLM**, i.e., all possible tokens in the model\u2019s tokenizer.\n- So, $ A = \\mathcal{V} $, the vocabulary set.\n\n#### 3. **Transition Function (T)**  \n- The transition function $ T(s_t, a_t) \\to s_{t+1} $ is deterministic.\n- Given a current state (prefix) $ s_t $ and an action (token $ a_t $), the next state is simply the extended prefix:  \n  $ s_{t+1} = s_t + a_t $\n- So, the transition is deterministic and defined by concatenation.\n- The paper notes that the transition is **not stochastic** in the standard sense \u2014 it\u2019s deterministic, but the **policy** (which token to pick) is stochastic due to the LLM\u2019s sampling mechanism.\n\n#### 4. **Reward Function (R)**  \n- The reward is **sparse and delayed**: it is only received at the end of the generation process (when the sequence terminates).\n- The reward $ R(s_T) $ depends on whether the final generated sequence is correct (e.g., matches the expected answer).\n- The paper uses a binary reward: $ R = 1 $ if correct, $ 0 $ otherwise (or a continuous score in some cases).\n- This is crucial: the LLM learns to generate sequences that lead to high reward, even though the reward is only available at the end.\n\n#### 5. **Discount Factor (\u03b3)**  \n- Typically $ \\gamma = 1 $, since the reward is only at the end and the model aims to maximize final success.\n\n---\n\n### Step 3: What is $ S_0 $ in ICRL prompting, and how does it differ from standard RL?\n\n- In **standard RL**, the initial state $ S_0 $ is typically the **initial environment state** (e.g., a robot in a starting position, a game board at the beginning).\n- In **ICRL**, the initial state $ S_0 $ is the **input prompt** (i.e., the context provided to the LLM).\n- Crucially, $ S_0 $ in ICRL is **not a state of the environment**, but rather **a fixed input context** that defines the task.\n- The LLM starts generating from this prompt, and the entire generation process unfolds from this initial context.\n\n#### Key difference:\n- In standard RL: $ S_0 $ is a state in the environment (e.g., a robot\u2019s position), and the agent interacts with the environment to change the state.\n- In ICRL: $ S_0 $ is the **prompt**, which is **fixed and not part of the environment dynamics**. The LLM generates a sequence (response) starting from this prompt, and the reward is based on the final output.\n\nThus, **in ICRL, $ S_0 $ is the prompt**, and the LLM\u2019s policy is conditioned on this prompt to generate a sequence that maximizes the final reward.\n\n---\n\n### Final Answer:\n\nIn the MDP formulation of in-context reinforcement learning (ICRL) from the paper:\n\n- **State space (S)**: The set of all possible prefixes of text sequences (i.e., the concatenation of the input prompt and the tokens generated so far).\n- **Action space (A)**: The LLM\u2019s vocabulary \u2014 the set of all possible tokens that can be generated next.\n- **Transition function (T)**: Deterministic; the next state is formed by appending the chosen token to the current prefix: $ s_{t+1} = s_t + a_t $.\n- **Initial state $ S_0 $**: The input prompt (i.e., the context provided to the LLM). This differs from standard RL, where $ S_0 $ is typically a state in the environment (e.g., a robot\u2019s starting position), whereas in ICRL, $ S_0 $ is a fixed task specification (the prompt) that conditions the entire generation process.",
+        "ground_truth": "State space S = union of V^i for i=1 to infinity (all possible token sequences). Action space A = V (vocabulary, next token). Transition: S_t+1 = [S_t A_t] (concatenation). In standard RL, S_0 is sampled from p_0. In ICRL prompting, S_0 is constructed by concatenating the task description s_task, all previous responses and rewards from the experience buffer, and the ICRL instruction s_ICRL.",
+        "score": 0.375,
+        "hits": [
+          "token",
+          "V",
+          "concatenat"
+        ],
+        "misses": [
+          "s_task",
+          "experience buffer",
+          "s_ICRL",
+          "previous responses",
+          "rewards"
+        ]
+      },
+      {
+        "id": "mh_8",
+        "type": "cross_context_ablation",
+        "question": "The paper presents both a context length analysis and an ablation on short context. What context lengths were tested in the analysis, on which model, and how do those findings relate to the short context ablation result?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper presents both a context length analysis and an ablation on short context. What context lengths were tested in the analysis, on which model, and how do those findings relate to the short context ablation result?",
+        "response": "Let me think step by step about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" by Liu et al. (2024), focusing on the context length analysis and the short context ablation.\n\nStep 1: Recall the key claims and framework of the paper.\n- The paper argues that large language models (LLMs) can perform in-context reinforcement learning (ICRL) by using reward signals embedded in the prompt to guide behavior.\n- The core idea is that the model learns to optimize for a reward function implicitly, using only the context (prompt) and no explicit training updates.\n- The authors demonstrate this via a series of experiments where the model is given a task with a reward signal (e.g., a score or feedback) in the context, and it adjusts its output accordingly.\n\nStep 2: Recall the context length analysis.\n- The paper conducts a context length analysis to investigate how the model\u2019s performance in ICRL depends on the length of the context (i.e., the number of examples or demonstrations provided).\n- Specifically, they vary the number of in-context examples (demonstrations) from 1 to 16, and measure the model\u2019s ability to learn from the reward signal.\n- The model used in this analysis is **GPT-3.5-turbo** (and sometimes GPT-4 for comparison).\n- Key finding: Performance improves with longer context (more examples), but the improvement saturates after a certain point (e.g., around 8\u201316 examples), suggesting that the model can effectively learn from a moderate number of demonstrations.\n\nStep 3: Recall the short context ablation.\n- The short context ablation experiment tests the model\u2019s performance when only a very small number of examples are provided\u2014specifically, **1 or 2 examples**.\n- The purpose is to assess whether the model can still perform ICRL with minimal context.\n- The results show that even with just 1 or 2 examples, the model can still learn to optimize for the reward, though performance is lower than with longer contexts.\n- This supports the claim that LLMs can perform ICRL even in very short contexts, indicating strong in-context learning capabilities.\n\nStep 4: Relate the two findings.\n- The context length analysis shows a gradual improvement in performance with increasing context length, peaking at 8\u201316 examples.\n- The short context ablation confirms that the model can still perform ICRL with as few as 1 or 2 examples, even though performance is suboptimal.\n- Thus, the two results are complementary: the context length analysis shows the upper bound and saturation point of performance, while the short context ablation demonstrates the model\u2019s robustness and minimal requirement for ICRL.\n- Together, they support the paper\u2019s central thesis: LLMs can act as in-context reinforcement learners, even with very limited context, and their performance scales with context length.\n\nFinal Answer:\nThe context length analysis tested context lengths of 1, 2, 4, 8, and 16 in-context examples using the **GPT-3.5-turbo** model. The results showed that performance in in-context reinforcement learning improves with longer context but saturates around 8\u201316 examples. This relates to the short context ablation (which tested 1 and 2 examples) by demonstrating that even with minimal context, the model can still perform ICRL, albeit with lower performance. The findings together indicate that LLMs are capable of in-context reinforcement learning across a wide range of context lengths, with strong performance even in very short contexts, supporting the paper\u2019s claim that reward is sufficient for learning in LLMs.",
+        "ground_truth": "Context length analysis tested 8k, 16k, and 32k on Qwen3-32B. ICRL surpasses Self-Refine and Reflexion in both Creative Writing and AIME at all context lengths. The short context ablation makes the buffer a deque of length 3. Both findings converge: more context leads to better ICRL performance, and restricting context causes performance drop.",
+        "score": 0.0,
+        "hits": [],
+        "misses": [
+          "8k",
+          "16k",
+          "32k",
+          "Qwen3-32B",
+          "Creative Writing",
+          "AIME",
+          "deque",
+          "length 3",
+          "performance drop"
+        ]
+      },
+      {
+        "id": "mh_9",
+        "type": "cross_design_comparison",
+        "question": "The paper emphasizes 'minimality' as a key design principle. What specific components does ICRL deliberately exclude, and how does this contrast with the search-based methods (ToT, MCTS, Go-Explore) mentioned in the related work?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper emphasizes 'minimality' as a key design principle. What specific components does ICRL deliberately exclude, and how does this contrast with the search-based methods (ToT, MCTS, Go-Explore) mentioned in the related work?",
+        "response": "Let me think through this step by step.\n\nStep 1: Recall the key points from the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (ICRL).\n\n- The paper argues that large language models (LLMs) can perform complex reasoning and decision-making not through explicit planning or search, but through in-context reinforcement learning (ICRL).\n- The core idea is that LLMs, when provided with a few examples of successful trajectories (demonstrations) and a reward signal, can learn to generate high-reward sequences through self-consistent reasoning, without needing explicit search mechanisms.\n- The method is called In-Context Reinforcement Learning (ICRL), where the LLM acts as a policy that generates sequences conditioned on a context that includes:\n  - Task description\n  - Reward function\n  - Demonstrations (successful trajectories)\n  - A prompt that encourages the model to generate a sequence that maximizes reward.\n\nStep 2: Focus on the concept of \"minimality\" as a design principle.\n\n- The paper emphasizes minimality: the ICRL framework is intentionally simple and avoids complex, external components.\n- The goal is to show that sophisticated behavior can emerge from a minimal setup\u2014just a reward signal and demonstrations\u2014without requiring additional machinery.\n\nStep 3: Identify what ICRL deliberately excludes.\n\n- ICRL deliberately excludes:\n  - **Explicit search algorithms** (e.g., tree search, beam search, Monte Carlo Tree Search).\n  - **Planning modules** that explore multiple future trajectories.\n  - **Memory or replay mechanisms** for storing and revisiting past experiences.\n  - **Separate reward evaluation modules** that are external to the LLM\u2019s reasoning process.\n  - **Iterative refinement loops** that involve backtracking or revising decisions based on feedback.\n\nInstead, ICRL relies solely on the LLM\u2019s ability to generate a coherent, high-reward sequence in a single forward pass, guided by the reward signal and demonstrations.\n\nStep 4: Contrast with search-based methods (ToT, MCTS, Go-Explore).\n\n- **Tree of Thoughts (ToT)**: Uses a search process where the model generates multiple reasoning paths, evaluates them with a critic, and explores different branches. It involves iterative expansion and pruning of thought trees.\n- **Monte Carlo Tree Search (MCTS)**: A classic search algorithm that builds a tree of possible actions, simulates outcomes, and uses statistical estimates to guide exploration. It requires repeated rollouts and backpropagation of values.\n- **Go-Explore**: A method that combines exploration (finding new states) and exploitation (returning to promising states), using a memory of visited states and a mechanism to revisit them.\n\nThese methods all rely on:\n- Explicit search over multiple trajectories.\n- Iterative exploration and evaluation.\n- External mechanisms to manage state, memory, and decision trees.\n\nStep 5: Synthesize the contrast.\n\n- ICRL contrasts sharply with these methods by **not using any search or planning machinery**. Instead of exploring multiple paths, it generates a single trajectory in one pass, guided by in-context learning.\n- While ToT, MCTS, and Go-Explore are designed to **explicitly explore and evaluate** many possibilities, ICRL assumes the LLM can **infer the optimal path directly from the context**, without search.\n- The minimality of ICRL lies in its **absence of search, memory, or iterative refinement**\u2014it relies entirely on the LLM\u2019s in-context reasoning capabilities.\n\nFinal Answer:\n\nThe paper emphasizes \"minimality\" by deliberately excluding explicit search mechanisms, planning modules, memory for state tracking, and iterative refinement. Specifically, ICRL does not use tree search, beam search, Monte Carlo rollouts, or state replay. In contrast, search-based methods like Tree of Thoughts (ToT), Monte Carlo Tree Search (MCTS), and Go-Explore rely on systematic exploration of multiple trajectories, iterative evaluation, and memory of past states to guide decision-making. Thus, ICRL achieves complex behavior through a minimal, single-pass reasoning process, while search-based methods depend on active, multi-step exploration and evaluation.",
+        "ground_truth": "ICRL deliberately excludes textual gradients, prioritized experience replay, sampling-based heuristics, and additional engineered modules. The only supervision is the scalar reward. Search-based methods like Tree-of-Thoughts (ToT), Graph-of-Thoughts (GoT), Monte Carlo Tree Search (MCTS), and Intelligent Go-Explore depend on externally engineered components such as heuristics or memory management, rather than leveraging the model's intrinsic learning ability.",
+        "score": 0.125,
+        "hits": [
+          "MCTS"
+        ],
+        "misses": [
+          "textual gradients",
+          "prioritized experience replay",
+          "sampling-based heuristics",
+          "scalar reward",
+          "Tree-of-Thoughts",
+          "engineered components",
+          "intrinsic learning"
+        ]
+      },
+      {
+        "id": "mh_10",
+        "type": "cross_contribution_evidence",
+        "question": "The paper lists three contributions. The second contribution claims 'emergence of RL' supported by five specific observations. Name all five observations and for each, identify which experiment or ablation provides the evidence.",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper lists three contributions. The second contribution claims 'emergence of RL' supported by five specific observations. Name all five observations and for each, identify which experiment or ablation provides the evidence.",
+        "response": "Let\u2019s go step by step.\n\n### Step 1: Recall the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\"\n\nThis paper, authored by Zhang et al. (2024), argues that large language models (LLMs) can perform in-context reinforcement learning (ICRL) without explicit training on reinforcement learning (RL) objectives. The core idea is that LLMs, when provided with a few examples of reward signals in context, can learn to optimize behavior to maximize reward\u2014effectively behaving like RL agents.\n\nThe paper makes three main contributions:\n\n1. **LLMs can perform in-context RL** by using reward signals in the prompt to guide behavior.\n2. **The emergence of RL-like behavior in LLMs**, supported by five key observations.\n3. **A new framework for evaluating and understanding RL in LLMs** via in-context learning.\n\nWe are focusing on the **second contribution**: the emergence of RL behavior, supported by **five specific observations**. The paper provides evidence for each observation through specific experiments or ablations.\n\n---\n\n### Step 2: Recall the five observations and their supporting experiments/ablations\n\nFrom the paper, the five observations that support the emergence of RL in LLMs are:\n\n---\n\n#### **Observation 1: The model learns to optimize for long-term reward, not just immediate reward.**\n\n- **Evidence**: The model chooses actions that lead to higher cumulative reward over multiple steps, even if the immediate reward is lower.\n- **Experiment/Ablation**: **Multi-step decision-making task (e.g., \"Chain of Reward\" or \"Reward Accumulation\" task)**.\n  - In this task, the model must make a sequence of decisions where the total reward depends on the entire sequence.\n  - Ablation: Removing reward feedback after intermediate steps (i.e., only providing final reward) still leads to good performance, showing the model can infer long-term consequences.\n  - This demonstrates **credit assignment** over time, a hallmark of RL.\n\n---\n\n#### **Observation 2: The model learns to explore when uncertain, balancing exploration and exploitation.**\n\n- **Evidence**: The model sometimes takes suboptimal actions early on (exploration) to gather information, then switches to optimal behavior (exploitation).\n- **Experiment/Ablation**: **Exploration vs. Exploitation in a stochastic environment (e.g., \"Bandit with Hidden States\" or \"Uncertain Reward Environment\")**.\n  - The model is presented with a multi-armed bandit where the reward distribution is initially unknown.\n  - The model is shown a few trajectories with rewards.\n  - Observation: The model explores different arms initially and then exploits the best one.\n  - Ablation: When only exploitation is possible (e.g., no exploration allowed), performance drops, showing that exploration is learned.\n\n---\n\n#### **Observation 3: The model learns to generalize across tasks and environments.**\n\n- **Evidence**: The model performs well on new, unseen tasks after being shown a few examples with reward signals.\n- **Experiment/Ablation**: **Zero-shot generalization across different environments (e.g., \"Task Transfer\" or \"Cross-task Generalization\" experiment)**.\n  - The model is trained on one type of task (e.g., navigation) with reward signals, then tested on a different but structurally similar task (e.g., puzzle solving).\n  - It performs well without retraining, showing **transfer learning** via in-context RL.\n  - Ablation: Removing the reward signal in the context leads to poor performance, showing that reward is key to generalization.\n\n---\n\n#### **Observation 4: The model learns to plan ahead by simulating future states.**\n\n- **Evidence**: The model generates intermediate reasoning steps that anticipate future rewards.\n- **Experiment/Ablation**: **Planning in a sequential decision task (e.g., \"Path Planning with Delayed Reward\")**.\n  - The model must choose a path where the reward is only revealed after several steps.\n  - The model produces reasoning traces that include predictions about future states and rewards.\n  - Ablation: When the model is forced to make decisions without reasoning (e.g., direct output), performance drops significantly.\n  - This shows **internal planning** based on reward anticipation.\n\n---\n\n#### **Observation 5: The model learns to adapt its behavior based on reward feedback, even when feedback is sparse or delayed.**\n\n- **Evidence**: The model adjusts its behavior after receiving reward signals, even if the feedback is not immediate or is noisy.\n- **Experiment/Ablation**: **Sparse and delayed reward experiments (e.g., \"Delayed Feedback\" or \"Noisy Reward\" task)**.\n  - The model receives reward only after a long sequence of actions.\n  - Despite the delay, it still learns to improve performance over time.\n  - Ablation: When reward is removed entirely, the model fails to improve.\n  - This shows **robustness to sparse feedback**, a key RL property.\n\n---\n\n### Final Answer:\n\nThe five observations supporting the emergence of RL in LLMs, along with their corresponding experiments/ablations, are:\n\n1. **Optimizes for long-term reward**  \n   \u2192 Experiment: Multi-step decision-making task (e.g., reward accumulation) with ablation of intermediate rewards.\n\n2. **Balances exploration and exploitation**  \n   \u2192 Experiment: Stochastic environment (e.g., bandit with hidden states) with ablation of exploration.\n\n3. **Generalizes across tasks and environments**  \n   \u2192 Experiment: Cross-task generalization (e.g., transfer from navigation to puzzle solving) with ablation of reward signal.\n\n4. **Plans ahead by simulating future states**  \n   \u2192 Experiment: Sequential decision task with delayed reward (e.g., path planning) with ablation of reasoning steps.\n\n5. **Adapts to sparse or delayed reward feedback**  \n   \u2192 Experiment: Delayed or noisy reward tasks with ablation of reward signal.\n\nThese five observations collectively demonstrate that LLMs, when provided with reward signals in context, exhibit core RL behaviors\u2014supporting the paper\u2019s claim that \"reward is enough\" for in-context RL.",
+        "ground_truth": "Five observations: (1) Maximisation of scalar reward signal - shown in Game of 24, creative writing, ScienceWorld return curves. (2) Exploration-exploitation trade-off - shown in Game of 24 oscillations in success rate. (3) Performance improvement from context growth - shown across all benchmarks. (4) Performance drop with short context - shown in ablation (deque of length 3). (5) Performance drop when reward is absent - shown in ablation (Zero Rewards and Exploration Only).",
+        "score": 0.111,
+        "hits": [
+          "performance drop"
+        ],
+        "misses": [
+          "maximisation",
+          "scalar reward",
+          "exploration-exploitation",
+          "context growth",
+          "short context",
+          "reward is absent",
+          "deque",
+          "Zero Rewards"
+        ]
+      },
+      {
+        "id": "mh_11",
+        "type": "cross_meta_info",
+        "question": "Where was the ICRL paper published, what university are the authors from, and what funding sources supported this work?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: Where was the ICRL paper published, what university are the authors from, and what funding sources supported this work?",
+        "response": "Step 1: Recall relevant facts about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\"\n\n- The paper titled \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" was presented at the International Conference on Reinforcement Learning (ICRL), which is a top-tier conference in the field of reinforcement learning.\n- The authors of the paper are from the University of California, Berkeley (UC Berkeley).\n- The paper argues that large language models (LLMs) can perform in-context reinforcement learning (ICRL), meaning they can learn from a few examples of reward signals within the context of a prompt, without explicit training on those rewards.\n- The key insight is that LLMs implicitly perform reinforcement learning by adjusting their behavior based on reward feedback provided in the prompt context.\n- The authors conducted experiments demonstrating that LLMs can learn to optimize for rewards in a few-shot setting, using only a few examples of state-action-reward triples.\n- The paper was published in the proceedings of ICRL 2024.\n\nStep 2: Identify the specific details requested in the question\n\n- Where was the ICRL paper published?  \n  \u2192 The paper was published in the proceedings of the International Conference on Reinforcement Learning (ICRL) 2024.\n\n- What university are the authors from?  \n  \u2192 The authors are affiliated with the University of California, Berkeley.\n\n- What funding sources supported this work?  \n  \u2192 The paper acknowledges support from the National Science Foundation (NSF), the Office of Naval Research (ONR), and the Simons Foundation.\n\nStep 3: Provide the final answer\n\nThe ICRL paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" was published in the proceedings of the International Conference on Reinforcement Learning (ICRL) 2024. The authors are from the University of California, Berkeley. The work was supported by funding from the National Science Foundation (NSF), the Office of Naval Research (ONR), and the Simons Foundation.",
+        "ground_truth": "Published at ICLR 2026. Authors are from University of Virginia (UVA). Funding: NSF grants III-2128019 and SLES-2331904, Coastal Virginia Center for Cyber Innovation (COVA CCI), Commonwealth Cyber Initiative (CCI), and NSF Grant No. 2124538.",
+        "score": 0.111,
+        "hits": [
+          "NSF"
+        ],
+        "misses": [
+          "ICLR 2026",
+          "Virginia",
+          "UVA",
+          "III-2128019",
+          "SLES-2331904",
+          "COVA CCI",
+          "Commonwealth Cyber Initiative",
+          "2124538"
+        ]
+      },
+      {
+        "id": "mh_12",
+        "type": "cross_failure_evidence",
+        "question": "The paper argues that Self-Refine suffers from 'performance collapse' due to hallucinated feedback. Which specific experiment demonstrates this collapse most clearly, and what quantitative evidence supports it?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper argues that Self-Refine suffers from 'performance collapse' due to hallucinated feedback. Which specific experiment demonstrates this collapse most clearly, and what quantitative evidence supports it?",
+        "response": "Let\u2019s break this down step by step, based on the content and findings of the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (by Liu et al., 2024), which explores how large language models (LLMs) can perform in-context reinforcement learning (ICRL) using reward signals.\n\n### Step 1: Recall key facts about the paper\n\n- The paper argues that LLMs can act as in-context reinforcement learners: they use feedback (reward signals) from prior reasoning steps to improve their outputs iteratively.\n- It introduces a framework where LLMs perform self-improvement via a process similar to reinforcement learning, where the reward signal (e.g., correctness, quality) guides future generations.\n- The paper evaluates this via a method called **Self-Refine**, which involves:\n  1. Generating a response.\n  2. Having the model self-evaluate the response (e.g., via a reward model or self-reflection).\n  3. Using the feedback to refine the response.\n  4. Repeating this process.\n- A key concern raised in the paper is **\"performance collapse\"** \u2014 a phenomenon where repeated self-refinement leads to a degradation in performance, especially when the feedback is **hallucinated** (i.e., incorrect or fabricated).\n- The paper attributes this collapse to **over-reliance on self-generated feedback** that becomes increasingly inaccurate over iterations, leading the model to drift toward worse outputs.\n\n### Step 2: Identify the specific experiment demonstrating performance collapse\n\nThe paper conducts a series of experiments to test the robustness of Self-Refine under different feedback conditions. The most relevant experiment demonstrating performance collapse due to hallucinated feedback is:\n\n> **Experiment 3: \"Self-Refine with Hallucinated Feedback\" (Section 4.3, Figure 4)**\n\nIn this experiment:\n- The authors simulate a scenario where the model generates **incorrect feedback** (i.e., hallucinated) during the self-refinement process.\n- They use a **\"fake reward\"** mechanism: instead of using real, ground-truth feedback (e.g., from a human or a reliable reward model), they inject **artificially incorrect feedback** into the refinement loop.\n- The model is then asked to refine its responses based on this **hallucinated feedback**, even though the feedback is misleading.\n\n### Step 3: Quantitative evidence supporting performance collapse\n\nThe key quantitative evidence comes from **Figure 4** in the paper, which plots the **accuracy** (or task performance) over successive refinement steps.\n\n- In the **baseline (no feedback)** and **correct feedback** conditions, performance improves steadily with refinement (e.g., from ~60% to ~85% accuracy on a reasoning task like GSM8K).\n- However, in the **hallucinated feedback** condition:\n  - Performance **starts high** (similar to correct feedback).\n  - But after **2\u20133 refinement steps**, performance **drops sharply**.\n  - By the **4th iteration**, accuracy **plummets to ~30%**, which is **worse than the initial baseline**.\n- This sharp decline is the hallmark of **performance collapse**.\n\n### Step 4: Conclusion\n\n**Answer:**\n\nThe specific experiment that most clearly demonstrates performance collapse due to hallucinated feedback is **Experiment 3: Self-Refine with Hallucinated Feedback** (Section 4.3, Figure 4). The quantitative evidence is that when the model uses hallucinated feedback during refinement, its performance on the GSM8K reasoning task drops from an initial ~80% accuracy to **~30% after 4 refinement steps**, which is significantly worse than both the initial performance and the performance under correct feedback. This sharp degradation illustrates how unreliable feedback can cause the model to drift toward incorrect solutions, leading to performance collapse.",
+        "ground_truth": "Creative writing demonstrates Self-Refine's collapse most clearly. Self-Refine initially matches ICRL in coherence reward, but after extending both methods by 50 additional episodes, ICRL keeps improving while Self-Refine first plateaus then declines, likely due to the significant growth of its context with accumulated hallucinated verbal feedback. Quantitatively, ICRL achieves 86.32% length-controlled win rate against Self-Refine.",
+        "score": 0.25,
+        "hits": [
+          "context",
+          "hallucinated"
+        ],
+        "misses": [
+          "creative writing",
+          "initially matches",
+          "plateaus",
+          "declines",
+          "verbal feedback",
+          "86.32%"
+        ]
+      },
+      {
+        "id": "mh_13",
+        "type": "cross_related_distinction",
+        "question": "The related work section distinguishes ICRL from prompt optimization methods. What is the key theoretical difference, and how does the 'Exploration Only' ablation result support this distinction?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The related work section distinguishes ICRL from prompt optimization methods. What is the key theoretical difference, and how does the 'Exploration Only' ablation result support this distinction?",
+        "response": "Let\u2019s break this down step by step, based on the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (by Liu et al., 2024).\n\n---\n\n### Step 1: Recall key facts about the paper\n\n**Core thesis**: The paper argues that large language models (LLMs) perform in-context reinforcement learning (ICRL) when given a reward signal, even without explicit training on reinforcement learning (RL) objectives. The model learns to optimize behavior in a context (e.g., a prompt with examples) to maximize a reward, effectively acting as an RL agent.\n\n**Key concepts**:\n- **In-Context Reinforcement Learning (ICRL)**: The LLM uses a few-shot context (demonstrations) to infer a policy that maximizes a reward signal provided in the prompt.\n- **Reward as a signal**: The reward is not used to train the model (no backpropagation), but is used during inference to guide the model\u2019s output via self-consistent reasoning or search (e.g., through chain-of-thought or sampling).\n- **No explicit RL training**: The model is not fine-tuned on RL objectives; instead, it performs RL-like behavior *in context*.\n\n---\n\n### Step 2: Understand the distinction between ICRL and prompt optimization\n\nThe **related work** section contrasts ICRL with **prompt optimization** methods (e.g., prompt tuning, auto-prompting, or gradient-based prompt optimization).\n\n**Key theoretical difference**:\n- **Prompt optimization** treats the prompt as a *parameter* to be optimized (e.g., via gradient descent) to improve performance on a task. The optimization is typically done *offline* (before inference), and the goal is to find a fixed prompt that works well for a given task.\n- **ICRL**, in contrast, treats the prompt as a *context* in which the LLM performs *online* decision-making under a reward signal. The LLM dynamically explores different responses (e.g., via sampling or reasoning paths) to find one that maximizes the reward, *during inference*, without modifying the prompt itself.\n\n> **Theoretical distinction**: Prompt optimization is about *finding a good prompt* (a static input), while ICRL is about *using a prompt to perform reinforcement learning* (dynamic, reward-guided behavior generation).\n\n---\n\n### Step 3: Analyze the \"Exploration Only\" ablation\n\nThe paper includes an ablation study called **\"Exploration Only\"**, where:\n- The model is given a reward signal.\n- But **no reward feedback is used to guide the generation** (i.e., no reward-based selection or filtering of responses).\n- The model only explores different reasoning paths or outputs (e.g., via sampling), but does not use the reward to bias its choices.\n\n**Result**: Performance drops significantly compared to the full ICRL setup.\n\n**Why this supports the distinction**:\n- The \"Exploration Only\" ablation shows that **mere exploration is insufficient** for good performance.\n- The key to ICRL is not just generating multiple options, but **using the reward signal to guide the selection** of the best response.\n- This highlights that ICRL is not just about prompt-based exploration (as in prompt optimization), but about **reward-guided search** \u2014 a core feature of reinforcement learning.\n- In contrast, prompt optimization methods do not involve such a reward-guided search during inference; they optimize the prompt *once* and then use it deterministically.\n\n---\n\n### Final Answer:\n\nThe key theoretical difference between ICRL and prompt optimization is that **prompt optimization seeks to find a fixed, optimal prompt (a static input) via offline tuning**, whereas **ICRL involves online, reward-guided exploration and selection of responses during inference**, mimicking reinforcement learning behavior.\n\nThe **\"Exploration Only\" ablation** supports this distinction by showing that simply generating multiple responses (exploration) without using the reward signal to guide selection leads to poor performance. This demonstrates that the **reward-guided selection** \u2014 not just exploration \u2014 is essential to ICRL, distinguishing it from prompt optimization, which does not involve such dynamic, reward-driven inference.",
+        "ground_truth": "Prompt optimization uses numerical scores to guide prompt refinement through top-k selection and error filtering, which is more aligned with in-context supervised learning (filtered behavior cloning) than RL. ICRL enables learning from failure experiences. The 'Exploration Only without reward' ablation performs significantly worse, showing that ICRL's improvement comes not from exploring and picking the best (like prompt optimization / Best-of-N) but from genuinely generating better novel responses through RL.",
+        "score": 0.222,
+        "hits": [
+          "prompt optimization",
+          "Exploration Only"
+        ],
+        "misses": [
+          "top-k selection",
+          "supervised learning",
+          "behavior cloning",
+          "failure experiences",
+          "significantly worse",
+          "genuinely",
+          "novel responses"
+        ]
+      },
+      {
+        "id": "mh_14",
+        "type": "cross_fairness_scaling",
+        "question": "In the ScienceWorld experiment, the paper gives Reflexion and Self-Refine an advantage that ICRL does not have. What is this advantage, and despite it, how does ICRL compare in terms of test-time compute scaling?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: In the ScienceWorld experiment, the paper gives Reflexion and Self-Refine an advantage that ICRL does not have. What is this advantage, and despite it, how does ICRL compare in terms of test-time compute scaling?",
+        "response": "Let me think through this step by step.\n\nStep 1: Recall the key points from the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" (ICRL paper) relevant to the ScienceWorld experiment.\n\n- The paper proposes that large language models (LLMs) can perform reinforcement learning (RL) in-context, meaning they learn policies by observing demonstrations and rewards without explicit training or fine-tuning.\n- The core idea is that LLMs can simulate RL by iteratively generating actions, receiving rewards, and refining their behavior based on feedback\u2014all within a single prompt (in-context learning).\n- The method is called In-Context Reinforcement Learning (ICRL).\n- The paper compares ICRL to two other approaches: Reflexion and Self-Refine.\n  - Reflexion: A method where the agent generates a reflection (self-evaluation) after each action, which is used to improve future decisions.\n  - Self-Refine: A method that uses a separate \"refinement\" step to improve the agent\u2019s plan or action sequence based on feedback.\n- The ScienceWorld environment is a benchmark for evaluating agents in a complex, multi-step task environment with diverse goals.\n\nStep 2: Identify the specific advantage given to Reflexion and Self-Refine in the ScienceWorld experiment.\n\n- According to the paper, Reflexion and Self-Refine are given access to a **\"planning horizon\"** that allows them to look ahead and revise their plans over multiple steps.\n- Specifically, they are allowed to **generate multiple candidate plans and evaluate them before committing to one**, which gives them a form of lookahead or planning capability.\n- In contrast, ICRL does not have this explicit planning horizon\u2014it must make decisions step-by-step based on the current context and immediate feedback, without the ability to generate and compare multiple future plans in advance.\n\nThis is the key advantage: **Reflexion and Self-Refine are given a planning horizon (i.e., the ability to generate and evaluate multiple future plans), which ICRL does not have.**\n\nStep 3: How does ICRL compare in terms of test-time compute scaling despite this disadvantage?\n\n- The paper shows that even without the planning horizon, ICRL achieves **strong performance** and **superior test-time compute scaling**.\n- Specifically, ICRL scales more efficiently with increasing compute (e.g., more reasoning steps or larger context windows) than Reflexion and Self-Refine.\n- The paper demonstrates that ICRL\u2019s performance improves more consistently and predictably as more compute is allocated at test time (e.g., more reasoning steps per action), while Reflexion and Self-Refine show diminishing returns or less efficient scaling.\n- This is because ICRL leverages the LLM\u2019s in-context learning ability to iteratively refine behavior through feedback, making better use of additional compute in a more direct and scalable way.\n\nFinal Answer:\n\nIn the ScienceWorld experiment, Reflexion and Self-Refine are given the advantage of a **planning horizon**, allowing them to generate and evaluate multiple future plans before acting. Despite this advantage, ICRL demonstrates **superior test-time compute scaling**, meaning it achieves better performance gains as more compute is allocated at test time, outperforming the other methods in terms of efficiency and scalability.",
+        "ground_truth": "Reflexion and Self-Refine are allowed access to the reward signals of the current episode before prompting for reflection, unlike ICRL which only uses rewards from previous episodes. Despite this advantage, ICRL outperforms baseline methods by about 20% after enough iterations. ICRL also scales better than baselines not only in terms of number of trials but also in test-time compute budget (in dollar amounts).",
+        "score": 0.0,
+        "hits": [],
+        "misses": [
+          "reward signals of the current episode",
+          "unlike ICRL",
+          "fair comparison",
+          "20%",
+          "scales better",
+          "compute budget",
+          "dollar"
+        ]
+      },
+      {
+        "id": "mh_15",
+        "type": "cross_duck_test",
+        "question": "The paper uses the phrase 'duck test' to describe their evidence for emergent RL. What does this metaphor mean in context, and which of the five RL-characteristic observations were demonstrated specifically in the Game of 24 experiment?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper uses the phrase 'duck test' to describe their evidence for emergent RL. What does this metaphor mean in context, and which of the five RL-characteristic observations were demonstrated specifically in the Game of 24 experiment?",
+        "response": "Let\u2019s break this down step by step.\n\n### Step 1: Recall key facts about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\"\n\nThe paper, authored by Liu et al. (2024), argues that large language models (LLMs) can perform reinforcement learning (RL) in-context\u2014meaning they learn to optimize behavior based on reward signals provided within the prompt, without explicit training on RL objectives.\n\nKey points from the paper:\n\n- **Core claim**: LLMs can act as in-context reinforcement learners. That is, when given a reward signal (e.g., a score or feedback) in the prompt, they adapt their behavior to maximize that reward, even if they were not trained for RL.\n- **Method**: The authors use a \"reward shaping\" approach where the LLM is prompted with a task, a few examples (demonstrations), and a reward signal (e.g., correctness, score) for each example. The model then generates responses that aim to maximize the reward.\n- **In-context learning**: The model uses the reward information in the prompt to adjust its behavior, effectively learning a policy on the fly.\n- **Five RL-characteristic observations**: The paper identifies five hallmarks of RL that they observe in LLMs:\n  1. **Reward maximization**: The model improves its performance as the reward signal becomes more informative.\n  2. **Policy improvement over time**: The model\u2019s behavior improves across iterations (e.g., in a sequence of reasoning steps).\n  3. **Exploration**: The model generates diverse candidate solutions, especially when reward is sparse.\n  4. **Generalization to unseen tasks**: The model applies learned strategies to new, similar tasks.\n  5. **Transfer learning**: The model can transfer knowledge from one task to another when reward signals are aligned.\n\n- **The \"duck test\" metaphor**: The paper uses the phrase \"if it walks like a duck, swims like a duck, and quacks like a duck, then it\u2019s a duck\" to argue that if a system exhibits all the key behaviors of RL (the five characteristics above), then we should treat it as performing RL\u2014even if it wasn\u2019t explicitly trained for it. This is a metaphor for **behavioral equivalence**: if the system acts like an RL agent, it is functionally an RL agent.\n\n- **Game of 24 experiment**: This is a key experiment in the paper. The task is to use four numbers and basic arithmetic operations (+, \u2212, \u00d7, \u00f7) to make 24. The model is given:\n  - A few examples of problems with solutions.\n  - A reward signal (e.g., \"correct\" or \"incorrect\") for each example.\n  - The model is then asked to solve new problems.\n\n  The experiment demonstrates that:\n  - The model learns to generate solutions that maximize the chance of receiving a \"correct\" reward.\n  - It improves over time (policy improvement).\n  - It explores different arithmetic combinations (exploration).\n  - It generalizes to new problems (generalization).\n  - It transfers strategies from one problem type to another (transfer).\n\n### Step 2: Answer the question\n\n**Question**: The paper uses the phrase 'duck test' to describe their evidence for emergent RL. What does this metaphor mean in context, and which of the five RL-characteristic observations were demonstrated specifically in the Game of 24 experiment?\n\n**Answer**:\n\nThe \"duck test\" metaphor in the paper means that if a system exhibits all the key behavioral characteristics of reinforcement learning\u2014such as maximizing rewards, improving policies, exploring, generalizing, and transferring knowledge\u2014then we should conclude that it is performing RL, even if it wasn\u2019t explicitly trained for it. The metaphor emphasizes **behavioral evidence over architectural or training assumptions**: if it acts like an RL agent, it is functionally one.\n\nIn the **Game of 24 experiment**, the following **four** of the five RL-characteristic observations were specifically demonstrated:\n\n1. **Reward maximization**: The model learned to generate solutions that were more likely to be correct (i.e., receive a positive reward), especially as the reward signal became more informative.\n2. **Policy improvement over time**: The model\u2019s performance improved across multiple reasoning steps or iterations, showing that it refined its strategy based on feedback.\n3. **Exploration**: The model generated diverse arithmetic expressions, trying different combinations of operations and parentheses, indicating exploratory behavior.\n4. **Generalization to unseen tasks**: The model successfully solved new Game of 24 problems it had not seen before, applying strategies learned from prior examples.\n\nThe **fifth** characteristic\u2014**transfer learning**\u2014was also implied in the broader context of the paper, but in the Game of 24 experiment, the focus was more on generalization within the same task domain rather than transfer to a different task. Thus, while transfer is a key theme in the paper, it was **not the primary focus** of the Game of 24 experiment.\n\n### Final Answer:\nThe \"duck test\" metaphor means that if a system behaves like a reinforcement learner (exhibiting key RL traits), it should be treated as one, regardless of its training. In the Game of 24 experiment, the paper demonstrated **reward maximization, policy improvement over time, exploration, and generalization to unseen tasks**\u2014four of the five RL-characteristic observations. Transfer learning was not the main focus of this specific experiment.",
+        "ground_truth": "The 'duck test' means: if the inference process exhibits all the characteristics expected of an RL algorithm, then it is RL ('if it looks like a duck and quacks like a duck, it is a duck'). In Game of 24: maximisation of scalar reward (success rate increases), exploration-exploitation trade-off (oscillations in ICRL Preset reflect alternating phases), and improvement from context growth (performance increases over trials). Short context and absent reward ablations were also tested on Game of 24.",
+        "score": 0.25,
+        "hits": [
+          "duck test",
+          "exploration"
+        ],
+        "misses": [
+          "RL algorithm",
+          "maximisation",
+          "oscillation",
+          "exploitation",
+          "alternating",
+          "context grow"
+        ]
+      }
+    ]
+  },
+  "step_000144_cot": {
+    "overall_score": 0.361,
+    "type_scores": {
+      "cross_method_experiment": 0.45,
+      "cross_reward_experiment": 0.25,
+      "cross_theory_evidence": 0.125,
+      "cross_model_experiment": 0.857,
+      "cross_selfreward_evidence": 0.0,
+      "cross_formalism_practice": 0.375,
+      "cross_context_ablation": 0.444,
+      "cross_design_comparison": 0.375,
+      "cross_contribution_evidence": 0.333,
+      "cross_meta_info": 0.889,
+      "cross_failure_evidence": 0.375,
+      "cross_related_distinction": 0.222,
+      "cross_fairness_scaling": 0.143,
+      "cross_duck_test": 0.125
+    },
+    "per_question": [
+      {
+        "id": "mh_1",
+        "type": "cross_method_experiment",
+        "question": "The ICRL paper describes two instruction strategies (Preset and Autonomous). Which one was used in the Game of 24 experiment, and what was the difference in their success rates after 50 trials?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper describes two instruction strategies (Preset and Autonomous). Which one was used in the Game of 24 experiment, and what was the difference in their success rates after 50 trials?",
+        "response": "I recall the following from the paper:\n\n1. The two instruction strategies are Preset ICRL (alternating exploration and exploitation) and Autonomous ICRL (LLM self-evaluates and decides).\n2. The Game of 24 experiment used only the Preset ICRL instruction.\n3. After 50 trials, the success rate was 90% for Preset ICRL and 49% for Autonomous ICRL.\n4. The paper notes that Preset ICRL is easier to implement and performs better on this task.\n\nThe answer is: Preset ICRL was used in the Game of 24 experiment, and after 50 trials, it achieved a 90% success rate compared to 49% for Autonomous ICRL.",
+        "ground_truth": "Both ICRL Preset and ICRL Autonomous were tested on Game of 24. ICRL Preset achieves 90% success rate after 50 trials. ICRL Preset alternates exploration (even episodes) and exploitation (odd episodes). ICRL Autonomous lets the LLM decide. Both outperform baselines.",
+        "score": 0.5,
+        "hits": [
+          "90%",
+          "50 trials",
+          "exploration",
+          "exploitation"
+        ],
+        "misses": [
+          "ICRL Preset",
+          "ICRL Autonomous",
+          "even",
+          "odd"
+        ]
+      },
+      {
+        "id": "mh_2",
+        "type": "cross_method_experiment",
+        "question": "In the ICRL paper, the experience buffer stores previous responses and rewards. The ablation study tests what happens with a short context buffer. What specific buffer configuration was tested, and what was the finding compared to the full buffer?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: In the ICRL paper, the experience buffer stores previous responses and rewards. The ablation study tests what happens with a short context buffer. What specific buffer configuration was tested, and what was the finding compared to the full buffer?",
+        "response": "In the ICRL paper, the experience buffer stores responses and rewards from previous episodes. The ablation study tests a short context buffer configuration where only the responses and rewards from the 3 most recent episodes are retained. The finding is that performance drops significantly compared to the full buffer, which stores all responses and rewards from all previous episodes. This demonstrates that the full buffer provides more useful information for ICRL.",
+        "ground_truth": "The ablation tested Short Context where the buffer B is made a deque of length 3 instead of infinite (queue). Only the recent 3 episodes are used in constructing S_0. Performance drops with short context, demonstrating that the growth of context is important for ICRL's improvement.",
+        "score": 0.4,
+        "hits": [
+          "performance drop",
+          "short context"
+        ],
+        "misses": [
+          "deque",
+          "length 3",
+          "3 episodes"
+        ]
+      },
+      {
+        "id": "mh_3",
+        "type": "cross_reward_experiment",
+        "question": "The ICRL paper describes sparse and dense reward functions. For each of the three main benchmarks (Game of 24, creative writing, ScienceWorld), which type of reward was used and who provided it?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper describes sparse and dense reward functions. For each of the three main benchmarks (Game of 24, creative writing, ScienceWorld), which type of reward was used and who provided it?",
+        "response": "In the Game of 24, the reward function is sparse: only the final answer receives a reward of 1 (correct) or 0 (incorrect). In creative writing, the reward function is dense: each sentence receives a scalar score. In ScienceWorld, the reward function is sparse: only terminal rewards are nonzero. In all three benchmarks, the reward is provided by the LLM itself (no external reward function).",
+        "ground_truth": "Game of 24: dense reward (GPT-4.1 scores each of 4 thinking steps on 0-3 scale, same LLM as policy). Creative writing: sparse reward (only R_T, coherence score from GPT-4.1 comparing against reference, same LLM as policy). ScienceWorld: sparse reward (environment-provided, r and r_* are identical, GPT-4.1 mini as policy).",
+        "score": 0.25,
+        "hits": [
+          "dense",
+          "sparse"
+        ],
+        "misses": [
+          "GPT-4.1",
+          "0-3 scale",
+          "thinking step",
+          "coherence",
+          "environment-provided",
+          "GPT-4.1 mini"
+        ]
+      },
+      {
+        "id": "mh_4",
+        "type": "cross_theory_evidence",
+        "question": "The ICRL paper claims the 'reward is enough' hypothesis supports their framework. What specific experimental evidence from the ablation study directly tests whether reward signals are necessary, and what was the result?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper claims the 'reward is enough' hypothesis supports their framework. What specific experimental evidence from the ablation study directly tests whether reward signals are necessary, and what was the result?",
+        "response": "The ICRL paper tested the hypothesis that the reward signal is the only mechanism driving performance improvement during inference. To test this, they conducted an ablation study where they removed the reward signal entirely. The results showed that performance dropped significantly when the reward was absent. This provides direct evidence that the reward signal is necessary for ICRL's improvement, supporting the 'reward is enough' hypothesis.",
+        "ground_truth": "The 'reward is enough' hypothesis states intelligence can be understood as subserving the maximisation of reward. The ablation 'Zero Rewards' sets all rewards to 0 and shows performance drop. The 'Exploration Only without reward signal' method performs significantly worse than ICRL when comparing running max. This demonstrates ICRL generates genuinely better novel responses, not just exploring and picking the best (Best-of-N).",
+        "score": 0.125,
+        "hits": [
+          "performance drop"
+        ],
+        "misses": [
+          "maximisation of reward",
+          "Zero Rewards",
+          "Exploration Only",
+          "without reward",
+          "significantly worse",
+          "running max",
+          "genuinely better novel responses"
+        ]
+      },
+      {
+        "id": "mh_5",
+        "type": "cross_model_experiment",
+        "question": "Different LLMs are used as the policy across the paper's experiments. Which specific model serves as the policy for Game of 24, which for ScienceWorld, and which open-source models were tested on creative writing and math?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: Different LLMs are used as the policy across the paper's experiments. Which specific model serves as the policy for Game of 24, which for ScienceWorld, and which open-source models were tested on creative writing and math?",
+        "response": "I recall the following from the paper:\n\n1. The Game of 24 experiments used GPT-4.1 as the policy LLM.\n2. The ScienceWorld experiments used GPT-4.1 mini as the policy LLM.\n3. For creative writing and math (AIME and HMMT), open-source models were tested: Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode.\n\nThe paper used GPT-4.1 as the policy LLM for Game of 24, GPT-4.1 mini for ScienceWorld, and Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B thinking mode for creative writing and math.",
+        "ground_truth": "Game of 24: GPT-4.1 as policy (chosen for excellent long-context capacity). ScienceWorld: GPT-4.1 mini as policy. Open-source models on creative writing and math: Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode.",
+        "score": 0.857,
+        "hits": [
+          "GPT-4.1",
+          "GPT-4.1 mini",
+          "Phi-4",
+          "Llama-4 Maverick",
+          "Qwen3-32B",
+          "thinking mode"
+        ],
+        "misses": [
+          "long-context"
+        ]
+      },
+      {
+        "id": "mh_6",
+        "type": "cross_selfreward_evidence",
+        "question": "The ICRL paper discusses using the LLM itself as the reward function. In which benchmarks is the reward self-generated by the same LLM, and how does the unseen paper abstract experiment prove that ICRL goes beyond parametric knowledge search?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The ICRL paper discusses using the LLM itself as the reward function. In which benchmarks is the reward self-generated by the same LLM, and how does the unseen paper abstract experiment prove that ICRL goes beyond parametric knowledge search?",
+        "response": "In 'Reward Is Enough', the LLM is used as both policy and reward function. The reward is generated by the LLM itself, not by external feedback. The reward function is denoted as r_theta_* where theta_* is the pretrained LLM. The reward is computed by prompting the LLM to score its own responses. The reward is scalar and token-based. The LLM is prompted to score each response on a 0-10 scale. The LLM is also prompted to provide a running tally of the total reward. The running tally is concatenated with the response. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s_t. The running tally is denoted as s",
+        "ground_truth": "Self-generated reward: Game of 24 (GPT-4.1 is both policy and reward) and creative writing (GPT-4.1 scores coherence). The hypothesis is 'evaluation is easier than generation'. The unseen paper abstract experiment uses papers published after the model's training cutoff. Best-of-1024 reaches only 0.44 ROUGE-recall, Self-Refine 0.45, Reflexion 0.46, but ICRL achieves 0.59 over 200 iterations, demonstrating learning from external reward signals beyond parametric knowledge.",
+        "score": 0.0,
+        "hits": [],
+        "misses": [
+          "evaluation is easier than generation",
+          "training cutoff",
+          "0.44",
+          "0.45",
+          "0.46",
+          "0.59",
+          "200 iterations",
+          "external reward"
+        ]
+      },
+      {
+        "id": "mh_7",
+        "type": "cross_formalism_practice",
+        "question": "The paper formally models LLM token generation as an MDP. What are the state space, action space, and transition function in this formulation, and how does S_0 in ICRL prompting differ from the standard RL initial state?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper formally models LLM token generation as an MDP. What are the state space, action space, and transition function in this formulation, and how does S_0 in ICRL prompting differ from the standard RL initial state?",
+        "response": "In \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners,\" the LLM's token generation process is modeled as an MDP:\n\n- State space S: All possible token sequences (strings over the vocabulary V)\n- Action space A: Single tokens (elements of V)\n- Transition function: Deterministic, defined by the LLM's next-token sampling rule (token generation rule)\n- Reward function: r: S \u2192 \u211d, maps token sequences to scalar rewards\n- Initial state S_0: The LLM's initial prompt with no generated tokens\n\nThe key distinction is that in ICRL prompting, S_0 is the same initial prompt for every episode. This differs from standard RL where S_0 typically varies per episode. The LLM's context grows across episodes, so the effective state S_t includes all previously generated tokens.",
+        "ground_truth": "State space S = union of V^i for i=1 to infinity (all possible token sequences). Action space A = V (vocabulary, next token). Transition: S_t+1 = [S_t A_t] (concatenation). In standard RL, S_0 is sampled from p_0. In ICRL prompting, S_0 is constructed by concatenating the task description s_task, all previous responses and rewards from the experience buffer, and the ICRL instruction s_ICRL.",
+        "score": 0.375,
+        "hits": [
+          "token",
+          "V",
+          "rewards"
+        ],
+        "misses": [
+          "concatenat",
+          "s_task",
+          "experience buffer",
+          "s_ICRL",
+          "previous responses"
+        ]
+      },
+      {
+        "id": "mh_8",
+        "type": "cross_context_ablation",
+        "question": "The paper presents both a context length analysis and an ablation on short context. What context lengths were tested in the analysis, on which model, and how do those findings relate to the short context ablation result?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper presents both a context length analysis and an ablation on short context. What context lengths were tested in the analysis, on which model, and how do those findings relate to the short context ablation result?",
+        "response": "In the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\", the context length analysis tested 256, 512, 1024, and 2048 context window sizes on the Qwen3-32B model in the Game of 24 experiment. The results showed that performance increased as context length increased, with the 2048 context length achieving the highest mean return. This finding supports the hypothesis that ICRL can leverage additional context for better performance. The short context ablation used a deque of length 3, which is consistent with the context length analysis results because the performance drop observed in the ablation is expected when the context window is too small to support effective learning.",
+        "ground_truth": "Context length analysis tested 8k, 16k, and 32k on Qwen3-32B. ICRL surpasses Self-Refine and Reflexion in both Creative Writing and AIME at all context lengths. The short context ablation makes the buffer a deque of length 3. Both findings converge: more context leads to better ICRL performance, and restricting context causes performance drop.",
+        "score": 0.444,
+        "hits": [
+          "Qwen3-32B",
+          "deque",
+          "length 3",
+          "performance drop"
+        ],
+        "misses": [
+          "8k",
+          "16k",
+          "32k",
+          "Creative Writing",
+          "AIME"
+        ]
+      },
+      {
+        "id": "mh_9",
+        "type": "cross_design_comparison",
+        "question": "The paper emphasizes 'minimality' as a key design principle. What specific components does ICRL deliberately exclude, and how does this contrast with the search-based methods (ToT, MCTS, Go-Explore) mentioned in the related work?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper emphasizes 'minimality' as a key design principle. What specific components does ICRL deliberately exclude, and how does this contrast with the search-based methods (ToT, MCTS, Go-Explore) mentioned in the related work?",
+        "response": "The paper states that ICRL prompting deliberately excludes: (1) engineered components such as reward models, trajectory buffers, sampling heuristics, and termination conditions; (2) any verbal feedback or textual gradients. This contrasts with search-based methods which rely on auxiliary mechanisms: Tree-of-Thoughts uses verbal feedback, Monte Carlo Tree Search uses external reward functions, and Go-Explore uses engineered exploration modules. The design principle is that the LLM's innate capacity for in-context RL should be sufficient.",
+        "ground_truth": "ICRL deliberately excludes textual gradients, prioritized experience replay, sampling-based heuristics, and additional engineered modules. The only supervision is the scalar reward. Search-based methods like Tree-of-Thoughts (ToT), Graph-of-Thoughts (GoT), Monte Carlo Tree Search (MCTS), and Intelligent Go-Explore depend on externally engineered components such as heuristics or memory management, rather than leveraging the model's intrinsic learning ability.",
+        "score": 0.375,
+        "hits": [
+          "textual gradients",
+          "Tree-of-Thoughts",
+          "engineered components"
+        ],
+        "misses": [
+          "prioritized experience replay",
+          "sampling-based heuristics",
+          "scalar reward",
+          "MCTS",
+          "intrinsic learning"
+        ]
+      },
+      {
+        "id": "mh_10",
+        "type": "cross_contribution_evidence",
+        "question": "The paper lists three contributions. The second contribution claims 'emergence of RL' supported by five specific observations. Name all five observations and for each, identify which experiment or ablation provides the evidence.",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper lists three contributions. The second contribution claims 'emergence of RL' supported by five specific observations. Name all five observations and for each, identify which experiment or ablation provides the evidence.",
+        "response": "The five observations are:\n\n1. Performance improves as context grows \u2014 evidence from the Long Context Alpaca experiment.\n2. Performance peaks at optimal k \u2014 evidence from the ablation where k is varied.\n3. Performance drops when short context \u2014 evidence from the Short Context ablation.\n4. Action reward signals are essential \u2014 evidence from the Zero Rewards ablation.\n5. No-reward condition performs worse \u2014 evidence from the No Rewards ablation.",
+        "ground_truth": "Five observations: (1) Maximisation of scalar reward signal - shown in Game of 24, creative writing, ScienceWorld return curves. (2) Exploration-exploitation trade-off - shown in Game of 24 oscillations in success rate. (3) Performance improvement from context growth - shown across all benchmarks. (4) Performance drop with short context - shown in ablation (deque of length 3). (5) Performance drop when reward is absent - shown in ablation (Zero Rewards and Exploration Only).",
+        "score": 0.333,
+        "hits": [
+          "short context",
+          "performance drop",
+          "Zero Rewards"
+        ],
+        "misses": [
+          "maximisation",
+          "scalar reward",
+          "exploration-exploitation",
+          "context growth",
+          "reward is absent",
+          "deque"
+        ]
+      },
+      {
+        "id": "mh_11",
+        "type": "cross_meta_info",
+        "question": "Where was the ICRL paper published, what university are the authors from, and what funding sources supported this work?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: Where was the ICRL paper published, what university are the authors from, and what funding sources supported this work?",
+        "response": "The ICRL paper was published at ICLR 2026. The authors are from the University of Virginia (UVA). The work was supported by the US National Science Foundation (NSF) under grants III-2128019, SLES-2331904, and No. 2124538, as well as the Coastal Virginia Center for Cyber Innovation (COVA CCI).",
+        "ground_truth": "Published at ICLR 2026. Authors are from University of Virginia (UVA). Funding: NSF grants III-2128019 and SLES-2331904, Coastal Virginia Center for Cyber Innovation (COVA CCI), Commonwealth Cyber Initiative (CCI), and NSF Grant No. 2124538.",
+        "score": 0.889,
+        "hits": [
+          "ICLR 2026",
+          "Virginia",
+          "UVA",
+          "NSF",
+          "III-2128019",
+          "SLES-2331904",
+          "COVA CCI",
+          "2124538"
+        ],
+        "misses": [
+          "Commonwealth Cyber Initiative"
+        ]
+      },
+      {
+        "id": "mh_12",
+        "type": "cross_failure_evidence",
+        "question": "The paper argues that Self-Refine suffers from 'performance collapse' due to hallucinated feedback. Which specific experiment demonstrates this collapse most clearly, and what quantitative evidence supports it?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper argues that Self-Refine suffers from 'performance collapse' due to hallucinated feedback. Which specific experiment demonstrates this collapse most clearly, and what quantitative evidence supports it?",
+        "response": "The paper argues that Self-Refine suffers from performance collapse because its verbal feedback is prone to hallucinated feedback that accumulates over iterations.\n\nThe most compelling evidence comes from the ICRL vs. Self-Refine ablation experiment on the creative writing task (see Figure). The key finding is that ICRL maintains consistently high performance across 50 iterations, with mean return staying nearly flat. In contrast, Self-Refine exhibits a clear performance drop after 20 iterations, with mean return declining by approximately 20%. This decline is attributed to the accumulation of hallucinated feedback that degrades the quality of subsequent responses.",
+        "ground_truth": "Creative writing demonstrates Self-Refine's collapse most clearly. Self-Refine initially matches ICRL in coherence reward, but after extending both methods by 50 additional episodes, ICRL keeps improving while Self-Refine first plateaus then declines, likely due to the significant growth of its context with accumulated hallucinated verbal feedback. Quantitatively, ICRL achieves 86.32% length-controlled win rate against Self-Refine.",
+        "score": 0.375,
+        "hits": [
+          "creative writing",
+          "hallucinated",
+          "verbal feedback"
+        ],
+        "misses": [
+          "initially matches",
+          "plateaus",
+          "declines",
+          "context",
+          "86.32%"
+        ]
+      },
+      {
+        "id": "mh_13",
+        "type": "cross_related_distinction",
+        "question": "The related work section distinguishes ICRL from prompt optimization methods. What is the key theoretical difference, and how does the 'Exploration Only' ablation result support this distinction?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The related work section distinguishes ICRL from prompt optimization methods. What is the key theoretical difference, and how does the 'Exploration Only' ablation result support this distinction?",
+        "response": "Key facts from the paper:\n\n1. The related work section distinguishes ICRL from prompt optimization methods (e.g., Best-of-N, Self-Refine, Reflexion).\n2. Prompt optimization methods are described as search or local optimization processes that require external feedback (reward signals) to guide improvement.\n3. ICRL is distinguished as an inference-time in-context learning (ICL) process that does not require external feedback.\n4. The 'Exploration Only' ablation experiment is designed to test whether external feedback is necessary for ICRL's performance gains.\n5. In the 'Exploration Only' condition, the reward signal is set to 0 for all tokens, meaning no informative feedback is provided to the LLM.\n6. Despite the absence of external feedback, the LLM still improves on the task, demonstrating that ICRL can function as an in-context learning process.\n7. This improvement without external feedback supports the distinction that ICRL is fundamentally different from search-based prompt optimization methods.",
+        "ground_truth": "Prompt optimization uses numerical scores to guide prompt refinement through top-k selection and error filtering, which is more aligned with in-context supervised learning (filtered behavior cloning) than RL. ICRL enables learning from failure experiences. The 'Exploration Only without reward' ablation performs significantly worse, showing that ICRL's improvement comes not from exploring and picking the best (like prompt optimization / Best-of-N) but from genuinely generating better novel responses through RL.",
+        "score": 0.222,
+        "hits": [
+          "prompt optimization",
+          "Exploration Only"
+        ],
+        "misses": [
+          "top-k selection",
+          "supervised learning",
+          "behavior cloning",
+          "failure experiences",
+          "significantly worse",
+          "genuinely",
+          "novel responses"
+        ]
+      },
+      {
+        "id": "mh_14",
+        "type": "cross_fairness_scaling",
+        "question": "In the ScienceWorld experiment, the paper gives Reflexion and Self-Refine an advantage that ICRL does not have. What is this advantage, and despite it, how does ICRL compare in terms of test-time compute scaling?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: In the ScienceWorld experiment, the paper gives Reflexion and Self-Refine an advantage that ICRL does not have. What is this advantage, and despite it, how does ICRL compare in terms of test-time compute scaling?",
+        "response": "ICRL vs. Reflexion and Self-Refine in ScienceWorld:\n\n- Reflexion and Self-Refine use the reward signal as context.\n- ICRL does not use the reward signal at all.\n- Reflexion and Self-Refine also get access to the ground-truth success signal from the environment.\n- ICRL does not get this ground-truth success signal.\n- Despite both of these advantages, Reflexion and Self-Refine show worse scaling with compute.\n- ICRL scales better than both methods in terms of test-time compute.",
+        "ground_truth": "Reflexion and Self-Refine are allowed access to the reward signals of the current episode before prompting for reflection, unlike ICRL which only uses rewards from previous episodes. Despite this advantage, ICRL outperforms baseline methods by about 20% after enough iterations. ICRL also scales better than baselines not only in terms of number of trials but also in test-time compute budget (in dollar amounts).",
+        "score": 0.143,
+        "hits": [
+          "scales better"
+        ],
+        "misses": [
+          "reward signals of the current episode",
+          "unlike ICRL",
+          "fair comparison",
+          "20%",
+          "compute budget",
+          "dollar"
+        ]
+      },
+      {
+        "id": "mh_15",
+        "type": "cross_duck_test",
+        "question": "The paper uses the phrase 'duck test' to describe their evidence for emergent RL. What does this metaphor mean in context, and which of the five RL-characteristic observations were demonstrated specifically in the Game of 24 experiment?",
+        "prompt": "Think step by step. First, recall what you know about the paper \"Reward Is Enough: LLMs Are In-Context Reinforcement Learners\" that is relevant to the question below. List the specific facts, methods, experiments, or results you can remember. Then, based on what you recalled, provide your answer.\n\nQuestion: The paper uses the phrase 'duck test' to describe their evidence for emergent RL. What does this metaphor mean in context, and which of the five RL-characteristic observations were demonstrated specifically in the Game of 24 experiment?",
+        "response": "The 'duck test' is a metaphor for inference by functional equivalence: if something behaves like a duck, it probably is a duck. In the paper, this means: if a behavior matches RL's defining characteristics, it's evidence for RL. The five observations from the Game of 24 experiment are: (1) performance improves as context window grows, (2) performance drops when context is shortened, (3) performance drops with no reward signal, (4) performance drops with explorable actions removed, (5) performance drops with short context and no reward. All five are documented in the paper.",
+        "ground_truth": "The 'duck test' means: if the inference process exhibits all the characteristics expected of an RL algorithm, then it is RL ('if it looks like a duck and quacks like a duck, it is a duck'). In Game of 24: maximisation of scalar reward (success rate increases), exploration-exploitation trade-off (oscillations in ICRL Preset reflect alternating phases), and improvement from context growth (performance increases over trials). Short context and absent reward ablations were also tested on Game of 24.",
+        "score": 0.125,
+        "hits": [
+          "duck test"
+        ],
+        "misses": [
+          "RL algorithm",
+          "maximisation",
+          "oscillation",
+          "exploration",
+          "exploitation",
+          "alternating",
+          "context grow"
+        ]
+      }
+    ]
+  }
+}

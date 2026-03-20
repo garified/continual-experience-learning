@@ -1,0 +1,320 @@
+{
+  "step_000144": {
+    "overall_score": 0.291,
+    "type_scores": {
+      "cross_method_experiment": 0.35,
+      "cross_reward_experiment": 0.25,
+      "cross_theory_evidence": 0.125,
+      "cross_model_experiment": 0.714,
+      "cross_selfreward_evidence": 0.0,
+      "cross_formalism_practice": 0.375,
+      "cross_context_ablation": 0.333,
+      "cross_design_comparison": 0.0,
+      "cross_contribution_evidence": 0.222,
+      "cross_meta_info": 0.667,
+      "cross_failure_evidence": 0.125,
+      "cross_related_distinction": 0.333,
+      "cross_fairness_scaling": 0.143,
+      "cross_duck_test": 0.375
+    },
+    "per_question": [
+      {
+        "id": "mh_1",
+        "type": "cross_method_experiment",
+        "question": "The ICRL paper describes two instruction strategies (Preset and Autonomous). Which one was used in the Game of 24 experiment, and what was the difference in their success rates after 50 trials?",
+        "response": "In the Game of 24 experiment, the Preset instruction strategy was used. After 50 trials, the success rate was 90% when the model was prompted to explore different approaches (exploration instruction), compared to only 49% when it was told to use its best previous attempt (exploitation instruction).",
+        "ground_truth": "Both ICRL Preset and ICRL Autonomous were tested on Game of 24. ICRL Preset achieves 90% success rate after 50 trials. ICRL Preset alternates exploration (even episodes) and exploitation (odd episodes). ICRL Autonomous lets the LLM decide. Both outperform baselines.",
+        "score": 0.5,
+        "hits": [
+          "90%",
+          "50 trials",
+          "exploration",
+          "exploitation"
+        ],
+        "misses": [
+          "ICRL Preset",
+          "ICRL Autonomous",
+          "even",
+          "odd"
+        ]
+      },
+      {
+        "id": "mh_2",
+        "type": "cross_method_experiment",
+        "question": "In the ICRL paper, the experience buffer stores previous responses and rewards. The ablation study tests what happens with a short context buffer. What specific buffer configuration was tested, and what was the finding compared to the full buffer?",
+        "response": "In the 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners' paper, the ablation study tests the hypothesis that ICRL generates genuinely better novel responses rather than just searching over previously seen ones. To test this, the authors use a short context buffer that stores only the most recent episode's response and reward. This is compared against the full ICRL method which accumulates all previous responses and rewards. The results show that the short context ablation performs significantly worse than the full ICRL method on Game of 24 (Figure). This demonstrates that ICRL genuinely improves performance over more exploration, rather than just searching over a long context of past attempts.",
+        "ground_truth": "The ablation tested Short Context where the buffer B is made a deque of length 3 instead of infinite (queue). Only the recent 3 episodes are used in constructing S_0. Performance drops with short context, demonstrating that the growth of context is important for ICRL's improvement.",
+        "score": 0.2,
+        "hits": [
+          "short context"
+        ],
+        "misses": [
+          "deque",
+          "length 3",
+          "3 episodes",
+          "performance drop"
+        ]
+      },
+      {
+        "id": "mh_3",
+        "type": "cross_reward_experiment",
+        "question": "The ICRL paper describes sparse and dense reward functions. For each of the three main benchmarks (Game of 24, creative writing, ScienceWorld), which type of reward was used and who provided it?",
+        "response": "- Game of 24: Sparse reward (the reward function is the rule of the game itself \u2014 only the final answer gets a reward).\n- Creative writing: Dense reward (the reward function is rule-based and provides scores for each paragraph).\n- ScienceWorld: Dense reward (the reward function is part of the environment and provides scores for each action).",
+        "ground_truth": "Game of 24: dense reward (GPT-4.1 scores each of 4 thinking steps on 0-3 scale, same LLM as policy). Creative writing: sparse reward (only R_T, coherence score from GPT-4.1 comparing against reference, same LLM as policy). ScienceWorld: sparse reward (environment-provided, r and r_* are identical, GPT-4.1 mini as policy).",
+        "score": 0.25,
+        "hits": [
+          "dense",
+          "sparse"
+        ],
+        "misses": [
+          "GPT-4.1",
+          "0-3 scale",
+          "thinking step",
+          "coherence",
+          "environment-provided",
+          "GPT-4.1 mini"
+        ]
+      },
+      {
+        "id": "mh_4",
+        "type": "cross_theory_evidence",
+        "question": "The ICRL paper claims the 'reward is enough' hypothesis supports their framework. What specific experimental evidence from the ablation study directly tests whether reward signals are necessary, and what was the result?",
+        "response": "The ablation study provides two key pieces of evidence: (1) When the reward function is removed entirely (r(s) = 0), performance drops significantly, proving the reward signal is not redundant. (2) When the reward signal is replaced with sparse binary success signals (only terminal success gets +1, everything else 0), performance drops. This shows the model genuinely needs the dense scalar reward signal for effective learning, not just success feedback.",
+        "ground_truth": "The 'reward is enough' hypothesis states intelligence can be understood as subserving the maximisation of reward. The ablation 'Zero Rewards' sets all rewards to 0 and shows performance drop. The 'Exploration Only without reward signal' method performs significantly worse than ICRL when comparing running max. This demonstrates ICRL generates genuinely better novel responses, not just exploring and picking the best (Best-of-N).",
+        "score": 0.125,
+        "hits": [
+          "performance drop"
+        ],
+        "misses": [
+          "maximisation of reward",
+          "Zero Rewards",
+          "Exploration Only",
+          "without reward",
+          "significantly worse",
+          "running max",
+          "genuinely better novel responses"
+        ]
+      },
+      {
+        "id": "mh_5",
+        "type": "cross_model_experiment",
+        "question": "Different LLMs are used as the policy across the paper's experiments. Which specific model serves as the policy for Game of 24, which for ScienceWorld, and which open-source models were tested on creative writing and math?",
+        "response": "In the Game of 24 and ScienceWorld experiments, GPT-4.1 serves as both the policy \u03c0_\u03b8 and the reward model r. For creative writing and AIME/HiMMath, open-source models are used: Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode. The reward model is always a different model from the policy.",
+        "ground_truth": "Game of 24: GPT-4.1 as policy (chosen for excellent long-context capacity). ScienceWorld: GPT-4.1 mini as policy. Open-source models on creative writing and math: Phi-4, Llama-4 Maverick, Qwen3-32B, and Qwen3-32B in thinking mode.",
+        "score": 0.714,
+        "hits": [
+          "GPT-4.1",
+          "Phi-4",
+          "Llama-4 Maverick",
+          "Qwen3-32B",
+          "thinking mode"
+        ],
+        "misses": [
+          "long-context",
+          "GPT-4.1 mini"
+        ]
+      },
+      {
+        "id": "mh_6",
+        "type": "cross_selfreward_evidence",
+        "question": "The ICRL paper discusses using the LLM itself as the reward function. In which benchmarks is the reward self-generated by the same LLM, and how does the unseen paper abstract experiment prove that ICRL goes beyond parametric knowledge search?",
+        "response": "In the ICRL paper, the reward function is denoted as r_\u03b8^*. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with the task description and the agent's responses, then asked to score each response on a 1-10 scale. The reward function is denoted as r_\u03b8^* in the paper. The LLM is prompted with",
+        "ground_truth": "Self-generated reward: Game of 24 (GPT-4.1 is both policy and reward) and creative writing (GPT-4.1 scores coherence). The hypothesis is 'evaluation is easier than generation'. The unseen paper abstract experiment uses papers published after the model's training cutoff. Best-of-1024 reaches only 0.44 ROUGE-recall, Self-Refine 0.45, Reflexion 0.46, but ICRL achieves 0.59 over 200 iterations, demonstrating learning from external reward signals beyond parametric knowledge.",
+        "score": 0.0,
+        "hits": [],
+        "misses": [
+          "evaluation is easier than generation",
+          "training cutoff",
+          "0.44",
+          "0.45",
+          "0.46",
+          "0.59",
+          "200 iterations",
+          "external reward"
+        ]
+      },
+      {
+        "id": "mh_7",
+        "type": "cross_formalism_practice",
+        "question": "The paper formally models LLM token generation as an MDP. What are the state space, action space, and transition function in this formulation, and how does S_0 in ICRL prompting differ from the standard RL initial state?",
+        "response": "In the MDP formulation, the state S_t is the concatenation of all tokens generated so far. The action A_t is a single token sampled from the LLM's vocabulary. The transition function is deterministic: S_t+1 = [S_t A_t] (concatenation). The initial state S_0 in ICRL prompting is a context C_0 that includes the task description and a buffer of previous attempts. This differs from standard RL where S_0 is typically the task description alone.",
+        "ground_truth": "State space S = union of V^i for i=1 to infinity (all possible token sequences). Action space A = V (vocabulary, next token). Transition: S_t+1 = [S_t A_t] (concatenation). In standard RL, S_0 is sampled from p_0. In ICRL prompting, S_0 is constructed by concatenating the task description s_task, all previous responses and rewards from the experience buffer, and the ICRL instruction s_ICRL.",
+        "score": 0.375,
+        "hits": [
+          "token",
+          "V",
+          "concatenat"
+        ],
+        "misses": [
+          "s_task",
+          "experience buffer",
+          "s_ICRL",
+          "previous responses",
+          "rewards"
+        ]
+      },
+      {
+        "id": "mh_8",
+        "type": "cross_context_ablation",
+        "question": "The paper presents both a context length analysis and an ablation on short context. What context lengths were tested in the analysis, on which model, and how do those findings relate to the short context ablation result?",
+        "response": "The context length analysis tested 8k, 16k, and 32k on GPT-4.1 mini. The short context ablation used 8k. Both show Q* prompting outperforming baselines. The consistent outperformance across both analyses demonstrates that Q* prompting is robust to varying context lengths.",
+        "ground_truth": "Context length analysis tested 8k, 16k, and 32k on Qwen3-32B. ICRL surpasses Self-Refine and Reflexion in both Creative Writing and AIME at all context lengths. The short context ablation makes the buffer a deque of length 3. Both findings converge: more context leads to better ICRL performance, and restricting context causes performance drop.",
+        "score": 0.333,
+        "hits": [
+          "8k",
+          "16k",
+          "32k"
+        ],
+        "misses": [
+          "Qwen3-32B",
+          "Creative Writing",
+          "AIME",
+          "deque",
+          "length 3",
+          "performance drop"
+        ]
+      },
+      {
+        "id": "mh_9",
+        "type": "cross_design_comparison",
+        "question": "The paper emphasizes 'minimality' as a key design principle. What specific components does ICRL deliberately exclude, and how does this contrast with the search-based methods (ToT, MCTS, Go-Explore) mentioned in the related work?",
+        "response": "ICRL deliberately excludes external components such as: (1) engineered search algorithms (e.g., Tree of Thoughts, Monte Carlo Tree Search), (2) external memory modules, (3) reward signals, and (4) verbal feedback. This contrasts with search-based methods that rely on external search or memory mechanisms. The design principle is that the LLM's intrinsic capacity for self-improvement should be the primary mechanism.",
+        "ground_truth": "ICRL deliberately excludes textual gradients, prioritized experience replay, sampling-based heuristics, and additional engineered modules. The only supervision is the scalar reward. Search-based methods like Tree-of-Thoughts (ToT), Graph-of-Thoughts (GoT), Monte Carlo Tree Search (MCTS), and Intelligent Go-Explore depend on externally engineered components such as heuristics or memory management, rather than leveraging the model's intrinsic learning ability.",
+        "score": 0.0,
+        "hits": [],
+        "misses": [
+          "textual gradients",
+          "prioritized experience replay",
+          "sampling-based heuristics",
+          "scalar reward",
+          "Tree-of-Thoughts",
+          "MCTS",
+          "engineered components",
+          "intrinsic learning"
+        ]
+      },
+      {
+        "id": "mh_10",
+        "type": "cross_contribution_evidence",
+        "question": "The paper lists three contributions. The second contribution claims 'emergence of RL' supported by five specific observations. Name all five observations and for each, identify which experiment or ablation provides the evidence.",
+        "response": "The five observations are:\n\n1. **Reward maximization**: Best-of-N with only reward signal (no verbal feedback) achieves significantly higher reward than Best-of-N with verbal feedback. \u2014 Experiment: Self-Refine and Reflexion use verbal feedback (textual self-critique). Best-of-N with only reward (no verbal feedback) outperforms both.\n\n2. **Zero initial capability**: Performance improves from theta_0 (no prior experience) with no external input. \u2014 Ablation: Zero Context.\n\n3. **Scaling**: Performance improves as model capacity and compute budget increase. \u2014 Experiment: Varying LLMs and compute budgets.\n\n4. **Exploration-exploitation tradeoff**: Performance drops with only exploitation (greedy action) or only exploration (random action). \u2014 Ablation: Exploitation Only, Exploration Only.\n\n5. **Superiority over verbal feedback methods**: ROPE outperforms Self-Refine and Reflexion in terms of reward and human preference. \u2014 Experiment: Comparison with Self-Refine and Reflexion.",
+        "ground_truth": "Five observations: (1) Maximisation of scalar reward signal - shown in Game of 24, creative writing, ScienceWorld return curves. (2) Exploration-exploitation trade-off - shown in Game of 24 oscillations in success rate. (3) Performance improvement from context growth - shown across all benchmarks. (4) Performance drop with short context - shown in ablation (deque of length 3). (5) Performance drop when reward is absent - shown in ablation (Zero Rewards and Exploration Only).",
+        "score": 0.222,
+        "hits": [
+          "exploration-exploitation",
+          "performance drop"
+        ],
+        "misses": [
+          "maximisation",
+          "scalar reward",
+          "context growth",
+          "short context",
+          "reward is absent",
+          "deque",
+          "Zero Rewards"
+        ]
+      },
+      {
+        "id": "mh_11",
+        "type": "cross_meta_info",
+        "question": "Where was the ICRL paper published, what university are the authors from, and what funding sources supported this work?",
+        "response": "The ICRL paper 'Reward Is Enough: LLMs Are In-Context Reinforcement Learners' was published at ICLR 2026. The authors are from the University of Virginia (UVA). The work was supported by the US National Science Foundation (grants III-2128019, SLES-2331904, and No. 2124538).",
+        "ground_truth": "Published at ICLR 2026. Authors are from University of Virginia (UVA). Funding: NSF grants III-2128019 and SLES-2331904, Coastal Virginia Center for Cyber Innovation (COVA CCI), Commonwealth Cyber Initiative (CCI), and NSF Grant No. 2124538.",
+        "score": 0.667,
+        "hits": [
+          "ICLR 2026",
+          "Virginia",
+          "UVA",
+          "III-2128019",
+          "SLES-2331904",
+          "2124538"
+        ],
+        "misses": [
+          "NSF",
+          "COVA CCI",
+          "Commonwealth Cyber Initiative"
+        ]
+      },
+      {
+        "id": "mh_12",
+        "type": "cross_failure_evidence",
+        "question": "The paper argues that Self-Refine suffers from 'performance collapse' due to hallucinated feedback. Which specific experiment demonstrates this collapse most clearly, and what quantitative evidence supports it?",
+        "response": "The most compelling evidence for performance collapse comes from the **long-horizon math benchmark (AIME and HMMT)** in the main paper. The key quantitative evidence is:\n\n1. **Reward trajectory**: Self-Refine and Reflexion show a rapid initial reward increase, but their rewards plateau and then **decline significantly** over 200 iterations.\n\n2. **Best-of-N performance**: After 200 iterations, Best-of-N with GPT-4.1 achieves 80-90% of the maximum reward. In contrast, Self-Refine and Reflexion recover only 40-50% of the maximum reward.\n\n3. **Zero-reward failure rate**: After 200 iterations, 30% of Self-Refine and Reflexion attempts receive a reward of 0, compared to just 10% for ICRL and 0% for Long-CoT.\n\nThe paper attributes this collapse to hallucinated feedback accumulating over iterations, causing the model to generate increasingly incorrect responses.",
+        "ground_truth": "Creative writing demonstrates Self-Refine's collapse most clearly. Self-Refine initially matches ICRL in coherence reward, but after extending both methods by 50 additional episodes, ICRL keeps improving while Self-Refine first plateaus then declines, likely due to the significant growth of its context with accumulated hallucinated verbal feedback. Quantitatively, ICRL achieves 86.32% length-controlled win rate against Self-Refine.",
+        "score": 0.125,
+        "hits": [
+          "hallucinated"
+        ],
+        "misses": [
+          "creative writing",
+          "initially matches",
+          "plateaus",
+          "declines",
+          "context",
+          "verbal feedback",
+          "86.32%"
+        ]
+      },
+      {
+        "id": "mh_13",
+        "type": "cross_related_distinction",
+        "question": "The related work section distinguishes ICRL from prompt optimization methods. What is the key theoretical difference, and how does the 'Exploration Only' ablation result support this distinction?",
+        "response": "The key theoretical difference is that ICRL is a multi-armed bandit problem where the reward is sparse and only the scalar reward signal is provided. Prompt optimization methods are fundamentally different because they use the model's self-evaluation (the model generates its own feedback) or the prompt contains an explicit scalar reward. The 'Exploration Only' ablation supports this by showing that when the reward signal is removed, ICRL performance drops significantly, proving that ICRL genuinely requires external reward signals rather than relying on self-evaluation.",
+        "ground_truth": "Prompt optimization uses numerical scores to guide prompt refinement through top-k selection and error filtering, which is more aligned with in-context supervised learning (filtered behavior cloning) than RL. ICRL enables learning from failure experiences. The 'Exploration Only without reward' ablation performs significantly worse, showing that ICRL's improvement comes not from exploring and picking the best (like prompt optimization / Best-of-N) but from genuinely generating better novel responses through RL.",
+        "score": 0.333,
+        "hits": [
+          "prompt optimization",
+          "Exploration Only",
+          "genuinely"
+        ],
+        "misses": [
+          "top-k selection",
+          "supervised learning",
+          "behavior cloning",
+          "failure experiences",
+          "significantly worse",
+          "novel responses"
+        ]
+      },
+      {
+        "id": "mh_14",
+        "type": "cross_fairness_scaling",
+        "question": "In the ScienceWorld experiment, the paper gives Reflexion and Self-Refine an advantage that ICRL does not have. What is this advantage, and despite it, how does ICRL compare in terms of test-time compute scaling?",
+        "response": "In the ScienceWorld experiment, the advantage given to Reflexion and Self-Refine is that they can access the ground-truth reward signal, which is not available to ICRL. Despite this advantage, ICRL still achieves a 20% improvement over Self-Refine and Reflexion in terms of test-time compute scaling.",
+        "ground_truth": "Reflexion and Self-Refine are allowed access to the reward signals of the current episode before prompting for reflection, unlike ICRL which only uses rewards from previous episodes. Despite this advantage, ICRL outperforms baseline methods by about 20% after enough iterations. ICRL also scales better than baselines not only in terms of number of trials but also in test-time compute budget (in dollar amounts).",
+        "score": 0.143,
+        "hits": [
+          "20%"
+        ],
+        "misses": [
+          "reward signals of the current episode",
+          "unlike ICRL",
+          "fair comparison",
+          "scales better",
+          "compute budget",
+          "dollar"
+        ]
+      },
+      {
+        "id": "mh_15",
+        "type": "cross_duck_test",
+        "question": "The paper uses the phrase 'duck test' to describe their evidence for emergent RL. What does this metaphor mean in context, and which of the five RL-characteristic observations were demonstrated specifically in the Game of 24 experiment?",
+        "response": "The 'duck test' metaphor means: if something walks like a duck, quacks like a duck, etc., then it's a duck. In context, if a method exhibits five behaviors characteristic of RL, then it's exhibiting emergent RL. The five RL characteristics are: (1) performance improves with more computation (longer context), (2) performance drops with less computation (short context), (3) performance drops with lower temperature, (4) exploration-exploitation trade-off (best performance at medium temperature), (5) success rates increase with more trials (episode). In the Game of 24 experiment, (1), (2), (3), and (5) were demonstrated. (4) was not tested.",
+        "ground_truth": "The 'duck test' means: if the inference process exhibits all the characteristics expected of an RL algorithm, then it is RL ('if it looks like a duck and quacks like a duck, it is a duck'). In Game of 24: maximisation of scalar reward (success rate increases), exploration-exploitation trade-off (oscillations in ICRL Preset reflect alternating phases), and improvement from context growth (performance increases over trials). Short context and absent reward ablations were also tested on Game of 24.",
+        "score": 0.375,
+        "hits": [
+          "duck test",
+          "exploration",
+          "exploitation"
+        ],
+        "misses": [
+          "RL algorithm",
+          "maximisation",
+          "oscillation",
+          "alternating",
+          "context grow"
+        ]
+      }
+    ]
+  }
+}
